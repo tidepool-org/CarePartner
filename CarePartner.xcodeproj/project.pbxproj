@@ -7,16 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */; };
+		C19F116529AD38E00055AC28 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C19F116329AD38E00055AC28 /* TidepoolKit.framework */; };
+		C19F116629AD38E00055AC28 /* TidepoolKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C19F116329AD38E00055AC28 /* TidepoolKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C19F116729AD38E00055AC28 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */; };
+		C19F116829AD38E00055AC28 /* TidepoolKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C19F116B29AD47830055AC28 /* SummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116A29AD47830055AC28 /* SummaryViewModel.swift */; };
+		C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */; };
+		C19F117129AD5A620055AC28 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117029AD5A620055AC28 /* OSLog.swift */; };
+		C19F117429AE583A0055AC28 /* FollowedAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117329AE583A0055AC28 /* FollowedAccount.swift */; };
 		C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA229A5895E0019E4CB /* CarePartnerApp.swift */; };
-		C1DDFAA529A5895E0019E4CB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA429A5895E0019E4CB /* ContentView.swift */; };
+		C1DDFAA529A5895E0019E4CB /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA429A5895E0019E4CB /* SummaryView.swift */; };
 		C1DDFAA729A5895F0019E4CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAA629A5895F0019E4CB /* Assets.xcassets */; };
 		C1DDFAAB29A5895F0019E4CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C19F116929AD38E00055AC28 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C19F116629AD38E00055AC28 /* TidepoolKit.framework in Embed Frameworks */,
+				C19F116829AD38E00055AC28 /* TidepoolKitUI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelMock.swift; sourceTree = "<group>"; };
+		C19F116129AD38D40055AC28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C19F116329AD38E00055AC28 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C19F116A29AD47830055AC28 /* SummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModel.swift; sourceTree = "<group>"; };
+		C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolClient.swift; sourceTree = "<group>"; };
+		C19F117029AD5A620055AC28 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
+		C19F117329AE583A0055AC28 /* FollowedAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedAccount.swift; sourceTree = "<group>"; };
 		C1DDFA9F29A5895E0019E4CB /* CarePartner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarePartner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1DDFAA229A5895E0019E4CB /* CarePartnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarePartnerApp.swift; sourceTree = "<group>"; };
-		C1DDFAA429A5895E0019E4CB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C1DDFAA429A5895E0019E4CB /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
 		C1DDFAA629A5895F0019E4CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1DDFAA829A5895F0019E4CB /* CarePartner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarePartner.entitlements; sourceTree = "<group>"; };
 		C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -27,17 +59,62 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C19F116529AD38E00055AC28 /* TidepoolKit.framework in Frameworks */,
+				C19F116729AD38E00055AC28 /* TidepoolKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C16D40B129AE6536009504BB /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		C19F116229AD38E00055AC28 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C19F116329AD38E00055AC28 /* TidepoolKit.framework */,
+				C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C19F116C29AD4AD60055AC28 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C1DDFAA429A5895E0019E4CB /* SummaryView.swift */,
+				C19F116A29AD47830055AC28 /* SummaryViewModel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		C19F116F29AD5A570055AC28 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C19F117029AD5A620055AC28 /* OSLog.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C19F117229AE582E0055AC28 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C19F117329AE583A0055AC28 /* FollowedAccount.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		C1DDFA9629A5895E0019E4CB = {
 			isa = PBXGroup;
 			children = (
 				C1DDFAA129A5895E0019E4CB /* CarePartner */,
 				C1DDFAA029A5895E0019E4CB /* Products */,
+				C19F116229AD38E00055AC28 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -52,8 +129,13 @@
 		C1DDFAA129A5895E0019E4CB /* CarePartner */ = {
 			isa = PBXGroup;
 			children = (
+				C16D40B129AE6536009504BB /* Mocks */,
+				C19F117229AE582E0055AC28 /* Models */,
+				C19F116F29AD5A570055AC28 /* Extensions */,
+				C19F116C29AD4AD60055AC28 /* Views */,
+				C19F116129AD38D40055AC28 /* Info.plist */,
 				C1DDFAA229A5895E0019E4CB /* CarePartnerApp.swift */,
-				C1DDFAA429A5895E0019E4CB /* ContentView.swift */,
+				C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */,
 				C1DDFAA629A5895F0019E4CB /* Assets.xcassets */,
 				C1DDFAA829A5895F0019E4CB /* CarePartner.entitlements */,
 				C1DDFAA929A5895F0019E4CB /* Preview Content */,
@@ -79,6 +161,7 @@
 				C1DDFA9B29A5895E0019E4CB /* Sources */,
 				C1DDFA9C29A5895E0019E4CB /* Frameworks */,
 				C1DDFA9D29A5895E0019E4CB /* Resources */,
+				C19F116929AD38E00055AC28 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -139,8 +222,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1DDFAA529A5895E0019E4CB /* ContentView.swift in Sources */,
+				C1DDFAA529A5895E0019E4CB /* SummaryView.swift in Sources */,
+				C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */,
 				C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */,
+				C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */,
+				C19F116B29AD47830055AC28 /* SummaryViewModel.swift in Sources */,
+				C19F117129AD5A620055AC28 /* OSLog.swift in Sources */,
+				C19F117429AE583A0055AC28 /* FollowedAccount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +357,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CarePartner/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -307,6 +396,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CarePartner/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

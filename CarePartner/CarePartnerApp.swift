@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct CarePartnerApp: App {
+
+    let summaryViewModel = SummaryViewModel()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                SummaryView(viewModel: summaryViewModel)
+            }
         }
     }
 }
