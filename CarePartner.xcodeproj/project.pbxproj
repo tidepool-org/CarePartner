@@ -8,10 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */; };
-		C19F116529AD38E00055AC28 /* TidepoolKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C19F116329AD38E00055AC28 /* TidepoolKit.framework */; };
-		C19F116629AD38E00055AC28 /* TidepoolKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C19F116329AD38E00055AC28 /* TidepoolKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C19F116729AD38E00055AC28 /* TidepoolKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */; };
-		C19F116829AD38E00055AC28 /* TidepoolKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C1787D5929B0183400C9D551 /* TidepoolKit */; };
+		C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; };
+		C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C19F116B29AD47830055AC28 /* SummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116A29AD47830055AC28 /* SummaryViewModel.swift */; };
 		C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */; };
 		C19F117129AD5A620055AC28 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117029AD5A620055AC28 /* OSLog.swift */; };
@@ -29,8 +28,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C19F116629AD38E00055AC28 /* TidepoolKit.framework in Embed Frameworks */,
-				C19F116829AD38E00055AC28 /* TidepoolKitUI.framework in Embed Frameworks */,
+				C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -39,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelMock.swift; sourceTree = "<group>"; };
+		C1787D5B29B018C000C9D551 /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C19F116129AD38D40055AC28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C19F116329AD38E00055AC28 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,8 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C19F116529AD38E00055AC28 /* TidepoolKit.framework in Frameworks */,
-				C19F116729AD38E00055AC28 /* TidepoolKitUI.framework in Frameworks */,
+				C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */,
+				C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +77,7 @@
 		C19F116229AD38E00055AC28 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C1787D5B29B018C000C9D551 /* LoopKit.framework */,
 				C19F116329AD38E00055AC28 /* TidepoolKit.framework */,
 				C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */,
 			);
@@ -168,6 +168,9 @@
 			dependencies = (
 			);
 			name = CarePartner;
+			packageProductDependencies = (
+				C1787D5929B0183400C9D551 /* TidepoolKit */,
+			);
 			productName = CarePartner;
 			productReference = C1DDFA9F29A5895E0019E4CB /* CarePartner.app */;
 			productType = "com.apple.product-type.application";
@@ -196,6 +199,9 @@
 				Base,
 			);
 			mainGroup = C1DDFA9629A5895E0019E4CB;
+			packageReferences = (
+				C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */,
+			);
 			productRefGroup = C1DDFAA029A5895E0019E4CB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -444,6 +450,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tidepool-org/TidepoolKit.git";
+			requirement = {
+				branch = "ps2/CPA-86/convert-to-spm";
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C1787D5929B0183400C9D551 /* TidepoolKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */;
+			productName = TidepoolKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C1DDFA9729A5895E0019E4CB /* Project object */;
 }

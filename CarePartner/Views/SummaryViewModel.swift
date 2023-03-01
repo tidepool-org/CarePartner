@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import TidepoolKitUI
+import TidepoolKit
 
 class SummaryViewModel: ObservableObject {
 
