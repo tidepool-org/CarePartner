@@ -47,5 +47,12 @@ lane :release do
     destination: 'generic/platform=iOS'
   )
 
+  upload_to_testflight(
+    api_key: api_key,
+    skip_submission: false,
+    ipa: "output/CarePartner.ipa",
+    skip_waiting_for_build_processing: true,
+  )
+
   #pilot(api_key: api_key)
 end
