@@ -67,4 +67,5 @@ RemoteSettings.plist
 
 # OS
 .DS_Store
-
+buildlog
+output
