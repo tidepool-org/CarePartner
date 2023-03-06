@@ -12,7 +12,7 @@ jobs:
       - run: bundle install
       - run:
           name: Fastlane
-          command: bundle exec fastlane $FASTLANE_LANE --scheme "CarePartner" --device "iPhone 14" --clean
+          command: bundle exec fastlane --scheme "CarePartner" --device "iPhone 14" --clean $FASTLANE_LANE
       - store_artifacts:
           path: output
       - store_test_results:
