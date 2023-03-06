@@ -9,6 +9,8 @@ jobs:
       FASTLANE_LANE: test
     steps:
       - checkout
+      - run: git submodule sync --recursive
+      - run: git submodule update --recursive --init
       - run: bundle install
       - run:
           name: Fastlane

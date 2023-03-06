@@ -14,20 +14,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "43D8FDCA1C728FDF0073BE78"
-               BuildableName = "LoopKit.framework"
-               BlueprintName = "LoopKit"
-               ReferencedContainer = "container:LoopKit/LoopKit.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "C1DDFA9E29A5895E0019E4CB"
                BuildableName = "CarePartner.app"
                BlueprintName = "CarePartner"
