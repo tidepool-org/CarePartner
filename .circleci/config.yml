@@ -20,7 +20,7 @@ jobs:
       - store_test_results:
           path: output/scan
 
-  adhoc:
+  release:
     macos:
       xcode: 14.2.0
     environment:
@@ -36,12 +36,12 @@ jobs:
           path: output
 
 workflows:
-  build-test-adhoc:
+  build-test-release:
     jobs:
       - build-and-test
-      - adhoc:
+      - release:
           filters:
             branches:
-              only: development
+              only: main
           requires:
             - build-and-test
