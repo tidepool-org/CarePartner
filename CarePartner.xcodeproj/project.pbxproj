@@ -586,7 +586,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tidepool-org/TidepoolKit.git";
 			requirement = {
-				branch = "ps2/CPA-86/convert-to-spm";
+				branch = dev;
 				kind = branch;
 			};
 		};
