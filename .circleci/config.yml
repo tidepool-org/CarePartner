@@ -30,6 +30,7 @@ jobs:
       - run:
           name: Fastlane
           command: bundle exec fastlane $FASTLANE_LANE
+          no_output_timeout: 20m
 
 workflows:
   build-test-release:
