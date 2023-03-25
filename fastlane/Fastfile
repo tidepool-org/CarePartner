@@ -53,6 +53,8 @@ platform :ios do
       readonly: true
     )
 
+    increment_build_number(xcodeproj: "CarePartner.xcodeproj")
+
     build_ios_app(
       export_method: "app-store",
       scheme: "CarePartner",
