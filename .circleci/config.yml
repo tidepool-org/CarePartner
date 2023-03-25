@@ -21,7 +21,7 @@ jobs:
       xcode: 14.2.0
     environment:
       FL_OUTPUT_DIR: output
-      FASTLANE_LANE: adhoc
+      FASTLANE_LANE: release
     steps:
       - checkout
       - run: bundle install
