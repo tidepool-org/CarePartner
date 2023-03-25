@@ -32,45 +32,45 @@ platform :ios do
     match(type: "adhoc")
     gym(export_method: "ad-hoc")
   end
-end
 
-lane :sync_certs do
-  sync_code_signing(
-    type: "appstore",
-    app_identifier: "org.tidepool.carepartner",
-    git_url: "https://github.com/tidepool-org/match_certificates",
-    git_branch: "main",
-    api_key: api_key
-  )
-end
+  lane :sync_certs do
+    sync_code_signing(
+      type: "appstore",
+      app_identifier: "org.tidepool.carepartner",
+      git_url: "https://github.com/tidepool-org/match_certificates",
+      git_branch: "main",
+      api_key: api_key
+    )
+  end
 
-lane :release do
+  lane :release do
 
-  match(
-    type: "appstore",
-    git_url: "https://github.com/tidepool-org/match_certificates",
-    app_identifier: "org.tidepool.carepartner",
-    git_branch: "main",
-    readonly: true
-  )
+    match(
+      type: "appstore",
+      git_url: "https://github.com/tidepool-org/match_certificates",
+      app_identifier: "org.tidepool.carepartner",
+      git_branch: "main",
+      readonly: true
+    )
 
-  build_ios_app(
-    export_method: "app-store",
-    scheme: "CarePartner",
-    output_name: "CarePartner.ipa",
-    clean: true,
-    output_directory: "output",
-    configuration: "Release",
-    destination: 'generic/platform=iOS',
-    xcodebuild_formatter: ''
-  )
+    build_ios_app(
+      export_method: "app-store",
+      scheme: "CarePartner",
+      output_name: "CarePartner.ipa",
+      clean: true,
+      output_directory: "output",
+      configuration: "Release",
+      destination: 'generic/platform=iOS',
+      xcodebuild_formatter: ''
+    )
 
-  upload_to_testflight(
-    api_key: api_key,
-    skip_submission: false,
-    ipa: "output/CarePartner.ipa",
-    skip_waiting_for_build_processing: true,
-  )
+    upload_to_testflight(
+      api_key: api_key,
+      skip_submission: false,
+      ipa: "output/CarePartner.ipa",
+      skip_waiting_for_build_processing: true,
+    )
 
-  #pilot(api_key: api_key)
+    #pilot(api_key: api_key)
+  end
 end
