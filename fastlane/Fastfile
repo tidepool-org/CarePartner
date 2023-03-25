@@ -43,7 +43,7 @@ platform :ios do
     )
   end
 
-  lane :release do
+  lane :release do |options|
 
     match(
       type: "appstore",
