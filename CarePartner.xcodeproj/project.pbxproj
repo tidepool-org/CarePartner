@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C11D2B7629CF9FFE00A218BC /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */; };
 		C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */; };
 		C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C1787D5929B0183400C9D551 /* TidepoolKit */; };
 		C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; };
@@ -47,6 +48,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
 		C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelMock.swift; sourceTree = "<group>"; };
 		C1787D5B29B018C000C9D551 /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1787D6229B6719900C9D551 /* CarePartnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarePartnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +119,7 @@
 			children = (
 				C1DDFAA429A5895E0019E4CB /* SummaryView.swift */,
 				C19F116A29AD47830055AC28 /* SummaryViewModel.swift */,
+				C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */,
 				C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */,
 				C19F116B29AD47830055AC28 /* SummaryViewModel.swift in Sources */,
+				C11D2B7629CF9FFE00A218BC /* AccountSettingsView.swift in Sources */,
 				C19F117129AD5A620055AC28 /* OSLog.swift in Sources */,
 				C19F117429AE583A0055AC28 /* FollowedAccount.swift in Sources */,
 			);

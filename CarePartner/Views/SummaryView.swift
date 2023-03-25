@@ -12,6 +12,8 @@ struct SummaryView: View {
 
     @ObservedObject private var viewModel: SummaryViewModel
 
+    @State private var showingAccountSettings = false
+
     private let loginSignupViewModel: LoginSignupViewModel
 
     init(viewModel: SummaryViewModel) {
@@ -37,9 +39,14 @@ struct SummaryView: View {
         .navigationTitle("Following")
         .toolbar {
             Button(role: .none, action: {
-                print("Account tapped!")
+                showingAccountSettings = true
             }) {
                 Label("Remove", systemImage: "person.crop.circle")
+            }
+        }
+        .sheet(isPresented: $showingAccountSettings) {
+            AccountSettingsView(accountLogin: viewModel.accountLogin) {
+                viewModel.logout()
             }
         }
     }

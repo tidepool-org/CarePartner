@@ -15,6 +15,18 @@ class SummaryViewModel: ObservableObject {
 
     let tidepoolClient: TidepoolClient
 
+    var accountLogin: String {
+        return tidepoolClient.api.session?.email ?? "Unknown"
+    }
+
+    func logout() {
+        tidepoolClient.api.logout { error in
+            DispatchQueue.main.async {
+                self.showLogin = true
+            }
+        }
+    }
+
     init(tidepoolClient: TidepoolClient = TidepoolClient()) {
         self.tidepoolClient = tidepoolClient
         self.showLogin = !tidepoolClient.hasSession
