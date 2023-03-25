@@ -13,6 +13,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
+### sync_certs
+
+```sh
+[bundle exec] fastlane sync_certs
+```
+
+
+
 ### release
 
 ```sh
