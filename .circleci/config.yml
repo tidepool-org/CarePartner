@@ -1,0 +1,41 @@
+# .circleci/config.yml
+version: 2.1
+jobs:
+  build-and-test:
+    macos:
+      xcode: 14.2.0
+    environment:
+      FL_OUTPUT_DIR: output
+      FASTLANE_LANE: test
+    steps:
+      - checkout
+      - run: git submodule sync --recursive
+      - run: git submodule update --recursive --init
+      - run: bundle install
+      - run:
+          name: Fastlane
+          command: bundle exec fastlane scan --scheme "CarePartner" --device "iPhone 14" --clean 
+
+  release:
+    macos:
+      xcode: 14.2.0
+    environment:
+      FL_OUTPUT_DIR: output
+      FASTLANE_LANE: adhoc
+    steps:
+      - checkout
+      - run: bundle install
+      - run:
+          name: Fastlane
+          command: bundle exec fastlane $FASTLANE_LANE
+
+workflows:
+  build-test-release:
+    jobs:
+      - build-and-test
+      - release:
+          filters:
+            branches:
+              only: main
+          requires:
+            - build-and-test

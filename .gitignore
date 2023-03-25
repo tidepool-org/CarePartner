@@ -61,10 +61,12 @@ Carthage/
 
 fastlane/report.xml
 fastlane/screenshots
+fastlane/test_output
 
 # Sensitive details about remote backup
 RemoteSettings.plist
 
 # OS
 .DS_Store
-
+buildlog
+output

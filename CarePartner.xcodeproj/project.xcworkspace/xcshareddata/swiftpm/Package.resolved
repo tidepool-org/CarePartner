@@ -3,10 +3,10 @@
     {
       "identity" : "tidepoolkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tidepool-org/TidepoolKit",
+      "location" : "https://github.com/tidepool-org/TidepoolKit.git",
       "state" : {
-        "branch" : "ps2/CPA-86/convert-to-spm",
-        "revision" : "54a33101cfbfbd9cd0c71e5903d6eea00c043705"
+        "branch" : "dev",
+        "revision" : "d23a6d745647acbec845d958f73fb8058fa5b2a4"
       }
     }
   ],
