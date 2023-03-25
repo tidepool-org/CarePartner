@@ -61,7 +61,8 @@ lane :release do
     clean: true,
     output_directory: "output",
     configuration: "Release",
-    destination: 'generic/platform=iOS'
+    destination: 'generic/platform=iOS',
+    xcodebuild_formatter: ''
   )
 
   upload_to_testflight(
