@@ -1,9 +1,14 @@
 # fastlane/Fastfile
 default_platform :ios
 
-FASTLANE_KEY_ID = ENV["FASTLANE_KEY_ID"]
-FASTLANE_ISSUER_ID = ENV["FASTLANE_ISSUER_ID"]
-FASTLANE_KEY = ENV["FASTLANE_KEY"]
+# In CircleCI, we encode the app store connect api key as base64
+# because CircleCI does not handle multi-line environment variabiles
+# https://support.circleci.com/hc/en-us/articles/360046094254-Using-Multiple-Line-newline-Environment-Variables-in-CircleCI
+# cat AuthKey_77H29HSX8R.p8| base64
+
+APP_STORE_CONNECT_ISSUER = ENV["APP_STORE_CONNECT_ISSUER"]
+APP_STORE_CONNECT_KEY_ID = ENV["APP_STORE_CONNECT_KEY_ID"]
+APP_STORE_CONNECT_KEY = Base64.decode64(ENV["APP_STORE_CONNECT_KEY_ENCODED"])
 
 platform :ios do
   before_all do
@@ -24,11 +29,10 @@ end
 
 lane :release do
   api_key = app_store_connect_api_key(
-    key_id: "#{FASTLANE_KEY_ID}",
-    issuer_id: "#{FASTLANE_ISSUER_ID}",
-    key_content: "#{FASTLANE_KEY}"
+    key_id: "#{APP_STORE_CONNECT_KEY_ID}",
+    issuer_id: "#{APP_STORE_CONNECT_ISSUER}",
+    key_content: "#{APP_STORE_CONNECT_KEY}"
   )
-
 
   match(
     type: "appstore",
