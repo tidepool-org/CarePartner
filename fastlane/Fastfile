@@ -39,6 +39,7 @@ lane :sync_certs do
     type: "appstore",
     app_identifier: "org.tidepool.carepartner",
     git_url: "https://github.com/tidepool-org/match_certificates",
+    git_branch: "main",
     api_key: api_key
   )
 end
