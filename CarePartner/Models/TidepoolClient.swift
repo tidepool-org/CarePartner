@@ -29,6 +29,10 @@ class TidepoolClient {
         return api.session != nil
     }
 
+    var accountLogin: String? {
+        return api.session?.email
+    }
+
     let api: TAPI
 
     init() {
@@ -43,6 +47,15 @@ class TidepoolClient {
         }
     }
 
+    func logout() async {
+        await withCheckedContinuation({ continuation in
+            api.logout(completion: { _ in
+                DispatchQueue.main.async {
+                    continuation.resume()
+                }
+            })
+        })
+    }
 }
 
 extension TidepoolClient: TLogging {

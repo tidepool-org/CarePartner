@@ -16,23 +16,39 @@ class SummaryViewModel: ObservableObject {
     let tidepoolClient: TidepoolClient
 
     var accountLogin: String {
-        return tidepoolClient.api.session?.email ?? "Unknown"
+        return tidepoolClient.accountLogin ?? "Unknown"
     }
 
-    func logout() {
-        tidepoolClient.api.logout { error in
-            DispatchQueue.main.async {
-                self.showLogin = true
-            }
-        }
+    func logout() async {
+        await tidepoolClient.logout()
+        showLogin = true
     }
 
     init(tidepoolClient: TidepoolClient = TidepoolClient()) {
         self.tidepoolClient = tidepoolClient
         self.showLogin = !tidepoolClient.hasSession
         accounts = []
-    }
 
+        tidepoolClient.api.getUsers { result in
+            switch result {
+            case .failure(let error):
+                print("Could not get users: \(error)")
+            case.success(let profiles):
+                DispatchQueue.main.async {
+                    self.accounts = profiles.compactMap { $0.followedAccount }
+                }
+            }
+        }
+    }
+}
+
+extension TTrusteeUser {
+    var followedAccount: FollowedAccount? {
+        guard let profile = profile, let fullName = profile.fullName else {
+            return nil
+        }
+        return FollowedAccount(name: fullName, currentBG: nil, lastRefresh: nil, basalRate: nil)
+    }
 }
 
 
