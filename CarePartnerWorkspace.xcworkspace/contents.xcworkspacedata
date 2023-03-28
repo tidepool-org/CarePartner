@@ -20,7 +20,4 @@
    <FileRef
       location = "group:LoopKit/LoopKit.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:../TidepoolKit">
-   </FileRef>
 </Workspace>

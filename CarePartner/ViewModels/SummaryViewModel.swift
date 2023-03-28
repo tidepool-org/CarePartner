@@ -29,6 +29,10 @@ class SummaryViewModel: ObservableObject {
         self.showLogin = !tidepoolClient.hasSession
         accounts = []
 
+        refreshFollowees()
+    }
+
+    func refreshFollowees() {
         tidepoolClient.api.getUsers { result in
             switch result {
             case .failure(let error):
@@ -57,6 +61,7 @@ extension SummaryViewModel: TLoginSignupDelegate {
         DispatchQueue.main.async {
             self.showLogin = false
             completion(nil)
+            self.refreshFollowees()
         }
     }
 
