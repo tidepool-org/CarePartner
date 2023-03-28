@@ -24,12 +24,13 @@ struct SummaryView: View {
 
     var body: some View {
         // TODO: list of followed accounts with their summary views
-        List {
+        ScrollView {
             if viewModel.accounts.isEmpty {
                 Text("No accounts have shared data with you yet.")
+                    .padding(.horizontal)
             } else {
                 ForEach(viewModel.accounts, id: \.name) { account in
-                    Text(account.name)
+                    FolloweeSummaryView(account: account)
                 }
             }
         }
@@ -46,7 +47,9 @@ struct SummaryView: View {
         }
         .sheet(isPresented: $showingAccountSettings) {
             AccountSettingsView(accountLogin: viewModel.accountLogin) {
-                viewModel.logout()
+                Task {
+                    await viewModel.logout()
+                }
             }
         }
     }
@@ -58,7 +61,7 @@ struct ContentView_Previews: PreviewProvider {
             SummaryView(viewModel: SummaryViewModelMock(
                 tidepoolClient: TidepoolClient(),
                 accounts: [
-                    FollowedAccount(name: "Sally")
+                    FollowedAccount.mock
                 ]
             ))
         }

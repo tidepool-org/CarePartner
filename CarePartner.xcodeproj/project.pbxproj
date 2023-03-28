@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		C11D2B7629CF9FFE00A218BC /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */; };
+		C11D2B7A29D2531300A218BC /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7929D2531300A218BC /* HKUnit.swift */; };
+		C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7B29D2593300A218BC /* LoopCircleView.swift */; };
+		C11D2B7E29D2596800A218BC /* LoopCompletionFreshness.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7D29D2596800A218BC /* LoopCompletionFreshness.swift */; };
+		C11D2B8029D2598A00A218BC /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7F29D2598A00A218BC /* TimeInterval.swift */; };
+		C11D2B9C29D2746800A218BC /* FolloweeSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B9B29D2746800A218BC /* FolloweeSummaryView.swift */; };
 		C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */; };
 		C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C1787D5929B0183400C9D551 /* TidepoolKit */; };
 		C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; };
@@ -49,6 +54,11 @@
 
 /* Begin PBXFileReference section */
 		C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
+		C11D2B7929D2531300A218BC /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
+		C11D2B7B29D2593300A218BC /* LoopCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCircleView.swift; sourceTree = "<group>"; };
+		C11D2B7D29D2596800A218BC /* LoopCompletionFreshness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCompletionFreshness.swift; sourceTree = "<group>"; };
+		C11D2B7F29D2598A00A218BC /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		C11D2B9B29D2746800A218BC /* FolloweeSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeSummaryView.swift; sourceTree = "<group>"; };
 		C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelMock.swift; sourceTree = "<group>"; };
 		C1787D5B29B018C000C9D551 /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1787D6229B6719900C9D551 /* CarePartnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarePartnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +98,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C11D2B9D29D274EA00A218BC /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				C19F116A29AD47830055AC28 /* SummaryViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		C16D40B129AE6536009504BB /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,9 +135,10 @@
 		C19F116C29AD4AD60055AC28 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C11D2B9B29D2746800A218BC /* FolloweeSummaryView.swift */,
 				C1DDFAA429A5895E0019E4CB /* SummaryView.swift */,
-				C19F116A29AD47830055AC28 /* SummaryViewModel.swift */,
 				C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */,
+				C11D2B7B29D2593300A218BC /* LoopCircleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -128,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				C19F117029AD5A620055AC28 /* OSLog.swift */,
+				C11D2B7929D2531300A218BC /* HKUnit.swift */,
+				C11D2B7F29D2598A00A218BC /* TimeInterval.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -135,7 +156,9 @@
 		C19F117229AE582E0055AC28 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */,
 				C19F117329AE583A0055AC28 /* FollowedAccount.swift */,
+				C11D2B7D29D2596800A218BC /* LoopCompletionFreshness.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -166,9 +189,9 @@
 				C19F117229AE582E0055AC28 /* Models */,
 				C19F116F29AD5A570055AC28 /* Extensions */,
 				C19F116C29AD4AD60055AC28 /* Views */,
+				C11D2B9D29D274EA00A218BC /* ViewModels */,
 				C19F116129AD38D40055AC28 /* Info.plist */,
 				C1DDFAA229A5895E0019E4CB /* CarePartnerApp.swift */,
-				C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */,
 				C1DDFAA629A5895F0019E4CB /* Assets.xcassets */,
 				C1DDFAA829A5895F0019E4CB /* CarePartner.entitlements */,
 				C1DDFAA929A5895F0019E4CB /* Preview Content */,
@@ -235,6 +258,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
+				ORGANIZATIONNAME = "Tidepool Project";
 				TargetAttributes = {
 					C1787D6129B6719900C9D551 = {
 						CreatedOnToolsVersion = 14.2;
@@ -299,9 +323,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C11D2B7E29D2596800A218BC /* LoopCompletionFreshness.swift in Sources */,
+				C11D2B8029D2598A00A218BC /* TimeInterval.swift in Sources */,
 				C1DDFAA529A5895E0019E4CB /* SummaryView.swift in Sources */,
 				C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */,
+				C11D2B7A29D2531300A218BC /* HKUnit.swift in Sources */,
 				C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */,
+				C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */,
+				C11D2B9C29D2746800A218BC /* FolloweeSummaryView.swift in Sources */,
 				C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */,
 				C19F116B29AD47830055AC28 /* SummaryViewModel.swift in Sources */,
 				C11D2B7629CF9FFE00A218BC /* AccountSettingsView.swift in Sources */,
