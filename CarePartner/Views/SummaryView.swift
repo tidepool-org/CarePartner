@@ -36,6 +36,8 @@ struct SummaryView: View {
         }
         .sheet(isPresented: $viewModel.showLogin) {
             LoginSignupView(viewModel: loginSignupViewModel)
+                .interactiveDismissDisabled()
+
         }
         .navigationTitle("Following")
         .toolbar {

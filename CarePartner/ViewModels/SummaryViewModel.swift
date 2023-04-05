@@ -8,6 +8,7 @@
 import Foundation
 import TidepoolKit
 
+@MainActor
 class SummaryViewModel: ObservableObject {
 
     @Published var showLogin: Bool

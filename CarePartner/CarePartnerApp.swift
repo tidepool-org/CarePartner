@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+
 @main
+@MainActor
 struct CarePartnerApp: App {
 
     let summaryViewModel = SummaryViewModel()
