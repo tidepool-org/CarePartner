@@ -14,12 +14,8 @@ struct SummaryView: View {
 
     @State private var showingAccountSettings = false
 
-    private let loginSignupViewModel: LoginSignupViewModel
-
     init(viewModel: SummaryViewModel) {
         self.viewModel = viewModel
-        loginSignupViewModel = LoginSignupViewModel(api: viewModel.tidepoolClient.api)
-        loginSignupViewModel.loginSignupDelegate = viewModel
     }
 
     var body: some View {
@@ -34,8 +30,8 @@ struct SummaryView: View {
                 }
             }
         }
-        .sheet(isPresented: $viewModel.showLogin) {
-            LoginSignupView(viewModel: loginSignupViewModel)
+        .sheet(isPresented: $showingAccountSettings) {
+            AccountSettingsView(client: viewModel.tidepoolClient)
         }
         .navigationTitle("Following")
         .toolbar {
@@ -45,11 +41,11 @@ struct SummaryView: View {
                 Label("Remove", systemImage: "person.crop.circle")
             }
         }
-        .sheet(isPresented: $showingAccountSettings) {
-            AccountSettingsView(accountLogin: viewModel.accountLogin) {
-                Task {
-                    await viewModel.logout()
-                }
+        .task {
+            if viewModel.tidepoolClient.hasSession {
+                await viewModel.refreshFollowees()
+            } else {
+                self.showingAccountSettings = true
             }
         }
     }
@@ -59,7 +55,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             SummaryView(viewModel: SummaryViewModelMock(
-                tidepoolClient: TidepoolClient(),
                 accounts: [
                     FollowedAccount.mock
                 ]
@@ -67,7 +62,6 @@ struct ContentView_Previews: PreviewProvider {
         }
         NavigationView {
             SummaryView(viewModel: SummaryViewModelMock(
-                tidepoolClient: TidepoolClient(),
                 accounts: []
             ))
         }

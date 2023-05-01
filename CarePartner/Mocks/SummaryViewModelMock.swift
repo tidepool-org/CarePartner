@@ -8,9 +8,8 @@
 import Foundation
 
 class SummaryViewModelMock: SummaryViewModel {
-    init(tidepoolClient: TidepoolClient = TidepoolClient(), accounts: [FollowedAccount]) {
-        super.init(tidepoolClient: tidepoolClient)
-        self.showLogin = false
+    init(accounts: [FollowedAccount]) {
+        super.init()
         self.accounts = accounts
     }
 }

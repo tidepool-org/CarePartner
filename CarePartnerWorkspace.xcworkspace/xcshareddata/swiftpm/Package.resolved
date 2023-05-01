@@ -1,21 +1,21 @@
 {
   "pins" : [
     {
+      "identity" : "appauth-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/openid/AppAuth-iOS.git",
+      "state" : {
+        "revision" : "71cde449f13d453227e687458144bde372d30fc7",
+        "version" : "1.6.2"
+      }
+    },
+    {
       "identity" : "swiftcharts",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ivanschuetz/SwiftCharts",
       "state" : {
         "branch" : "master",
         "revision" : "c354c1945bb35a1f01b665b22474f6db28cba4a2"
-      }
-    },
-    {
-      "identity" : "tidepoolkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tidepool-org/TidepoolKit.git",
-      "state" : {
-        "branch" : "dev",
-        "revision" : "04d2125e0ebc81f58c45de44ebaa592c342129f3"
       }
     }
   ],
