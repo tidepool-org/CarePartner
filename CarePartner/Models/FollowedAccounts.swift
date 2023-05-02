@@ -22,6 +22,7 @@ class FollowedAccounts: ObservableObject {
         tidepoolClient = client
         accounts = []
 
+        // When account changes, refresh list
         cancellable = client.$session.sink { [weak self] _ in
             Task {
                 await self?.refreshFollowees()
@@ -31,10 +32,13 @@ class FollowedAccounts: ObservableObject {
 
     public func refreshFollowees() async {
         do {
-            let profiles = try await tidepoolClient.api.getUsers()
-            self.accounts = profiles.compactMap { $0.followedAccount }
+            if tidepoolClient.hasSession {
+                let profiles = try await tidepoolClient.api.getUsers()
+                self.accounts = profiles.compactMap { $0.followedAccount }
+            } else {
+                self.accounts = []
+            }
         } catch {
-            self.accounts = []
             print("Could not get users: \(error)")
         }
     }

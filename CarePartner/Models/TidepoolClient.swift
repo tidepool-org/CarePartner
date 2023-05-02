@@ -31,11 +31,11 @@ class TidepoolClient: ObservableObject {
 
     let api: TAPI
 
-    init() {
-        self.api = TAPI(clientId: "tidepool-carepartner-ios", redirectURL: URL(string: "org.tidepool.tidepoolkit.auth://redirect")!)
-        self.session = try? sessionStorage.getSession(for: sessionStorageServiceKey)
+    init(session: TSession? = nil) {
+        let initialSession = session ?? (try? sessionStorage.getSession(for: sessionStorageServiceKey))
+        self.session = initialSession
+        self.api = TAPI(clientId: "tidepool-carepartner-ios", redirectURL: URL(string: "org.tidepool.tidepoolkit.auth://redirect")!, session: initialSession)
         Task {
-            await api.setSession(session)
             await api.setLogging(self)
             await api.addObserver(self)
         }

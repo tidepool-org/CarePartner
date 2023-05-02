@@ -13,13 +13,13 @@ public struct AccountSettingsView: View {
     @EnvironmentObject var sceneDelegate: SceneDelegate
 
     @State private var isEnvironmentActionSheetPresented = false
-    @State private var showingDeletionConfirmation = false
+    @State private var showingLogoutConfirmation = false
 
     @State private var error: Error?
     @State private var isLoggingIn = false
     @State private var selectedEnvironment: TEnvironment
     @State private var environments: [TEnvironment] = [TEnvironment.productionEnvironment]
-    @State private var environmentFetchError: Error?
+    @State private var profile: TProfile?
 
     @ObservedObject private var client: TidepoolClient
 
@@ -31,60 +31,62 @@ public struct AccountSettingsView: View {
     }
 
     public var body: some View {
-        ZStack {
-            Color(.secondarySystemBackground)
-                .edgesIgnoringSafeArea(.all)
-            GeometryReader { geometry in
-                ScrollView {
-                    VStack(spacing: 20) {
-                        HStack() {
+        NavigationView {
+            VStack(alignment: .leading, spacing: 20) {
+                logo
+                    .padding(.horizontal, 30)
+                    .padding(.bottom)
+                VStack(alignment: .leading, spacing: 0) {
+                    if let profile, let fullName = profile.fullName {
+                        HStack {
+                            Text(fullName)
+                                .font(.largeTitle)
                             Spacer()
-                            closeButton
-                                .padding()
-                        }
-                        Spacer()
-                        logo
-                            .padding(.horizontal, 30)
-                            .padding(.bottom)
-                        if selectedEnvironment != TEnvironment.productionEnvironment {
-                            VStack {
-                                Text(NSLocalizedString("Environment", comment: "Label title for displaying selected Tidepool server environment."))
-                                    .bold()
-                                Text(selectedEnvironment.description)
-                            }
-                        }
-                        if let username = client.session?.username {
-                            VStack {
-                                Text(NSLocalizedString("Logged in as", comment: "LoginViewModel description text when logged in"))
-                                    .bold()
-                                Text(username)
-                            }
-                        } else {
-                            Text(NSLocalizedString("You are not logged in.", comment: "LoginViewModel description text when not logged in"))
-                                .padding()
-                        }
-
-                        if let error {
-                            VStack(alignment: .leading) {
-                                Text(error.localizedDescription)
-                                    .font(.callout)
-                                    .foregroundColor(.red)
-                            }
-                            .padding()
-                        }
-                        Spacer()
-                        if client.hasSession {
-                            logoutButton
-                        } else {
-                            loginButton
+                            Image(systemName: "person.crop.circle")
+                                .font(Font.system(.largeTitle))
+                                .foregroundColor(.accentColor)
                         }
                     }
+                    if let session = client.session {
+                        Text(session.username)
+                    }
+                }
+                if !client.hasSession {
+                    Text(NSLocalizedString("You are not logged in.", comment: "LoginViewModel description text when not logged in"))
+                        .padding()
+                }
+
+                Spacer()
+                if selectedEnvironment != TEnvironment.productionEnvironment {
+                    VStack(alignment: .leading) {
+                        Text(NSLocalizedString("Environment", comment: "Label title for displaying selected Tidepool server environment."))
+                            .bold()
+                        Text(selectedEnvironment.description)
+                    }
+                }
+
+                if let error {
+                    VStack(alignment: .leading) {
+                        Text(error.localizedDescription)
+                            .font(.callout)
+                            .foregroundColor(.red)
+                    }
                     .padding()
-                    .frame(minHeight: geometry.size.height)
+                }
+                if client.hasSession {
+                    logoutButton
+                } else {
+                    loginButton
                 }
             }
+            .padding()
+            .navigationTitle(NSLocalizedString("My Account", comment: "title for AccountSettingsView"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                closeButton
+            }
         }
-        .alert(NSLocalizedString("Are you sure you want to logout?", comment: "Confirmation message for logging out"), isPresented: $showingDeletionConfirmation)
+        .alert(NSLocalizedString("Are you sure you want to logout?", comment: "Confirmation message for logging out"), isPresented: $showingLogoutConfirmation)
         {
             Button(NSLocalizedString("Logout", comment: "Button title to logout"), role: .destructive) {
                 Task {
@@ -93,24 +95,34 @@ public struct AccountSettingsView: View {
             }
         }
         .task {
-            do {
-                environments = try await TEnvironment.fetchEnvironments()
-            } catch {
-
+            environments = (try? await TEnvironment.fetchEnvironments()) ?? []
+            await refreshProfile()
+        }
+        .onChange(of: client.session) { newValue in
+            Task {
+                await refreshProfile()
             }
         }
+    }
 
+    private func refreshProfile() async {
+        if client.hasSession {
+            do {
+                profile = try await client.api.getProfile()
+            } catch {
+                self.error = error
+            }
+        } else {
+            profile = nil
+        }
     }
 
     private var logo: some View {
         VStack {
-            Text("Tidepool ")
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-            Image(decorative: "Tidepool Logo")
+            Image(decorative: "Tidepool Logo Full")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 150, height: 150)
+                .scaledToFit()
                 .onLongPressGesture(minimumDuration: 2) {
                     if !client.hasSession {
                         UINotificationFeedbackGenerator().notificationOccurred(.warning)
@@ -153,7 +165,7 @@ public struct AccountSettingsView: View {
 
     private var logoutButton: some View {
         Button(action: {
-            showingDeletionConfirmation = true
+            showingLogoutConfirmation = true
         }) {
             Text(NSLocalizedString("Logout", comment: "Logout button title"))
         }
@@ -184,18 +196,16 @@ public struct AccountSettingsView: View {
         Button(action: {
             dismiss()
         }) {
-            Text(closeButtonTitle)
+            Text(NSLocalizedString("Done", comment: "Done navigation button title on AccountSettingsView"))
                 .fontWeight(.regular)
         }
     }
-
-    private var closeButtonTitle: String { NSLocalizedString("Close", comment: "Close navigation button title of an onboarding section page view") }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     @MainActor
     static var previews: some View {
-        AccountSettingsView(client: TidepoolClient())
+        AccountSettingsView(client: TidepoolClient.loggedInMock)
     }
 }
 

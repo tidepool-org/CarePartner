@@ -40,13 +40,11 @@ struct FollowedAccountsView: View {
             Button(role: .none, action: {
                 showingAccountSettings = true
             }) {
-                Label("Remove", systemImage: "person.crop.circle")
+                Label("Account", systemImage: "person.crop.circle")
             }
         }
         .task {
-            if client.hasSession {
-                await followedAccounts.refreshFollowees()
-            } else {
+            if !client.hasSession {
                 self.showingAccountSettings = true
             }
         }
