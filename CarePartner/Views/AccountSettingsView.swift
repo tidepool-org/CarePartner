@@ -41,9 +41,11 @@ public struct AccountSettingsView: View {
                         HStack {
                             Text(fullName)
                                 .font(.largeTitle)
+                                .fontWeight(.semibold)
                             Spacer()
                             Image(systemName: "person.crop.circle")
                                 .font(Font.system(.largeTitle))
+                                .fontWeight(.thin)
                                 .foregroundColor(.accentColor)
                         }
                     }
