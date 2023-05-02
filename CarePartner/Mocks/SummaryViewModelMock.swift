@@ -7,9 +7,9 @@
 
 import Foundation
 
-class SummaryViewModelMock: SummaryViewModel {
-    init(accounts: [FollowedAccount]) {
-        super.init()
+class FollowedAccountsMock: FollowedAccounts {
+    init(accounts: [AccountData]) {
+        super.init(client: TidepoolClient())
         self.accounts = accounts
     }
 }

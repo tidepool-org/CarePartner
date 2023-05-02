@@ -10,7 +10,7 @@ import TidepoolKit
 
 public struct AccountSettingsView: View {
     @Environment(\.dismiss) private var dismiss
-
+    @EnvironmentObject var sceneDelegate: SceneDelegate
 
     @State private var isEnvironmentActionSheetPresented = false
     @State private var showingDeletionConfirmation = false
@@ -74,7 +74,7 @@ public struct AccountSettingsView: View {
                         }
                         Spacer()
                         if client.hasSession {
-                            deleteServiceButton
+                            logoutButton
                         } else {
                             loginButton
                         }
@@ -151,11 +151,11 @@ public struct AccountSettingsView: View {
     }
 
 
-    private var deleteServiceButton: some View {
+    private var logoutButton: some View {
         Button(action: {
             showingDeletionConfirmation = true
         }) {
-            Text(NSLocalizedString("Delete Service", comment: "Delete Tidepool service button title"))
+            Text(NSLocalizedString("Logout", comment: "Logout button title"))
         }
         .buttonStyle(ActionButtonStyle(.secondary))
         .disabled(isLoggingIn)
@@ -171,18 +171,13 @@ public struct AccountSettingsView: View {
 
         Task {
             do {
-                try await login()
+                try await client.login(environment: selectedEnvironment, sceneDelegate: sceneDelegate)
                 isLoggingIn = false
             } catch {
                 self.error = error
                 isLoggingIn = false
             }
         }
-    }
-
-    private func login() async throws {
-        // use selectedEnvironment
-
     }
 
     private var closeButton: some View {

@@ -7,16 +7,26 @@
 
 import Foundation
 import TidepoolKit
+import Combine
 
 @MainActor
-class SummaryViewModel: ObservableObject {
+class FollowedAccounts: ObservableObject {
 
-    @Published var accounts: [FollowedAccount]
+    @Published var accounts: [AccountData]
 
-    let tidepoolClient = TidepoolClient()
+    private let tidepoolClient: TidepoolClient
 
-    init() {
+    var cancellable : AnyCancellable?
+
+    init(client: TidepoolClient) {
+        tidepoolClient = client
         accounts = []
+
+        cancellable = client.$session.sink { [weak self] _ in
+            Task {
+                await self?.refreshFollowees()
+            }
+        }
     }
 
     public func refreshFollowees() async {
@@ -24,16 +34,17 @@ class SummaryViewModel: ObservableObject {
             let profiles = try await tidepoolClient.api.getUsers()
             self.accounts = profiles.compactMap { $0.followedAccount }
         } catch {
+            self.accounts = []
             print("Could not get users: \(error)")
         }
     }
 }
 
 extension TTrusteeUser {
-    var followedAccount: FollowedAccount? {
+    var followedAccount: AccountData? {
         guard let profile = profile, let fullName = profile.fullName else {
             return nil
         }
-        return FollowedAccount(name: fullName, currentBG: nil, lastRefresh: nil, basalRate: nil)
+        return AccountData(name: fullName, currentBG: nil, lastRefresh: nil, basalRate: nil)
     }
 }

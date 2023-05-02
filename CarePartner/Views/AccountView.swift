@@ -1,5 +1,5 @@
 //
-//  FolloweeSummaryView.swift
+//  AccountView.swift
 //  CarePartner
 //
 //  Created by Pete Schwamb on 3/27/23.
@@ -8,16 +8,16 @@
 
 import SwiftUI
 
-struct FolloweeSummaryView: View {
+struct AccountView: View {
 
-    var account: FollowedAccount
+    var accountData: AccountData
 
     var body: some View {
         VStack {
             HStack {
                 HStack {
                     Image(systemName: "person.fill")
-                    Text(account.name)
+                    Text(accountData.name)
                         .font(.headline)
                 }
                 Spacer()
@@ -64,7 +64,7 @@ struct FolloweeSummaryView: View {
 struct FolloweeSummaryView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollView {
-            FolloweeSummaryView(account: FollowedAccount.mock)
+            AccountView(accountData: AccountData.mock)
         }
     }
 }

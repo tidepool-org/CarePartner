@@ -9,6 +9,7 @@ import Foundation
 import TidepoolKit
 import LoopKit
 import os.log
+import AuthenticationServices
 
 
 @MainActor
@@ -20,6 +21,8 @@ class TidepoolClient: ObservableObject {
 
     private let sessionStorageServiceKey = "Tidepool Care Partner"
 
+    private var authenticationSession: ASWebAuthenticationSession?
+
     @Published var session: TSession?
 
     var hasSession: Bool {
@@ -29,13 +32,26 @@ class TidepoolClient: ObservableObject {
     let api: TAPI
 
     init() {
-        // TODO: eventually tidepool-carepartner-ios
-        self.api = TAPI(clientId: "tidepool-loop", redirectURL: URL(string: "org.tidepool.TidepoolKit://redirect")!)
+        self.api = TAPI(clientId: "tidepool-carepartner-ios", redirectURL: URL(string: "org.tidepool.tidepoolkit.auth://redirect")!)
         self.session = try? sessionStorage.getSession(for: sessionStorageServiceKey)
         Task {
             await api.setSession(session)
             await api.setLogging(self)
             await api.addObserver(self)
+        }
+    }
+
+    func login(environment: TEnvironment, sceneDelegate: SceneDelegate) async throws {
+        let authenticator = OAuth2Authenticator(api: api, environment: environment, contextProviding: sceneDelegate)
+
+        do {
+            try await authenticator.login()
+        } catch {
+            if case ASWebAuthenticationSessionError.canceledLogin = error {
+                // Do nothing on cancel
+            } else {
+                throw error
+            }
         }
     }
 
@@ -65,6 +81,7 @@ extension TidepoolClient: TLogging {
 extension TidepoolClient: TAPIObserver {
     public func apiDidUpdateSession(_ session: TSession?) {
         do {
+            self.session = session
             try sessionStorage.setSession(session, for: sessionStorageServiceKey)
         } catch {
             log.error("Unable to store Tidepool Client session: %{public}@", error.localizedDescription)

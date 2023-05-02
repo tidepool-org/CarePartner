@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  FollowedAccountsView.swift
 //  CarePartner
 //
 //  Created by Pete Schwamb on 2/21/23.
@@ -8,30 +8,32 @@
 import SwiftUI
 import TidepoolKit
 
-struct SummaryView: View {
+struct FollowedAccountsView: View {
 
-    @ObservedObject private var viewModel: SummaryViewModel
+    @ObservedObject private var followedAccounts: FollowedAccounts
+    @ObservedObject private var client: TidepoolClient
 
     @State private var showingAccountSettings = false
 
-    init(viewModel: SummaryViewModel) {
-        self.viewModel = viewModel
+    init(followedAccounts: FollowedAccounts, client: TidepoolClient) {
+        self.followedAccounts = followedAccounts
+        self.client = client
     }
 
     var body: some View {
         // TODO: list of followed accounts with their summary views
         ScrollView {
-            if viewModel.accounts.isEmpty {
+            if followedAccounts.accounts.isEmpty {
                 Text("No accounts have shared data with you yet.")
                     .padding(.horizontal)
             } else {
-                ForEach(viewModel.accounts, id: \.name) { account in
-                    FolloweeSummaryView(account: account)
+                ForEach(followedAccounts.accounts, id: \.name) { account in
+                    AccountView(accountData: account)
                 }
             }
         }
         .sheet(isPresented: $showingAccountSettings) {
-            AccountSettingsView(client: viewModel.tidepoolClient)
+            AccountSettingsView(client: client)
         }
         .navigationTitle("Following")
         .toolbar {
@@ -42,8 +44,8 @@ struct SummaryView: View {
             }
         }
         .task {
-            if viewModel.tidepoolClient.hasSession {
-                await viewModel.refreshFollowees()
+            if client.hasSession {
+                await followedAccounts.refreshFollowees()
             } else {
                 self.showingAccountSettings = true
             }
@@ -54,16 +56,16 @@ struct SummaryView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SummaryView(viewModel: SummaryViewModelMock(
+            FollowedAccountsView(followedAccounts: FollowedAccountsMock(
                 accounts: [
-                    FollowedAccount.mock
+                    AccountData.mock
                 ]
-            ))
+            ), client: TidepoolClient())
         }
         NavigationView {
-            SummaryView(viewModel: SummaryViewModelMock(
+            FollowedAccountsView(followedAccounts: FollowedAccountsMock(
                 accounts: []
-            ))
+            ), client: TidepoolClient())
         }
     }
 }
