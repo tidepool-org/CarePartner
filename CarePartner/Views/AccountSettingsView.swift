@@ -203,7 +203,6 @@ public struct AccountSettingsView: View {
 }
 
 struct SettingsView_Previews: PreviewProvider {
-    @MainActor
     static var previews: some View {
         AccountSettingsView(client: TidepoolClient.loggedInMock)
     }

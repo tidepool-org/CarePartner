@@ -49,6 +49,6 @@ extension TTrusteeUser {
         guard let profile = profile, let fullName = profile.fullName else {
             return nil
         }
-        return AccountData(name: fullName, currentBG: nil, lastRefresh: nil, basalRate: nil)
+        return AccountData(name: fullName, userid: userid, currentBG: nil, lastRefresh: nil, basalRate: nil)
     }
 }

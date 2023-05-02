@@ -27,7 +27,7 @@ struct FollowedAccountsView: View {
                 Text("No accounts have shared data with you yet.")
                     .padding(.horizontal)
             } else {
-                ForEach(followedAccounts.accounts, id: \.name) { account in
+                ForEach(followedAccounts.accounts, id: \.userid) { account in
                     AccountView(accountData: account)
                 }
             }
