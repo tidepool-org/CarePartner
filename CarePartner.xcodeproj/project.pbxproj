@@ -630,7 +630,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tidepool-org/TidepoolKit.git";
 			requirement = {
-				branch = "ps2/LOOP-887/keycloak-updates";
+				branch = dev;
 				kind = branch;
 			};
 		};

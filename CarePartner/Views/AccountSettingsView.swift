@@ -34,7 +34,6 @@ public struct AccountSettingsView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
                 logo
-                    .padding(.horizontal, 30)
                     .padding(.bottom)
                 VStack(alignment: .leading, spacing: 0) {
                     if let profile, let fullName = profile.fullName {
