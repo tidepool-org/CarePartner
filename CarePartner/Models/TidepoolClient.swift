@@ -9,52 +9,54 @@ import Foundation
 import TidepoolKit
 import LoopKit
 import os.log
+import AuthenticationServices
 
 
-class TidepoolClient {
+@MainActor
+class TidepoolClient: ObservableObject {
 
     private let log = OSLog(category: "TidepoolClient")
 
     public var sessionStorage: SessionStorage = KeychainManager()
 
-    private let sessionStorageServiceKey = "Tidepool"
+    private let sessionStorageServiceKey = "Tidepool Care Partner"
 
-    private var dataSetId: String? {
-        didSet {
-            // TODO: Store state
-        }
-    }
+    private var authenticationSession: ASWebAuthenticationSession?
+
+    @Published var session: TSession?
 
     var hasSession: Bool {
-        return api.session != nil
-    }
-
-    var accountLogin: String? {
-        return api.session?.email
+        return session != nil
     }
 
     let api: TAPI
 
-    init() {
-        self.api = TAPI(automaticallyFetchEnvironments: true)
-        api.addObserver(self)
-        api.logging = self
+    init(session: TSession? = nil) {
+        let initialSession = session ?? (try? sessionStorage.getSession(for: sessionStorageServiceKey))
+        self.session = initialSession
+        self.api = TAPI(clientId: "tidepool-carepartner-ios", redirectURL: URL(string: "org.tidepool.tidepoolkit.auth://redirect")!, session: initialSession)
+        Task {
+            await api.setLogging(self)
+            await api.addObserver(self)
+        }
+    }
+
+    func login(environment: TEnvironment, sceneDelegate: SceneDelegate) async throws {
+        let authenticator = OAuth2Authenticator(api: api, environment: environment, contextProviding: sceneDelegate)
 
         do {
-            api.session = try sessionStorage.getSession(for: sessionStorageServiceKey)
+            try await authenticator.login()
         } catch {
-            log.error("Unable to fetch Tidepool Client session: %{public}@", error.localizedDescription)
+            if case ASWebAuthenticationSessionError.canceledLogin = error {
+                // Do nothing on cancel
+            } else {
+                throw error
+            }
         }
     }
 
     func logout() async {
-        await withCheckedContinuation({ continuation in
-            api.logout(completion: { _ in
-                DispatchQueue.main.async {
-                    continuation.resume()
-                }
-            })
-        })
+        await api.logout()
     }
 }
 
@@ -78,10 +80,8 @@ extension TidepoolClient: TLogging {
 
 extension TidepoolClient: TAPIObserver {
     public func apiDidUpdateSession(_ session: TSession?) {
-        if session == nil {
-            self.dataSetId = nil
-        }
         do {
+            self.session = session
             try sessionStorage.setSession(session, for: sessionStorageServiceKey)
         } catch {
             log.error("Unable to store Tidepool Client session: %{public}@", error.localizedDescription)

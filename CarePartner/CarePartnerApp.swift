@@ -6,16 +6,24 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 
 @main
+@MainActor
 struct CarePartnerApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    let summaryViewModel = SummaryViewModel()
+    let client = TidepoolClient()
+    let followedAccounts: FollowedAccounts
+
+    init() {
+        followedAccounts = FollowedAccounts(client: client)
+    }
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                SummaryView(viewModel: summaryViewModel)
+                FollowedAccountsView(followedAccounts: followedAccounts, client: client)
             }
         }
     }
