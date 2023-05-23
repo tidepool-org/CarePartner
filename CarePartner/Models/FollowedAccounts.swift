@@ -46,7 +46,7 @@ class FollowedAccounts: ObservableObject {
 
 extension TTrusteeUser {
     var followedAccount: AccountData? {
-        guard let profile = profile, let fullName = profile.fullName else {
+        guard let profile = profile, let fullName = profile.fullName, trustorPermissions?.view != nil else {
             return nil
         }
         return AccountData(name: fullName, userid: userid, currentBG: nil, lastRefresh: nil, basalRate: nil)
