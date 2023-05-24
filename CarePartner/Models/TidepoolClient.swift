@@ -11,7 +11,6 @@ import LoopKit
 import os.log
 import AuthenticationServices
 
-
 @MainActor
 class TidepoolClient: ObservableObject {
 
@@ -42,7 +41,8 @@ class TidepoolClient: ObservableObject {
     }
 
     func login(environment: TEnvironment, sceneDelegate: SceneDelegate) async throws {
-        let authenticator = OAuth2Authenticator(api: api, environment: environment, contextProviding: sceneDelegate)
+        let sessionProvider = ASWebAuthenticationSessionProvider(contextProviding: sceneDelegate)
+        let authenticator = OAuth2Authenticator(api: api, environment: environment, sessionProvider: sessionProvider)
 
         do {
             try await authenticator.login()
