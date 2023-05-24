@@ -33,12 +33,21 @@ platform :ios do
     gym(export_method: "ad-hoc")
   end
 
+  lane :update_profile do 
+    match(
+      type: "appstore",
+      git_url: "https://github.com/tidepool-org/match_certificates",
+      app_identifier: "org.tidepool.carepartner",
+      git_branch: "carepartner",
+    )
+  end
+
   lane :sync_certs do
     sync_code_signing(
       type: "appstore",
       app_identifier: "org.tidepool.carepartner",
       git_url: "https://github.com/tidepool-org/match_certificates",
-      git_branch: "main",
+      git_branch: "carepartner",
       api_key: api_key
     )
   end
@@ -49,7 +58,7 @@ platform :ios do
       type: "appstore",
       git_url: "https://github.com/tidepool-org/match_certificates",
       app_identifier: "org.tidepool.carepartner",
-      git_branch: "main",
+      git_branch: "carepartner",
       readonly: true
     )
 
