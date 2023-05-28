@@ -3,32 +3,33 @@
 //  CarePartner
 //
 //  Created by Pete Schwamb on 2/21/23.
+//  Copyright © 2023 Tidepool Project. All rights reserved.
 //
 
 import SwiftUI
 import TidepoolKit
 
-struct FollowedAccountsView: View {
+struct FolloweeListView: View {
 
-    @ObservedObject private var followedAccounts: FollowedAccounts
+    @ObservedObject private var manager: FolloweeManager
     @ObservedObject private var client: TidepoolClient
 
     @State private var showingAccountSettings = false
 
-    init(followedAccounts: FollowedAccounts, client: TidepoolClient) {
-        self.followedAccounts = followedAccounts
+    init(manager: FolloweeManager, client: TidepoolClient) {
+        self.manager = manager
         self.client = client
     }
 
     var body: some View {
         // TODO: list of followed accounts with their summary views
         ScrollView {
-            if followedAccounts.accounts.isEmpty {
+            if manager.followees.isEmpty {
                 Text("No accounts have shared data with you yet.")
                     .padding(.horizontal)
             } else {
-                ForEach(followedAccounts.accounts, id: \.userid) { account in
-                    AccountView(accountData: account)
+                ForEach(Array(manager.followees.values)) { followee in
+                    FolloweeStatusView(followee: followee)
                 }
             }
         }
@@ -48,20 +49,24 @@ struct FollowedAccountsView: View {
                 self.showingAccountSettings = true
             }
         }
+        .refreshable {
+            await manager.refreshFollowees()
+            print("Do your refresh work here")
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            FollowedAccountsView(followedAccounts: FollowedAccountsMock(
+            FolloweeListView(manager: FollowedAccountsMock(
                 accounts: [
-                    AccountData.mock
+                    FolloweeStatus.mock
                 ]
             ), client: TidepoolClient())
         }
         NavigationView {
-            FollowedAccountsView(followedAccounts: FollowedAccountsMock(
+            FolloweeListView(manager: FollowedAccountsMock(
                 accounts: []
             ), client: TidepoolClient())
         }

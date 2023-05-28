@@ -7,17 +7,33 @@
 //
 
 import SwiftUI
+import LoopKit
+import LoopKitUI
 
-struct AccountView: View {
+struct FolloweeStatusView: View {
 
-    var accountData: AccountData
+    @EnvironmentObject private var displayGlucosePreference: DisplayGlucosePreference
+
+    @ObservedObject private var followee: Followee
+
+    init(followee: Followee) {
+        self.followee = followee
+    }
+
+    var glucoseText: String {
+        if let glucose = followee.status.latestGlucose {
+            return displayGlucosePreference.format(glucose.quantity)
+        } else {
+            return "---"
+        }
+    }
 
     var body: some View {
         VStack {
             HStack {
                 HStack {
                     Image(systemName: "person.fill")
-                    Text(accountData.name)
+                    Text(followee.status.name)
                         .font(.headline)
                 }
                 Spacer()
@@ -36,14 +52,15 @@ struct AccountView: View {
 
             HStack {
 
-                Text("100 mg/dl")
+                Text(glucoseText)
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(.background)
                     .frame(height: 44)
                     .cornerRadius(22)
-                LoopCircleView(closeLoop: true, lastLoopCompleted: Date(), dataIsStale: false)                                .padding(20)
+                LoopCircleView(closeLoop: true, lastLoopCompleted: Date(), dataIsStale: false)
+                    .padding(20)
                 Text("0.45 U/hr")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
@@ -64,7 +81,7 @@ struct AccountView: View {
 struct FolloweeSummaryView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollView {
-            AccountView(accountData: AccountData.mock)
+            FolloweeStatusView(followee: Followee.mock)
         }
     }
 }

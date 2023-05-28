@@ -18,6 +18,9 @@
       location = "group:CarePartner.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:../TidepoolKit">
+   </FileRef>
+   <FileRef
       location = "group:LoopKit/LoopKit.xcodeproj">
    </FileRef>
 </Workspace>

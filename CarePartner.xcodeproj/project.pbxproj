@@ -12,7 +12,7 @@
 		C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7B29D2593300A218BC /* LoopCircleView.swift */; };
 		C11D2B7E29D2596800A218BC /* LoopCompletionFreshness.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7D29D2596800A218BC /* LoopCompletionFreshness.swift */; };
 		C11D2B8029D2598A00A218BC /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7F29D2598A00A218BC /* TimeInterval.swift */; };
-		C11D2B9C29D2746800A218BC /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B9B29D2746800A218BC /* AccountView.swift */; };
+		C11D2B9C29D2746800A218BC /* FolloweeStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B9B29D2746800A218BC /* FolloweeStatusView.swift */; };
 		C128BE512A017A63000167A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C128BE502A017A63000167A1 /* SceneDelegate.swift */; };
 		C128BE532A017A83000167A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C128BE522A017A83000167A1 /* AppDelegate.swift */; };
 		C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */; };
@@ -21,14 +21,19 @@
 		C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1787D6529B6719900C9D551 /* CarePartnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1787D6429B6719900C9D551 /* CarePartnerTests.swift */; };
 		C17CDEF12A014C43003F4C84 /* TidepoolClientLoggedInMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17CDEF02A014C43003F4C84 /* TidepoolClientLoggedInMock.swift */; };
-		C19F116B29AD47830055AC28 /* FollowedAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116A29AD47830055AC28 /* FollowedAccounts.swift */; };
+		C19F116B29AD47830055AC28 /* FolloweeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116A29AD47830055AC28 /* FolloweeManager.swift */; };
 		C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */; };
 		C19F117129AD5A620055AC28 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117029AD5A620055AC28 /* OSLog.swift */; };
-		C19F117429AE583A0055AC28 /* AccountData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117329AE583A0055AC28 /* AccountData.swift */; };
+		C19F117429AE583A0055AC28 /* Followee.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117329AE583A0055AC28 /* Followee.swift */; };
+		C1C2AF222A214E7D006D13B6 /* FolloweeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C2AF212A214E7D006D13B6 /* FolloweeStatus.swift */; };
+		C1C2AF242A225A38006D13B6 /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */; };
+		C1C2AF252A225A38006D13B6 /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C1C2AF272A225E1B006D13B6 /* GlucoseFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C2AF262A225E1B006D13B6 /* GlucoseFormatter.swift */; };
 		C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA229A5895E0019E4CB /* CarePartnerApp.swift */; };
-		C1DDFAA529A5895E0019E4CB /* FollowedAccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA429A5895E0019E4CB /* FollowedAccountsView.swift */; };
+		C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */; };
 		C1DDFAA729A5895F0019E4CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAA629A5895F0019E4CB /* Assets.xcassets */; };
 		C1DDFAAB29A5895F0019E4CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */; };
+		C1F96E082A2403E300656332 /* Followee+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F96E072A2403E300656332 /* Followee+Mock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +54,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */,
+				C1C2AF252A225A38006D13B6 /* LoopKitUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,7 +67,7 @@
 		C11D2B7B29D2593300A218BC /* LoopCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCircleView.swift; sourceTree = "<group>"; };
 		C11D2B7D29D2596800A218BC /* LoopCompletionFreshness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCompletionFreshness.swift; sourceTree = "<group>"; };
 		C11D2B7F29D2598A00A218BC /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
-		C11D2B9B29D2746800A218BC /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		C11D2B9B29D2746800A218BC /* FolloweeStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeStatusView.swift; sourceTree = "<group>"; };
 		C128BE502A017A63000167A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C128BE522A017A83000167A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelMock.swift; sourceTree = "<group>"; };
@@ -72,16 +78,20 @@
 		C19F116129AD38D40055AC28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C19F116329AD38E00055AC28 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C19F116A29AD47830055AC28 /* FollowedAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedAccounts.swift; sourceTree = "<group>"; };
+		C19F116A29AD47830055AC28 /* FolloweeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeManager.swift; sourceTree = "<group>"; };
 		C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolClient.swift; sourceTree = "<group>"; };
 		C19F117029AD5A620055AC28 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
-		C19F117329AE583A0055AC28 /* AccountData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountData.swift; sourceTree = "<group>"; };
+		C19F117329AE583A0055AC28 /* Followee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Followee.swift; sourceTree = "<group>"; };
+		C1C2AF212A214E7D006D13B6 /* FolloweeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeStatus.swift; sourceTree = "<group>"; };
+		C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1C2AF262A225E1B006D13B6 /* GlucoseFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseFormatter.swift; sourceTree = "<group>"; };
 		C1DDFA9F29A5895E0019E4CB /* CarePartner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarePartner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1DDFAA229A5895E0019E4CB /* CarePartnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarePartnerApp.swift; sourceTree = "<group>"; };
-		C1DDFAA429A5895E0019E4CB /* FollowedAccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedAccountsView.swift; sourceTree = "<group>"; };
+		C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeListView.swift; sourceTree = "<group>"; };
 		C1DDFAA629A5895F0019E4CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1DDFAA829A5895F0019E4CB /* CarePartner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarePartner.entitlements; sourceTree = "<group>"; };
 		C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C1F96E072A2403E300656332 /* Followee+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Followee+Mock.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +108,7 @@
 			files = (
 				C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */,
 				C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */,
+				C1C2AF242A225A38006D13B6 /* LoopKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +120,7 @@
 			children = (
 				C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */,
 				C17CDEF02A014C43003F4C84 /* TidepoolClientLoggedInMock.swift */,
+				C1F96E072A2403E300656332 /* Followee+Mock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -124,6 +136,7 @@
 		C19F116229AD38E00055AC28 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */,
 				C1787D5B29B018C000C9D551 /* LoopKit.framework */,
 				C19F116329AD38E00055AC28 /* TidepoolKit.framework */,
 				C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */,
@@ -134,8 +147,8 @@
 		C19F116C29AD4AD60055AC28 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C11D2B9B29D2746800A218BC /* AccountView.swift */,
-				C1DDFAA429A5895E0019E4CB /* FollowedAccountsView.swift */,
+				C11D2B9B29D2746800A218BC /* FolloweeStatusView.swift */,
+				C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */,
 				C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */,
 				C11D2B7B29D2593300A218BC /* LoopCircleView.swift */,
 			);
@@ -155,10 +168,12 @@
 		C19F117229AE582E0055AC28 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */,
-				C19F117329AE583A0055AC28 /* AccountData.swift */,
+				C19F117329AE583A0055AC28 /* Followee.swift */,
+				C19F116A29AD47830055AC28 /* FolloweeManager.swift */,
+				C1C2AF212A214E7D006D13B6 /* FolloweeStatus.swift */,
 				C11D2B7D29D2596800A218BC /* LoopCompletionFreshness.swift */,
-				C19F116A29AD47830055AC28 /* FollowedAccounts.swift */,
+				C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */,
+				C1C2AF262A225E1B006D13B6 /* GlucoseFormatter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -326,20 +341,23 @@
 			files = (
 				C11D2B7E29D2596800A218BC /* LoopCompletionFreshness.swift in Sources */,
 				C11D2B8029D2598A00A218BC /* TimeInterval.swift in Sources */,
-				C1DDFAA529A5895E0019E4CB /* FollowedAccountsView.swift in Sources */,
+				C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */,
 				C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */,
 				C17CDEF12A014C43003F4C84 /* TidepoolClientLoggedInMock.swift in Sources */,
 				C128BE512A017A63000167A1 /* SceneDelegate.swift in Sources */,
 				C11D2B7A29D2531300A218BC /* HKUnit.swift in Sources */,
 				C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */,
+				C1F96E082A2403E300656332 /* Followee+Mock.swift in Sources */,
 				C128BE532A017A83000167A1 /* AppDelegate.swift in Sources */,
 				C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */,
-				C11D2B9C29D2746800A218BC /* AccountView.swift in Sources */,
+				C11D2B9C29D2746800A218BC /* FolloweeStatusView.swift in Sources */,
+				C1C2AF272A225E1B006D13B6 /* GlucoseFormatter.swift in Sources */,
 				C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */,
-				C19F116B29AD47830055AC28 /* FollowedAccounts.swift in Sources */,
+				C19F116B29AD47830055AC28 /* FolloweeManager.swift in Sources */,
 				C11D2B7629CF9FFE00A218BC /* AccountSettingsView.swift in Sources */,
+				C1C2AF222A214E7D006D13B6 /* FolloweeStatus.swift in Sources */,
 				C19F117129AD5A620055AC28 /* OSLog.swift in Sources */,
-				C19F117429AE583A0055AC28 /* AccountData.swift in Sources */,
+				C19F117429AE583A0055AC28 /* Followee.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,8 +599,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.carepartner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-                                PROVISIONING_PROFILE_SPECIFIER = "";
-                                "PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.tidepool.carepartner 1684937681";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.tidepool.carepartner 1684937681";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
