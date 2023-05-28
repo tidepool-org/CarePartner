@@ -44,7 +44,6 @@ class Followee: ObservableObject, Identifiable {
         )
 
         let latestGlucose = glucoseStore.latestGlucose
-        print("*********** latestGlucose = \(latestGlucose)")
 
         status = FolloweeStatus(
             name: name,
@@ -55,9 +54,8 @@ class Followee: ObservableObject, Identifiable {
             basalRate: basalRate)
 
         NotificationCenter.default.publisher(for: GlucoseStore.glucoseSamplesDidChange, object: nil)
+            .receive(on: RunLoop.main)
             .sink() { [weak self] _ in
-                print("*********** updating glucose = \(self?.glucoseStore.latestGlucose)")
-
                 self?.status.latestGlucose = self?.glucoseStore.latestGlucose
             }
             .store(in: &cancellables)
@@ -69,7 +67,6 @@ class Followee: ObservableObject, Identifiable {
         let filter = TDatum.Filter(startDate: start, types: ["cbg"])
         do {
             let (data, _) = try await api.listData(filter: filter, userId: userId)
-            print("Data = \(data)")
 
             var newSamples = [NewGlucoseSample]()
 
@@ -84,9 +81,7 @@ class Followee: ObservableObject, Identifiable {
                 }
             }
             if !newSamples.isEmpty {
-                glucoseStore.addGlucoseSamples(newSamples) { result in
-                    print("*********** addedGLucose = \(result)")
-                }
+                glucoseStore.addGlucoseSamples(newSamples) { result in }
             }
         } catch {
             log.error("Unable to fetch data for %{public}@: %{public}@", userId, error.localizedDescription)
