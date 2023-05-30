@@ -14,7 +14,7 @@ import TidepoolKit
 import os.log
 import Combine
 
-
+@MainActor
 class Followee: ObservableObject, Identifiable {
 
     @Published var status: FolloweeStatus
@@ -55,7 +55,6 @@ class Followee: ObservableObject, Identifiable {
             }
             .store(in: &cancellables)
     }
-
 
     func fetchData(api: TAPI) async {
         let start = Date().addingTimeInterval(-.days(1))

@@ -67,17 +67,17 @@ class FolloweeManager: ObservableObject {
         }
     }
 
-    private func addFollowee(user: TTrusteeUser) {
-        followees[user.userid] = user.followee
-    }
-}
-
-extension TTrusteeUser {
-    var followee: Followee? {
-        guard let profile = profile, let fullName = profile.fullName, trustorPermissions?.view != nil else {
+    private func followeeFromUser(user: TTrusteeUser) -> Followee? {
+        guard let profile = user.profile, let fullName = profile.fullName, user.trustorPermissions?.view != nil else {
             return nil
         }
         let firstName = fullName.components(separatedBy: " ").first ?? fullName
-        return Followee(name: firstName, userId: userid, basalRate: nil)
+        return Followee(name: firstName, userId: user.userid, basalRate: nil)
+    }
+
+    private func addFollowee(user: TTrusteeUser) {
+        if let followee = followeeFromUser(user: user) {
+            followees[user.userid] = followee
+        }
     }
 }
