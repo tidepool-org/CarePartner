@@ -35,14 +35,6 @@ struct FolloweeStatusView: View {
         return displayGlucosePreference.formatter.localizedUnitStringWithPlurality()
     }
 
-    var expandControlImage: String {
-        if expanded {
-            return "chevron.up"
-        } else {
-            return "chevron.down"
-        }
-    }
-
     var body: some View {
         VStack {
             statusHeader
@@ -97,9 +89,10 @@ struct FolloweeStatusView: View {
                         expanded.toggle()
                     }
                 } label: {
-                    Image(systemName: expandControlImage)
+                    Image(systemName: "chevron.up")
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 8)
+                        .rotationEffect(Angle(degrees: expanded ? 0 : -180))
                 }
             }
         }
