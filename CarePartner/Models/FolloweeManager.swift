@@ -77,6 +77,7 @@ extension TTrusteeUser {
         guard let profile = profile, let fullName = profile.fullName, trustorPermissions?.view != nil else {
             return nil
         }
-        return Followee(name: fullName, userId: userid, lastRefresh: nil, basalRate: nil)
+        let firstName = fullName.components(separatedBy: " ").first ?? fullName
+        return Followee(name: firstName, userId: userid, lastRefresh: nil, basalRate: nil)
     }
 }

@@ -35,44 +35,59 @@ struct FolloweeStatusView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                HStack {
-                    Image(systemName: "person.fill")
-                    Text(followee.status.name)
-                        .font(.headline)
-                }
-                Spacer()
-                HStack {
-                    Image(systemName: "arrow.triangle.2.circlepath")
-                    Text("12:34")
-                }
-                .font(.caption)
-                .foregroundColor(.secondary)
-                Spacer()
-                Image(systemName: "chevron.down")
-                    .foregroundColor(.secondary)
-                    .padding(5)
-            }
-            .padding(.top, 8)
-
-            HStack(spacing: 12) {
-                cgmStatus
-                LoopCircleView(closeLoop: true, lastLoopCompleted: Date(), dataIsStale: false)
-                Text("0.45 U/hr")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(.background)
-                    .frame(height: 44)
-                    .cornerRadius(22)
-            }
-            .padding(.vertical, 12)
+            statusHeader
+            pillRow
         }
         .padding(.horizontal, 8)
         .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(10)
         .padding(.horizontal)
 
+    }
+
+    var pillRow: some View {
+        HStack(spacing: 12) {
+            cgmStatus
+            LoopCircleView(closeLoop: true, lastLoopCompleted: Date(), dataIsStale: false)
+            Text("1 U/hr")
+                .font(.headline)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(.background)
+                .frame(height: 44)
+                .cornerRadius(22)
+        }
+        .padding(.vertical, 12)
+    }
+
+    var statusHeader: some View {
+        GeometryReader { geometry in
+            HStack(spacing: 0) {
+                HStack {
+                    Image(systemName: "person.fill")
+                    Text(followee.status.name)
+                        .font(.headline)
+                    Spacer()
+                }
+                .frame(width: geometry.size.width / 3.0)
+                HStack {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                    Text("12:34")
+                }
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .frame(width: geometry.size.width / 3.0)
+                HStack {
+                    Spacer()
+                    Image(systemName: "chevron.down")
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 8)
+                }
+                .frame(width: geometry.size.width / 3.0)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 8)
     }
 
     var cgmStatus: some View {
@@ -112,7 +127,7 @@ struct FolloweeSummaryView_Previews: PreviewProvider {
             FolloweeStatusView(
                 followee: FolloweeMock(
                     status: FolloweeStatus(
-                        name: "Sally Seastar",
+                        name: "Sally",
                         latestGlucose: StoredGlucoseSample.mock(150, .downDownDown)
                     )
                 )
