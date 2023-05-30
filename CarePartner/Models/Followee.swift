@@ -21,17 +21,15 @@ class Followee: ObservableObject, Identifiable {
 
     let name: String
     let userId: String
-    let lastRefresh: Date?
     let basalRate: HKQuantity?
     let glucoseStore: GlucoseStore
     private let log = OSLog(category: "Followee")
     var cancellables: Set<AnyCancellable> = []
 
 
-    init(name: String, userId: String, lastRefresh: Date?, basalRate: HKQuantity?) {
+    init(name: String, userId: String, basalRate: HKQuantity?) {
         self.name = name
         self.userId = userId
-        self.lastRefresh = lastRefresh
         self.basalRate = basalRate
 
         let url = NSPersistentContainer.defaultDirectoryURL.appendingPathComponent(userId)
@@ -47,7 +45,7 @@ class Followee: ObservableObject, Identifiable {
             name: name,
             latestGlucose: latestGlucose,
             trend: latestGlucose?.trend,
-            lastRefresh: lastRefresh ?? .distantPast,
+            lastRefresh: .distantPast,
             basalRate: basalRate)
 
         NotificationCenter.default.publisher(for: GlucoseStore.glucoseSamplesDidChange, object: nil)
@@ -64,6 +62,8 @@ class Followee: ObservableObject, Identifiable {
         let filter = TDatum.Filter(startDate: start, types: ["cbg"])
         do {
             let (data, _) = try await api.listData(filter: filter, userId: userId)
+
+            status.lastRefresh = Date()
 
             var newSamples = [NewGlucoseSample]()
 

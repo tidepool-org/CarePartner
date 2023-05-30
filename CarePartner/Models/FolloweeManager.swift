@@ -78,6 +78,6 @@ extension TTrusteeUser {
             return nil
         }
         let firstName = fullName.components(separatedBy: " ").first ?? fullName
-        return Followee(name: firstName, userId: userid, lastRefresh: nil, basalRate: nil)
+        return Followee(name: firstName, userId: userid, basalRate: nil)
     }
 }
