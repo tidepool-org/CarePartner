@@ -47,7 +47,7 @@ class Followee: ObservableObject, Identifiable {
             name: name,
             latestGlucose: latestGlucose,
             trend: latestGlucose?.trend,
-            lastRefresh: lastRefresh,
+            lastRefresh: lastRefresh ?? .distantPast,
             basalRate: basalRate)
 
         NotificationCenter.default.publisher(for: GlucoseStore.glucoseSamplesDidChange, object: nil)

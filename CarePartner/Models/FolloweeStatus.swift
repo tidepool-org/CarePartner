@@ -14,7 +14,7 @@ struct FolloweeStatus {
     var name: String
     var latestGlucose: GlucoseSampleValue?
     var trend: GlucoseTrend?
-    var lastRefresh: Date?
+    var lastRefresh: Date
     var basalRate: HKQuantity?
 }
 
