@@ -62,7 +62,7 @@ class FolloweeManager: ObservableObject {
     private func fetchFolloweeData() async {
         for followee in followees.values {
             Task {
-                await followee.fetchData(api: tidepoolClient.api)
+                await followee.fetchRemoteData(api: tidepoolClient.api)
             }
         }
     }

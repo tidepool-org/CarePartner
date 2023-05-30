@@ -13,6 +13,7 @@ import LoopKit
 struct FolloweeStatus {
     var name: String
     var latestGlucose: GlucoseSampleValue?
+    var glucoseDelta: HKQuantity?
     var trend: GlucoseTrend?
     var lastRefresh: Date
     var basalRate: HKQuantity?

@@ -43,7 +43,7 @@ class Followee: ObservableObject, Identifiable {
 
         status = FolloweeStatus(
             name: name,
-            latestGlucose: latestGlucose,
+            latestGlucose: nil,
             trend: latestGlucose?.trend,
             lastRefresh: .distantPast,
             basalRate: basalRate)
@@ -51,12 +51,36 @@ class Followee: ObservableObject, Identifiable {
         NotificationCenter.default.publisher(for: GlucoseStore.glucoseSamplesDidChange, object: nil)
             .receive(on: RunLoop.main)
             .sink() { [weak self] _ in
-                self?.status.latestGlucose = self?.glucoseStore.latestGlucose
+                self?.refreshGlucose()
             }
             .store(in: &cancellables)
+
+        self.refreshGlucose()
     }
 
-    func fetchData(api: TAPI) async {
+    func refreshGlucose() {
+        if let latest = glucoseStore.latestGlucose, latest.startDate.timeIntervalSinceNow > -.minutes(15) {
+            status.latestGlucose = glucoseStore.latestGlucose
+            Task {
+                do {
+                    let samples = try await glucoseStore.getGlucoseSamples(start: latest.startDate.addingTimeInterval(-.minutes(6)))
+                    if let previousSample = samples.filter({ $0.syncIdentifier != latest.syncIdentifier }).sorted(by: \.startDate).last {
+                        let delta = latest.quantity.doubleValue(for: .milligramsPerDeciliter) - previousSample.quantity.doubleValue(for: .milligramsPerDeciliter)
+                        status.glucoseDelta = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: delta)
+                    } else {
+                        status.glucoseDelta = nil
+                    }
+                } catch {
+                    status.glucoseDelta = nil
+                }
+            }
+        } else {
+            status.latestGlucose = nil
+            status.glucoseDelta = nil
+        }
+    }
+
+    func fetchRemoteData(api: TAPI) async {
         let start = Date().addingTimeInterval(-.days(1))
         let filter = TDatum.Filter(startDate: start, types: ["cbg"])
         do {

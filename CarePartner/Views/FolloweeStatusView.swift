@@ -9,6 +9,7 @@
 import SwiftUI
 import LoopKit
 import LoopKitUI
+import HealthKit
 
 struct FolloweeStatusView: View {
 
@@ -155,6 +156,20 @@ struct FolloweeStatusView: View {
         .cornerRadius(10)
     }
 
+    var deltaText: String {
+        if let delta = followee.status.glucoseDelta {
+            var signText: String
+            if delta.doubleValue(for: .milligramsPerDeciliter) >= 0 {
+                signText = NSLocalizedString("+", comment: "Sign marker for positive glucose delta")
+            } else {
+                signText = ""
+            }
+            return signText + displayGlucosePreference.format(delta, includeUnit: false)
+        } else {
+            return NSLocalizedString("-", comment: "Placeholder when glucose delta is not available")
+        }
+    }
+
     var glucoseDetail: some View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
@@ -164,7 +179,7 @@ struct FolloweeStatusView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            Text("+ 3")
+            Text(deltaText)
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.glucose)
@@ -211,12 +226,13 @@ struct FolloweeSummaryView_Previews: PreviewProvider {
                 followee: FolloweeMock(
                     status: FolloweeStatus(
                         name: "Sally",
-                        latestGlucose: StoredGlucoseSample.mock(150, .downDownDown),
+                        latestGlucose: StoredGlucoseSample.mock(150, .downDown),
+                        glucoseDelta: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: -10),
                         lastRefresh: Date()
                     )
                 )
             )
-            .environmentObject(DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter))
+            .environmentObject(DisplayGlucosePreference(displayGlucoseUnit: .millimolesPerLiter))
 
         }
     }

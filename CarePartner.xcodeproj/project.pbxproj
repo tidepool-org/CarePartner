@@ -16,6 +16,7 @@
 		C128BE512A017A63000167A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C128BE502A017A63000167A1 /* SceneDelegate.swift */; };
 		C128BE532A017A83000167A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C128BE522A017A83000167A1 /* AppDelegate.swift */; };
 		C13D97F62A26558600905DE4 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D97F52A26558600905DE4 /* Color.swift */; };
+		C13D97F82A265E6A00905DE4 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D97F72A265E6A00905DE4 /* Sequence.swift */; };
 		C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF412A262E7700D0E70E /* GlucoseTrend.swift */; };
 		C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF432A262F4800D0E70E /* FolloweeMock.swift */; };
 		C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */; };
@@ -74,6 +75,7 @@
 		C128BE502A017A63000167A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C128BE522A017A83000167A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C13D97F52A26558600905DE4 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		C13D97F72A265E6A00905DE4 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		C166AF412A262E7700D0E70E /* GlucoseTrend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrend.swift; sourceTree = "<group>"; };
 		C166AF432A262F4800D0E70E /* FolloweeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeMock.swift; sourceTree = "<group>"; };
 		C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelMock.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				C11D2B7F29D2598A00A218BC /* TimeInterval.swift */,
 				C166AF412A262E7700D0E70E /* GlucoseTrend.swift */,
 				C13D97F52A26558600905DE4 /* Color.swift */,
+				C13D97F72A265E6A00905DE4 /* Sequence.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C11D2B7E29D2596800A218BC /* LoopCompletionFreshness.swift in Sources */,
+				C13D97F82A265E6A00905DE4 /* Sequence.swift in Sources */,
 				C11D2B8029D2598A00A218BC /* TimeInterval.swift in Sources */,
 				C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */,
 				C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */,
