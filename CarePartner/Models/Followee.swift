@@ -21,7 +21,6 @@ class Followee: ObservableObject, Identifiable {
 
     let name: String
     let userId: String
-    let currentBG: HKQuantity?
     let lastRefresh: Date?
     let basalRate: HKQuantity?
     let glucoseStore: GlucoseStore
@@ -29,10 +28,9 @@ class Followee: ObservableObject, Identifiable {
     var cancellables: Set<AnyCancellable> = []
 
 
-    init(name: String, userId: String, currentBG: HKQuantity?, lastRefresh: Date?, basalRate: HKQuantity?) {
+    init(name: String, userId: String, lastRefresh: Date?, basalRate: HKQuantity?) {
         self.name = name
         self.userId = userId
-        self.currentBG = currentBG
         self.lastRefresh = lastRefresh
         self.basalRate = basalRate
 
@@ -47,7 +45,6 @@ class Followee: ObservableObject, Identifiable {
 
         status = FolloweeStatus(
             name: name,
-            userId: userId,
             latestGlucose: latestGlucose,
             trend: latestGlucose?.trend,
             lastRefresh: lastRefresh,

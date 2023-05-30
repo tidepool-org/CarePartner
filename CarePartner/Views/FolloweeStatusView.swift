@@ -22,11 +22,16 @@ struct FolloweeStatusView: View {
 
     var glucoseText: String {
         if let glucose = followee.status.latestGlucose {
-            return displayGlucosePreference.format(glucose.quantity)
+            return displayGlucosePreference.format(glucose.quantity, includeUnit: false)
         } else {
             return "---"
         }
     }
+
+    var glucoseUnits: String {
+        return displayGlucosePreference.formatter.localizedUnitStringWithPlurality()
+    }
+
 
     var body: some View {
         VStack {
@@ -50,17 +55,9 @@ struct FolloweeStatusView: View {
             }
             .padding(.top, 8)
 
-            HStack {
-
-                Text(glucoseText)
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(.background)
-                    .frame(height: 44)
-                    .cornerRadius(22)
+            HStack(spacing: 12) {
+                cgmStatus
                 LoopCircleView(closeLoop: true, lastLoopCompleted: Date(), dataIsStale: false)
-                    .padding(20)
                 Text("0.45 U/hr")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
@@ -69,6 +66,7 @@ struct FolloweeStatusView: View {
                     .frame(height: 44)
                     .cornerRadius(22)
             }
+            .padding(.vertical, 12)
         }
         .padding(.horizontal, 8)
         .background(Color(UIColor.secondarySystemBackground))
@@ -76,12 +74,51 @@ struct FolloweeStatusView: View {
         .padding(.horizontal)
 
     }
+
+    var cgmStatus: some View {
+        HStack {
+            VStack {
+                Text(glucoseText)
+                    .font(.system(size: 30))
+                    .fontWeight(.black)
+                    .padding(.top, 5)
+                Text(glucoseUnits)
+                    .font(.caption)
+                    .padding(.top, -25)
+                    .foregroundColor(.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            if let trend = followee.status.latestGlucose?.trend {
+                trend.image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 30)
+                    .padding(.trailing, -8)
+                    .foregroundColor(.accentColor)
+            }
+        }
+        .frame(height: 44)
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(.background)
+        .frame(height: 44)
+        .cornerRadius(22)
+    }
 }
 
 struct FolloweeSummaryView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollView {
-            FolloweeStatusView(followee: Followee.mock)
+            FolloweeStatusView(
+                followee: FolloweeMock(
+                    status: FolloweeStatus(
+                        name: "Sally Seastar",
+                        latestGlucose: StoredGlucoseSample.mock(150, .downDownDown)
+                    )
+                )
+            )
+            .environmentObject(DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter))
+
         }
     }
 }

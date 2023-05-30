@@ -15,6 +15,8 @@
 		C11D2B9C29D2746800A218BC /* FolloweeStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B9B29D2746800A218BC /* FolloweeStatusView.swift */; };
 		C128BE512A017A63000167A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C128BE502A017A63000167A1 /* SceneDelegate.swift */; };
 		C128BE532A017A83000167A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C128BE522A017A83000167A1 /* AppDelegate.swift */; };
+		C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF412A262E7700D0E70E /* GlucoseTrend.swift */; };
+		C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF432A262F4800D0E70E /* FolloweeMock.swift */; };
 		C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */; };
 		C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C1787D5929B0183400C9D551 /* TidepoolKit */; };
 		C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; };
@@ -70,6 +72,8 @@
 		C11D2B9B29D2746800A218BC /* FolloweeStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeStatusView.swift; sourceTree = "<group>"; };
 		C128BE502A017A63000167A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C128BE522A017A83000167A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C166AF412A262E7700D0E70E /* GlucoseTrend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrend.swift; sourceTree = "<group>"; };
+		C166AF432A262F4800D0E70E /* FolloweeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeMock.swift; sourceTree = "<group>"; };
 		C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelMock.swift; sourceTree = "<group>"; };
 		C1787D5B29B018C000C9D551 /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1787D6229B6719900C9D551 /* CarePartnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarePartnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +125,7 @@
 				C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */,
 				C17CDEF02A014C43003F4C84 /* TidepoolClientLoggedInMock.swift */,
 				C1F96E072A2403E300656332 /* Followee+Mock.swift */,
+				C166AF432A262F4800D0E70E /* FolloweeMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -161,6 +166,7 @@
 				C19F117029AD5A620055AC28 /* OSLog.swift */,
 				C11D2B7929D2531300A218BC /* HKUnit.swift */,
 				C11D2B7F29D2598A00A218BC /* TimeInterval.swift */,
+				C166AF412A262E7700D0E70E /* GlucoseTrend.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -273,7 +279,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Tidepool Project";
 				TargetAttributes = {
 					C1787D6129B6719900C9D551 = {
@@ -346,11 +352,13 @@
 				C17CDEF12A014C43003F4C84 /* TidepoolClientLoggedInMock.swift in Sources */,
 				C128BE512A017A63000167A1 /* SceneDelegate.swift in Sources */,
 				C11D2B7A29D2531300A218BC /* HKUnit.swift in Sources */,
+				C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */,
 				C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */,
 				C1F96E082A2403E300656332 /* Followee+Mock.swift in Sources */,
 				C128BE532A017A83000167A1 /* AppDelegate.swift in Sources */,
 				C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */,
 				C11D2B9C29D2746800A218BC /* FolloweeStatusView.swift in Sources */,
+				C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */,
 				C1C2AF272A225E1B006D13B6 /* GlucoseFormatter.swift in Sources */,
 				C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */,
 				C19F116B29AD47830055AC28 /* FolloweeManager.swift in Sources */,
@@ -446,6 +454,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -504,6 +513,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -531,6 +541,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CarePartner/Preview Content\"";
 				DEVELOPMENT_TEAM = 75U4X84TEG;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -575,6 +586,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CarePartner/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 75U4X84TEG;

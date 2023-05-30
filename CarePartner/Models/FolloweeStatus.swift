@@ -12,7 +12,6 @@ import LoopKit
 
 struct FolloweeStatus {
     var name: String
-    var userId: String
     var latestGlucose: GlucoseSampleValue?
     var trend: GlucoseTrend?
     var lastRefresh: Date?
@@ -23,24 +22,23 @@ extension FolloweeStatus {
     static var mock: FolloweeStatus {
         return FolloweeStatus(
             name: "Sally",
-            userId: "9138ecc2-ed54-4254-bcc4-687d37d6398b",
-            latestGlucose: StoredGlucoseSample.mock,
+            latestGlucose: StoredGlucoseSample.mock(),
             lastRefresh: Date(),
             basalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 0.45))
     }
 }
 
 extension StoredGlucoseSample {
-    static var mock: StoredGlucoseSample {
+    static func mock(_ glucose: Double = 100, _ trend: GlucoseTrend = .flat) -> StoredGlucoseSample {
         return StoredGlucoseSample(
             uuid: UUID(),
             provenanceIdentifier: "org.loopkit.Loop",
             syncIdentifier: "mock-identifier",
             syncVersion: 1,
             startDate: Date(),
-            quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 100),
+            quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: glucose),
             condition: .none,
-            trend: .flat,
+            trend: trend,
             trendRate: HKQuantity(unit: .milligramsPerDeciliter.unitDivided(by: .minute()), doubleValue: 1),
             isDisplayOnly: false,
             wasUserEntered: false,

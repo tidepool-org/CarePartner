@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import HealthKit
 
 extension Followee {
     static var mock: Followee {
-        return Followee(name: "test", userId: "1234", currentBG: nil, lastRefresh: nil, basalRate: nil)
+        return Followee(name: "test", userId: "1234", lastRefresh: nil, basalRate: nil)
     }
 }
