@@ -16,6 +16,8 @@ struct FolloweeStatusView: View {
 
     @ObservedObject private var followee: Followee
 
+    @State private var expanded: Bool = true
+
     init(followee: Followee) {
         self.followee = followee
     }
@@ -32,6 +34,13 @@ struct FolloweeStatusView: View {
         return displayGlucosePreference.formatter.localizedUnitStringWithPlurality()
     }
 
+    var expandControlImage: String {
+        if expanded {
+            return "chevron.up"
+        } else {
+            return "chevron.down"
+        }
+    }
 
     var body: some View {
         VStack {
@@ -39,6 +48,11 @@ struct FolloweeStatusView: View {
                 .padding(.vertical, 10)
             pillRow
                 .padding(.bottom, 12)
+            if expanded {
+                details
+                    .padding(.bottom)
+
+            }
         }
         .padding(.horizontal, 8)
         .background(Color(UIColor.secondarySystemBackground))
@@ -77,9 +91,15 @@ struct FolloweeStatusView: View {
             .foregroundColor(.secondary)
             HStack {
                 Spacer()
-                Image(systemName: "chevron.down")
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal, 8)
+                Button {
+                    withAnimation {
+                        expanded.toggle()
+                    }
+                } label: {
+                    Image(systemName: expandControlImage)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 8)
+                }
             }
         }
         .frame(maxWidth: .infinity)
@@ -114,6 +134,63 @@ struct FolloweeStatusView: View {
         .frame(height: 44)
         .cornerRadius(22)
     }
+
+    var details: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Change in Glucose")
+                    Text("Last Reading: 2 mins ago")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+                Text("+ 3")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.accentColor)
+            }
+            .padding(.horizontal)
+            .padding(.top)
+            Divider()
+                .padding(.leading)
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Active Insulin")
+                    Text("Last Bolus: ")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+                Text("4.35 U")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.accentColor)
+            }
+            .padding(.horizontal)
+            Divider()
+                .padding(.leading)
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Active Carbs")
+                    Text("Last Entry: 2 mins ago")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+                Text("25 g")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.accentColor)
+            }
+            .padding(.horizontal)
+            .padding(.bottom)
+        }
+        .frame(maxWidth: .infinity)
+        .background(.background)
+        .cornerRadius(10)
+    }
+
 }
 
 struct FolloweeSummaryView_Previews: PreviewProvider {
