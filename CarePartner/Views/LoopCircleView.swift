@@ -31,11 +31,11 @@ struct LoopCircleView: View {
     func getLoopColor(freshness: LoopCompletionFreshness) -> Color {
         switch freshness {
         case .fresh:
-            return Color("fresh")
+            return .fresh
         case .aging:
-            return Color("warning")
+            return .warning
         case .stale:
-            return Color.red
+            return .stale
         }
     }
 }

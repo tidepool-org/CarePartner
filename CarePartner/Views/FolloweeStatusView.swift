@@ -124,7 +124,7 @@ struct FolloweeStatusView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 30)
                     .padding(.trailing, -8)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(.glucose)
             }
         }
         .frame(height: 44)
@@ -137,60 +137,71 @@ struct FolloweeStatusView: View {
 
     var details: some View {
         VStack(alignment: .leading) {
-            HStack {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Change in Glucose")
-                    Text("Last Reading: 2 mins ago")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                Spacer()
-                Text("+ 3")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.accentColor)
-            }
-            .padding(.horizontal)
-            .padding(.top)
+            glucoseDetail
+                .padding(.horizontal)
+                .padding(.top)
             Divider()
                 .padding(.leading)
-            HStack {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Active Insulin")
-                    Text("Last Bolus: ")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                Spacer()
-                Text("4.35 U")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.accentColor)
-            }
-            .padding(.horizontal)
+            insulinDetail
+                .padding(.horizontal)
             Divider()
                 .padding(.leading)
-            HStack {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Active Carbs")
-                    Text("Last Entry: 2 mins ago")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                Spacer()
-                Text("25 g")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.accentColor)
-            }
-            .padding(.horizontal)
-            .padding(.bottom)
+            carbDetail
+                .padding(.horizontal)
+                .padding(.bottom)
         }
         .frame(maxWidth: .infinity)
         .background(.background)
         .cornerRadius(10)
     }
 
+    var glucoseDetail: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Change in Glucose")
+                Text("Last Reading: 2 mins ago")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+            Text("+ 3")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.glucose)
+        }
+    }
+
+    var insulinDetail: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Active Insulin")
+                Text("Last Bolus: ")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+            Text("4.35 U")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.insulin)
+        }
+    }
+
+    var carbDetail: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Active Carbs")
+                Text("Last Entry: 3 mins ago")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+            Text("25 g")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.carbs)
+        }
+    }
 }
 
 struct FolloweeSummaryView_Previews: PreviewProvider {
