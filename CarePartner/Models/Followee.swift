@@ -56,13 +56,17 @@ class Followee: ObservableObject, Identifiable {
         NotificationCenter.default.publisher(for: GlucoseStore.glucoseSamplesDidChange, object: nil)
             .receive(on: RunLoop.main)
             .sink() { [weak self] _ in
-                self?.refreshGlucose()
+                Task {
+                    await self?.refreshGlucose()
+                }
             }
             .store(in: &cancellables)
 
         glucoseStore.onReady { error in
             if error == nil {
-                self.refreshGlucose()
+                Task {
+                    await self.refreshGlucose()
+                }
             }
         }
     }
@@ -87,21 +91,19 @@ class Followee: ObservableObject, Identifiable {
 
 
     // MARK: - Remote data
-    func refreshGlucose() {
+    func refreshGlucose() async {
         if let latest = glucoseStore.latestGlucose, latest.startDate.timeIntervalSinceNow > -.minutes(15) {
             status.latestGlucose = glucoseStore.latestGlucose
-            Task {
-                do {
-                    let samples = try await glucoseStore.getGlucoseSamples(start: latest.startDate.addingTimeInterval(-.minutes(6)))
-                    if let previousSample = samples.filter({ $0.syncIdentifier != latest.syncIdentifier }).sorted(by: \.startDate).last {
-                        let delta = latest.quantity.doubleValue(for: .milligramsPerDeciliter) - previousSample.quantity.doubleValue(for: .milligramsPerDeciliter)
-                        status.glucoseDelta = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: delta)
-                    } else {
-                        status.glucoseDelta = nil
-                    }
-                } catch {
+            do {
+                let samples = try await glucoseStore.getGlucoseSamples(start: latest.startDate.addingTimeInterval(-.minutes(6)))
+                if let previousSample = samples.filter({ $0.syncIdentifier != latest.syncIdentifier }).sorted(by: \.startDate).last {
+                    let delta = latest.quantity.doubleValue(for: .milligramsPerDeciliter) - previousSample.quantity.doubleValue(for: .milligramsPerDeciliter)
+                    status.glucoseDelta = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: delta)
+                } else {
                     status.glucoseDelta = nil
                 }
+            } catch {
+                status.glucoseDelta = nil
             }
         } else {
             status.latestGlucose = nil
