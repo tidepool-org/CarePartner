@@ -45,7 +45,7 @@ extension StoredGlucoseSample {
             provenanceIdentifier: "org.loopkit.Loop",
             syncIdentifier: "mock-identifier",
             syncVersion: 1,
-            startDate: Date(),
+            startDate: Date().addingTimeInterval(-4 * 60),
             quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: glucose),
             condition: .none,
             trend: trend,

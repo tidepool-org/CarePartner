@@ -14,4 +14,7 @@ class FolloweeMock: Followee {
         super.init(name: status.name, userId: status.name)
         self.status = status
     }
+
+    override func refreshGlucose() async {
+    }
 }

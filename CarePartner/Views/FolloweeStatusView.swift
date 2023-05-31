@@ -166,13 +166,26 @@ struct FolloweeStatusView: View {
         }
     }
 
+    var glucoseAgeText: String {
+        if let latest = followee.status.latestGlucose {
+            let formatter = RelativeDateTimeFormatter()
+            formatter.unitsStyle = .short
+            return formatter.localizedString(for: latest.startDate, relativeTo: Date())
+        } else {
+            return ""
+        }
+    }
+
     var glucoseDetail: some View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Change in Glucose")
-                Text("Last Reading: 2 mins ago")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                HStack(spacing: 0) {
+                    Text("Last Reading: ")
+                    Text(glucoseAgeText)
+                }
+                .font(.caption)
+                .foregroundColor(.secondary)
             }
             Spacer()
             Text(deltaText)
