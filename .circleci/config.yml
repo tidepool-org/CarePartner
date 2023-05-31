@@ -2,6 +2,7 @@
 version: 2.1
 jobs:
   build-and-test:
+    resource_class: macos.m1.large.gen1
     macos:
       xcode: 14.3.0
     environment:
