@@ -28,6 +28,7 @@ class Followee: ObservableObject, Identifiable {
     let name: String
     let userId: String
     let glucoseStore: GlucoseStore
+    let doseStore: DoseStore
     private let log = OSLog(category: "Followee")
     var cancellables: Set<AnyCancellable> = []
 
@@ -39,17 +40,25 @@ class Followee: ObservableObject, Identifiable {
 
         let url = NSPersistentContainer.defaultDirectoryURL.appendingPathComponent(userId)
         let cacheStore = PersistenceController(directoryURL: url)
+        let provenanceIdentifier = HKSource.default().bundleIdentifier
+
         glucoseStore = GlucoseStore(
             cacheStore: cacheStore,
-            provenanceIdentifier: HKSource.default().bundleIdentifier
+            provenanceIdentifier: provenanceIdentifier
         )
 
-        let latestGlucose = glucoseStore.latestGlucose
+        doseStore = DoseStore(
+            cacheStore: cacheStore,
+            insulinModelProvider: PresetInsulinModelProvider(defaultRapidActingModel: nil),
+            longestEffectDuration: ExponentialInsulinModelPreset.rapidActingAdult.effectDuration,
+            basalProfile: nil,
+            insulinSensitivitySchedule: nil,
+            provenanceIdentifier: provenanceIdentifier)
 
         status = FolloweeStatus(
             name: name,
             latestGlucose: nil,
-            trend: latestGlucose?.trend,
+            trend: nil,
             lastRefresh: lastRefresh,
             basalRate: nil)
 
@@ -114,7 +123,7 @@ class Followee: ObservableObject, Identifiable {
     func fetchRemoteData(api: TAPI) async {
         self.isLoading = true
         let start = Date().addingTimeInterval(-.days(1))
-        let filter = TDatum.Filter(startDate: start, types: ["cbg"])
+        let filter = TDatum.Filter(startDate: start, types: ["cbg", "basal", "bolus", "insulin", "food"])
         do {
             let (data, _) = try await api.listData(filter: filter, userId: userId)
 
@@ -123,6 +132,7 @@ class Followee: ObservableObject, Identifiable {
             delegate?.stateDidChange(for: self)
 
             var newSamples = [NewGlucoseSample]()
+            var newDoses = [DoseEntry]()
 
             for datum in data {
                 switch datum {
@@ -130,12 +140,24 @@ class Followee: ObservableObject, Identifiable {
                     if let sample = cbg.newGlucoseSample {
                         newSamples.append(sample)
                     }
+                case let basal as TAutomatedBasalDatum:
+                    if let dose = basal.dose {
+                        newDoses.append(dose)
+                    }
+                case let bolus as TAutomatedBolusDatum:
+                    if let dose = bolus.dose {
+                        newDoses.append(dose)
+                    }
                 default:
+                    print("Unhandled: \(datum)")
                     break
                 }
             }
             if !newSamples.isEmpty {
                 glucoseStore.addGlucoseSamples(newSamples) { result in }
+            }
+            if !newDoses.isEmpty {
+                doseStore.addDoses(newDoses, from: nil) { error in }
             }
         } catch {
             log.error("Unable to fetch data for %{public}@: %{public}@", userId, error.localizedDescription)
