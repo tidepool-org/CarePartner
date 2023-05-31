@@ -18,6 +18,7 @@ import Combine
 class Followee: ObservableObject, Identifiable {
 
     @Published var status: FolloweeStatus
+    @Published var isLoading: Bool = false
 
     let name: String
     let userId: String
@@ -81,6 +82,8 @@ class Followee: ObservableObject, Identifiable {
     }
 
     func fetchRemoteData(api: TAPI) async {
+        print("******* setting isLoading = true")
+        self.isLoading = true
         let start = Date().addingTimeInterval(-.days(1))
         let filter = TDatum.Filter(startDate: start, types: ["cbg"])
         do {
@@ -106,6 +109,8 @@ class Followee: ObservableObject, Identifiable {
         } catch {
             log.error("Unable to fetch data for %{public}@: %{public}@", userId, error.localizedDescription)
         }
+        print("******* setting isLoading = false")
+        self.isLoading = false
     }
 }
 

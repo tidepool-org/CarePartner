@@ -58,6 +58,7 @@ struct FolloweeStatusView: View {
         HStack(spacing: 12) {
             cgmStatus
             LoopCircleView(closeLoop: true, lastLoopCompleted: Date(), dataIsStale: false)
+                .animation(Animation.easeInOut(duration: 2), value: 5)
             Text("1.5 U/hr")
                 .font(.headline)
                 .frame(maxWidth: .infinity)
@@ -71,9 +72,11 @@ struct FolloweeStatusView: View {
     var statusHeader: some View {
         HStack(spacing: 0) {
             HStack {
-                Image(systemName: "person.fill")
+                Image(systemName: "person.crop.circle")
+                    .fontWeight(.light)
                 Text(followee.status.name)
                     .font(.headline)
+
                 Spacer()
             }
             HStack {
@@ -89,10 +92,10 @@ struct FolloweeStatusView: View {
                         expanded.toggle()
                     }
                 } label: {
-                    Image(systemName: "chevron.up")
+                    Image(systemName: "chevron.forward")
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 8)
-                        .rotationEffect(Angle(degrees: expanded ? 0 : -180))
+                        .rotationEffect(Angle(degrees: expanded ? 90 : 0))
                 }
             }
         }

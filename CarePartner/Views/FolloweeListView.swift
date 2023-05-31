@@ -37,6 +37,7 @@ struct FolloweeListView: View {
             AccountSettingsView(client: client)
         }
         .navigationTitle("Following")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Button(role: .none, action: {
                 showingAccountSettings = true
