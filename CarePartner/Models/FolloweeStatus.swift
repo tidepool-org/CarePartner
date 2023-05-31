@@ -20,13 +20,22 @@ struct FolloweeStatus {
 }
 
 extension FolloweeStatus {
-    static var mock: FolloweeStatus {
+    static var mockSally: FolloweeStatus {
         return FolloweeStatus(
             name: "Sally",
             latestGlucose: StoredGlucoseSample.mock(),
             lastRefresh: Date(),
             basalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 0.45))
     }
+
+    static var mockOmar: FolloweeStatus {
+        return FolloweeStatus(
+            name: "Omar",
+            latestGlucose: StoredGlucoseSample.mock(),
+            lastRefresh: Date(),
+            basalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 0.45))
+    }
+
 }
 
 extension StoredGlucoseSample {

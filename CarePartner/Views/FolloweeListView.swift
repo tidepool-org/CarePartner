@@ -8,6 +8,7 @@
 
 import SwiftUI
 import TidepoolKit
+import LoopKitUI
 
 struct FolloweeListView: View {
 
@@ -60,16 +61,19 @@ struct FolloweeListView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            FolloweeListView(manager: FollowedAccountsMock(
-                accounts: [
-                    FolloweeStatus.mock
-                ]
-            ), client: TidepoolClient())
+            FolloweeListView(
+                manager: FolloweeManagerMock(
+                    followees: [
+                        FolloweeStatus.mockSally,
+                        FolloweeStatus.mockOmar
+                    ]),
+                client: TidepoolClient.loggedInMock)
         }
+        .environmentObject(DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter))
         NavigationView {
-            FolloweeListView(manager: FollowedAccountsMock(
-                accounts: []
-            ), client: TidepoolClient())
+            FolloweeListView(
+                manager: FolloweeManagerMock(followees: []),
+                client: TidepoolClient.loggedInMock)
         }
     }
 }

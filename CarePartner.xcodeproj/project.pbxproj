@@ -19,7 +19,7 @@
 		C13D97F82A265E6A00905DE4 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D97F72A265E6A00905DE4 /* Sequence.swift */; };
 		C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF412A262E7700D0E70E /* GlucoseTrend.swift */; };
 		C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF432A262F4800D0E70E /* FolloweeMock.swift */; };
-		C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */; };
+		C16D40B329AE6546009504BB /* FolloweeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */; };
 		C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C1787D5929B0183400C9D551 /* TidepoolKit */; };
 		C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; };
 		C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -37,7 +37,6 @@
 		C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */; };
 		C1DDFAA729A5895F0019E4CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAA629A5895F0019E4CB /* Assets.xcassets */; };
 		C1DDFAAB29A5895F0019E4CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */; };
-		C1F96E082A2403E300656332 /* Followee+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F96E072A2403E300656332 /* Followee+Mock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +77,7 @@
 		C13D97F72A265E6A00905DE4 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		C166AF412A262E7700D0E70E /* GlucoseTrend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrend.swift; sourceTree = "<group>"; };
 		C166AF432A262F4800D0E70E /* FolloweeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeMock.swift; sourceTree = "<group>"; };
-		C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelMock.swift; sourceTree = "<group>"; };
+		C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeManagerMock.swift; sourceTree = "<group>"; };
 		C1787D5B29B018C000C9D551 /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1787D6229B6719900C9D551 /* CarePartnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarePartnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1787D6429B6719900C9D551 /* CarePartnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarePartnerTests.swift; sourceTree = "<group>"; };
@@ -99,7 +98,6 @@
 		C1DDFAA629A5895F0019E4CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1DDFAA829A5895F0019E4CB /* CarePartner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarePartner.entitlements; sourceTree = "<group>"; };
 		C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		C1F96E072A2403E300656332 /* Followee+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Followee+Mock.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,10 +124,9 @@
 		C16D40B129AE6536009504BB /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */,
-				C17CDEF02A014C43003F4C84 /* TidepoolClientLoggedInMock.swift */,
-				C1F96E072A2403E300656332 /* Followee+Mock.swift */,
+				C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */,
 				C166AF432A262F4800D0E70E /* FolloweeMock.swift */,
+				C17CDEF02A014C43003F4C84 /* TidepoolClientLoggedInMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -355,13 +352,12 @@
 				C13D97F82A265E6A00905DE4 /* Sequence.swift in Sources */,
 				C11D2B8029D2598A00A218BC /* TimeInterval.swift in Sources */,
 				C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */,
-				C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */,
+				C16D40B329AE6546009504BB /* FolloweeManagerMock.swift in Sources */,
 				C17CDEF12A014C43003F4C84 /* TidepoolClientLoggedInMock.swift in Sources */,
 				C128BE512A017A63000167A1 /* SceneDelegate.swift in Sources */,
 				C11D2B7A29D2531300A218BC /* HKUnit.swift in Sources */,
 				C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */,
 				C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */,
-				C1F96E082A2403E300656332 /* Followee+Mock.swift in Sources */,
 				C128BE532A017A83000167A1 /* AppDelegate.swift in Sources */,
 				C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */,
 				C11D2B9C29D2746800A218BC /* FolloweeStatusView.swift in Sources */,
