@@ -14,24 +14,28 @@ import TidepoolKit
 import os.log
 import Combine
 
+protocol FolloweeDelegate: AnyObject {
+    func stateDidChange(for followee: Followee)
+}
+
 @MainActor
 class Followee: ObservableObject, Identifiable {
+    typealias RawValue = [String: Any]
 
     @Published var status: FolloweeStatus
     @Published var isLoading: Bool = false
 
     let name: String
     let userId: String
-    let basalRate: HKQuantity?
     let glucoseStore: GlucoseStore
     private let log = OSLog(category: "Followee")
     var cancellables: Set<AnyCancellable> = []
 
+    weak var delegate: FolloweeDelegate?
 
-    init(name: String, userId: String, basalRate: HKQuantity?) {
+    init(name: String, userId: String, lastRefresh: Date = .distantPast) {
         self.name = name
         self.userId = userId
-        self.basalRate = basalRate
 
         let url = NSPersistentContainer.defaultDirectoryURL.appendingPathComponent(userId)
         let cacheStore = PersistenceController(directoryURL: url)
@@ -46,8 +50,8 @@ class Followee: ObservableObject, Identifiable {
             name: name,
             latestGlucose: nil,
             trend: latestGlucose?.trend,
-            lastRefresh: .distantPast,
-            basalRate: basalRate)
+            lastRefresh: lastRefresh,
+            basalRate: nil)
 
         NotificationCenter.default.publisher(for: GlucoseStore.glucoseSamplesDidChange, object: nil)
             .receive(on: RunLoop.main)
@@ -56,9 +60,33 @@ class Followee: ObservableObject, Identifiable {
             }
             .store(in: &cancellables)
 
-        self.refreshGlucose()
+        glucoseStore.onReady { error in
+            if error == nil {
+                self.refreshGlucose()
+            }
+        }
     }
 
+    convenience init?(rawValue: [String : Any]) {
+        guard let name = rawValue["name"] as? String,
+              let userId = rawValue["userId"] as? String
+        else { return nil }
+
+        let lastRefresh = rawValue["lastRefresh"] as? Date ?? .distantPast
+
+        self.init(name: name, userId: userId, lastRefresh: lastRefresh)
+    }
+
+    var rawValue: [String : Any] {
+        return [
+            "name": name,
+            "userId": userId,
+            "lastRefresh": status.lastRefresh
+        ]
+    }
+
+
+    // MARK: - Remote data
     func refreshGlucose() {
         if let latest = glucoseStore.latestGlucose, latest.startDate.timeIntervalSinceNow > -.minutes(15) {
             status.latestGlucose = glucoseStore.latestGlucose
@@ -82,7 +110,6 @@ class Followee: ObservableObject, Identifiable {
     }
 
     func fetchRemoteData(api: TAPI) async {
-        print("******* setting isLoading = true")
         self.isLoading = true
         let start = Date().addingTimeInterval(-.days(1))
         let filter = TDatum.Filter(startDate: start, types: ["cbg"])
@@ -90,6 +117,8 @@ class Followee: ObservableObject, Identifiable {
             let (data, _) = try await api.listData(filter: filter, userId: userId)
 
             status.lastRefresh = Date()
+
+            delegate?.stateDidChange(for: self)
 
             var newSamples = [NewGlucoseSample]()
 
@@ -109,68 +138,6 @@ class Followee: ObservableObject, Identifiable {
         } catch {
             log.error("Unable to fetch data for %{public}@: %{public}@", userId, error.localizedDescription)
         }
-        print("******* setting isLoading = false")
         self.isLoading = false
-    }
-}
-
-extension TBloodGlucose.Units {
-    var hkUnit: HKUnit? {
-        switch self {
-        case .milligramsPerDeciliter:
-            return .milligramsPerDeciliter
-        case .millimolesPerLiter:
-            return .millimolesPerLiter
-        }
-    }
-}
-
-extension TBloodGlucose.Trend {
-    var loopKitTrend: GlucoseTrend {
-        switch self {
-        case .constant:
-            return .flat
-        case .slowFall:
-            return .down
-        case .slowRise:
-            return .up
-        case .moderateFall:
-            return .downDown
-        case .moderateRise:
-            return .upUp
-        case .rapidFall:
-            return .downDownDown
-        case .rapidRise:
-            return .upUpUp
-        }
-    }
-}
-
-extension TCBGDatum {
-    var newGlucoseSample: NewGlucoseSample? {
-        guard let unit = units?.hkUnit, let value = value, let date = time else {
-            return nil
-        }
-        let rate: HKQuantity?
-        if let trendRate {
-            let rateUnit = unit.unitDivided(by: .minute())
-            rate = HKQuantity(unit: rateUnit, doubleValue: trendRate)
-        } else {
-            rate = nil
-        }
-        let syncIdentifier: String
-        if let payload, let identifier = payload["syncIdentifier"] as? String {
-            syncIdentifier = identifier
-        } else {
-            syncIdentifier = id ?? String(describing: date.timeIntervalSince1970)
-        }
-        return NewGlucoseSample(
-            date: date,
-            quantity: HKQuantity(unit: unit, doubleValue: value),
-            condition: nil,
-            trend: trend?.loopKitTrend,
-            trendRate: rate,
-            isDisplayOnly: false, wasUserEntered: false,
-            syncIdentifier: syncIdentifier)
     }
 }

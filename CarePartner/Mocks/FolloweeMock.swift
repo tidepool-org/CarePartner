@@ -11,7 +11,7 @@ import Foundation
 class FolloweeMock: Followee {
 
     init(status: FolloweeStatus) {
-        super.init(name: status.name, userId: status.name, basalRate: nil)
+        super.init(name: status.name, userId: status.name)
         self.status = status
     }
 }

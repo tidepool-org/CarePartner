@@ -229,7 +229,6 @@ struct FolloweeSummaryView_Previews: PreviewProvider {
                 )
             )
             .environmentObject(DisplayGlucosePreference(displayGlucoseUnit: .millimolesPerLiter))
-
         }
     }
 }

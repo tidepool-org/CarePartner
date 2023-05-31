@@ -9,6 +9,7 @@
 import Foundation
 import TidepoolKit
 import Combine
+import os.log
 
 @MainActor
 class FolloweeManager: ObservableObject {
@@ -16,6 +17,8 @@ class FolloweeManager: ObservableObject {
     private let tidepoolClient: TidepoolClient
 
     @Published var followees: [String: Followee]
+
+    private let log = OSLog(category: "FolloweeManager")
 
     var cancellable : AnyCancellable?
 
@@ -28,6 +31,10 @@ class FolloweeManager: ObservableObject {
             Task {
                 await self?.refreshFollowees()
             }
+        }
+
+        Task {
+            await loadFollowees()
         }
     }
 
@@ -46,8 +53,9 @@ class FolloweeManager: ObservableObject {
 
                 // Add newly followed accounts
                 for user in users {
-                    if !followees.keys.contains(user.userid) {
-                        addFollowee(user: user)
+                    if !followees.keys.contains(user.userid), let followee = followeeFromUser(user: user) {
+                        storeFollowee(followee)
+                        addFollowee(followee)
                     }
                 }
                 
@@ -62,7 +70,9 @@ class FolloweeManager: ObservableObject {
     private func fetchFolloweeData() async {
         for followee in followees.values {
             Task {
+                print("Fetching \(followee.name)")
                 await followee.fetchRemoteData(api: tidepoolClient.api)
+                print("Fetching complete for \(followee.name)")
             }
         }
     }
@@ -72,12 +82,92 @@ class FolloweeManager: ObservableObject {
             return nil
         }
         let firstName = fullName.components(separatedBy: " ").first ?? fullName
-        return Followee(name: firstName, userId: user.userid, basalRate: nil)
+        return Followee(name: firstName, userId: user.userid)
     }
 
-    private func addFollowee(user: TTrusteeUser) {
-        if let followee = followeeFromUser(user: user) {
-            followees[user.userid] = followee
+    private func addFollowee(_ followee: Followee) {
+        followees[followee.userId] = followee
+        followee.delegate = self
+    }
+
+    // MARK: Persistence
+    private func loadFollowees() async {
+
+        let loadFolloweesTask: Task<[Followee], Never> = Task.detached(priority: .userInitiated) {
+
+            let fm = FileManager.default
+
+            guard let localDocuments = try? fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
+                preconditionFailure("Could not get a documents directory URL.")
+            }
+            let followeesPath = localDocuments.appendingPathComponent("followees")
+            if !fm.fileExists(atPath: followeesPath.path) {
+                // No followees stored
+                return []
+            }
+
+            var followees: [Followee] = []
+
+            do {
+                let files = try fm.contentsOfDirectory(at: followeesPath, includingPropertiesForKeys: nil)
+                for file in files {
+                    print("Found \(file)")
+                    let userId = file.deletingPathExtension().lastPathComponent
+
+                    print("last \(file.deletingPathExtension().lastPathComponent)")
+
+                    let data = try Data(contentsOf: file)
+                    self.log.info("Reading %{public}@ from %{public}@", userId, file.absoluteString)
+                    guard let value = try PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? Followee.RawValue else {
+                        self.log.error("Unexpected type for %{public}@", userId)
+                        continue
+                    }
+                    if let followee = await Followee(rawValue: value) {
+                        followees.append(followee)
+                    }
+                }
+            } catch {
+                self.log.error("Could not list contents of directory %{public}@: %{public}@", followeesPath.absoluteString, error.localizedDescription)
+            }
+
+            return followees
         }
+        let storedFollowees = await loadFolloweesTask.value
+
+        for followee in storedFollowees {
+            addFollowee(followee)
+        }
+    }
+
+    private func storeFollowee(_ followee: Followee) {
+        let fm = FileManager.default
+        guard let localDocuments = try? fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) else {
+            preconditionFailure("Could not get a documents directory URL.")
+        }
+        let followeesPath = localDocuments.appendingPathComponent("followees")
+        if !fm.fileExists(atPath: followeesPath.path) {
+            do {
+                try fm.createDirectory(atPath: followeesPath.path, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                preconditionFailure("Could not create storage directory: \(error.localizedDescription)")
+            }
+        }
+
+        let storageURL = followeesPath.appendingPathComponent(followee.userId + ".plist")
+
+        let newValue = followee.rawValue
+        do {
+            let data = try PropertyListSerialization.data(fromPropertyList: newValue, format: .binary, options: 0)
+            try data.write(to: storageURL, options: .atomic)
+            os_log(.info, "Wrote %{public}@ to %{public}@", followee.userId, storageURL.absoluteString)
+        } catch {
+            os_log(.error, "Error saving %{public}@: %{public}@", storageURL.absoluteString, error.localizedDescription)
+        }
+    }
+}
+
+extension FolloweeManager: FolloweeDelegate {
+    func stateDidChange(for followee: Followee) {
+        storeFollowee(followee)
     }
 }
