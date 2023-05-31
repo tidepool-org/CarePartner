@@ -31,7 +31,6 @@ jobs:
           name: Fastlane
           command: bundle exec fastlane release build_number:<< pipeline.number >>
           no_output_timeout: 20m
-          resource_class: macos.x86.medium.gen2
 
 workflows:
   build-test-release:
