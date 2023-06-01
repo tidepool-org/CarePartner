@@ -29,6 +29,8 @@ struct FolloweeStatus {
     var activeInsulin: InsulinValue?
     var activeCarbs: CarbValue?
     var basalState: BasalDeliveryState?
+    var lastBolusDate: Date?
+    var lastCarbDate: Date?
 }
 
 extension FolloweeStatus {

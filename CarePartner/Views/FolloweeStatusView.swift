@@ -216,11 +216,20 @@ struct FolloweeStatusView: View {
         }
     }
 
+    var bolusAgeText: String {
+        if let latest = followee.status.lastBolusDate {
+            let formatter = RelativeDateTimeFormatter()
+            formatter.unitsStyle = .short
+            return formatter.localizedString(for: latest, relativeTo: Date())
+        } else {
+            return ""
+        }
+    }
+
     var activeInsulinText: String {
         if let iob = followee.status.activeInsulin {
-            let formatter = QuantityFormatter(for: .internationalUnit())
             let quantity = HKQuantity(unit: .internationalUnit(), doubleValue: iob.value)
-            return formatter.string(from: quantity)!
+            return formatters.insulinFormatter.string(from: quantity)!
         } else {
             return "-"
         }
@@ -230,9 +239,12 @@ struct FolloweeStatusView: View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Active Insulin")
-                Text("Last Bolus: ")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                HStack(spacing: 0) {
+                    Text("Last Bolus: ")
+                    Text(bolusAgeText)
+                }
+                .font(.caption)
+                .foregroundColor(.secondary)
             }
             Spacer()
             Text(activeInsulinText)
@@ -242,10 +254,19 @@ struct FolloweeStatusView: View {
         }
     }
 
+    var carbAgeText: String {
+        if let latest = followee.status.lastCarbDate {
+            let formatter = RelativeDateTimeFormatter()
+            formatter.unitsStyle = .short
+            return formatter.localizedString(for: latest, relativeTo: Date())
+        } else {
+            return ""
+        }
+    }
+
     var activeCarbsText: String {
         if let cob = followee.status.activeCarbs {
-            let formatter = QuantityFormatter(for: .gram())
-            return formatter.string(from: cob.quantity)!
+            return formatters.carbFormatter.string(from: cob.quantity)!
         } else {
             return "-"
         }
@@ -255,9 +276,12 @@ struct FolloweeStatusView: View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Active Carbs")
-                Text("Last Entry: 3 mins ago")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                HStack(spacing: 0) {
+                    Text("Last Entry: ")
+                    Text(carbAgeText)
+                }
+                .font(.caption)
+                .foregroundColor(.secondary)
             }
             Spacer()
             Text(activeCarbsText)
@@ -280,7 +304,9 @@ struct FolloweeSummaryView_Previews: PreviewProvider {
                         glucoseDelta: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: -10),
                         activeInsulin: InsulinValue(startDate: Date(), value: 1.056),
                         activeCarbs: CarbValue(startDate: Date(), quantity: HKQuantity(unit: .gram(), doubleValue: 25)),
-                        basalState: BasalDeliveryState(date: Date(), rate: 2.55, scheduledRate: 1.0, isSuspended: false)
+                        basalState: BasalDeliveryState(date: Date(), rate: 2.55, scheduledRate: 1.0, isSuspended: false),
+                        lastBolusDate: Date().addingTimeInterval(-8*60),
+                        lastCarbDate: Date().addingTimeInterval(-4*60*60)
                     )
                 )
             )

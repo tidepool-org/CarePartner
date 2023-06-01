@@ -86,6 +86,7 @@ class Followee: ObservableObject, Identifiable {
         }
         Task {
             await self.getLatestDosingDecision()
+            await self.refreshInsulinData()
         }
     }
 
@@ -123,7 +124,6 @@ class Followee: ObservableObject, Identifiable {
         }
     }
 
-
     func refreshGlucose() async {
         if let latest = glucoseStore.latestGlucose, latest.startDate.timeIntervalSinceNow > -.minutes(15) {
             status.latestGlucose = glucoseStore.latestGlucose
@@ -141,6 +141,16 @@ class Followee: ObservableObject, Identifiable {
         } else {
             status.latestGlucose = nil
             status.glucoseDelta = nil
+        }
+    }
+
+    func refreshInsulinData() async {
+        do {
+            if let latestBolus = try await doseStore.getLatestBolus() {
+                status.lastBolusDate = max(status.lastBolusDate ?? .distantPast, latestBolus.startDate)
+            }
+        } catch {
+            log.error("Unable to fetch insulin data: %{public}@", userId, error.localizedDescription)
         }
     }
 
@@ -193,6 +203,9 @@ class Followee: ObservableObject, Identifiable {
             }
             if !newDoses.isEmpty {
                 doseStore.addDoses(newDoses, from: nil) { error in }
+                Task {
+                    await self.refreshInsulinData()
+                }
             }
             if !newDosingDecisions.isEmpty {
                 dosingDecisionStore.addStoredDosingDecisions(dosingDecisions: newDosingDecisions) { error in }
