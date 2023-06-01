@@ -17,7 +17,7 @@ struct CarePartnerApp: App {
 
     let client = TidepoolClient()
     let followedAccounts: FolloweeManager
-    let glucosePreference = DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter)
+    let formatters = QuantityFormatters(glucoseUnit: .milligramsPerDeciliter)
 
     init() {
         followedAccounts = FolloweeManager(client: client)
@@ -27,7 +27,7 @@ struct CarePartnerApp: App {
         WindowGroup {
             NavigationView {
                 FolloweeListView(manager: followedAccounts, client: client)
-                    .environmentObject(glucosePreference)
+                    .environmentObject(formatters)
             }
         }
     }

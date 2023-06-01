@@ -27,8 +27,11 @@ class Followee: ObservableObject, Identifiable {
 
     let name: String
     let userId: String
+
     let glucoseStore: GlucoseStore
     let doseStore: DoseStore
+    let dosingDecisionStore: DosingDecisionStore
+
     private let log = OSLog(category: "Followee")
     var cancellables: Set<AnyCancellable> = []
 
@@ -42,25 +45,28 @@ class Followee: ObservableObject, Identifiable {
         let cacheStore = PersistenceController(directoryURL: url)
         let provenanceIdentifier = HKSource.default().bundleIdentifier
 
+        let historyInterval = TimeInterval(days: 7)
+
         glucoseStore = GlucoseStore(
             cacheStore: cacheStore,
+            cacheLength: historyInterval,
             provenanceIdentifier: provenanceIdentifier
         )
 
         doseStore = DoseStore(
             cacheStore: cacheStore,
+            cacheLength: historyInterval,
             insulinModelProvider: PresetInsulinModelProvider(defaultRapidActingModel: nil),
             longestEffectDuration: ExponentialInsulinModelPreset.rapidActingAdult.effectDuration,
             basalProfile: nil,
             insulinSensitivitySchedule: nil,
             provenanceIdentifier: provenanceIdentifier)
 
-        status = FolloweeStatus(
-            name: name,
-            latestGlucose: nil,
-            trend: nil,
-            lastRefresh: lastRefresh,
-            basalRate: nil)
+        dosingDecisionStore = DosingDecisionStore(
+            store: cacheStore,
+            expireAfter: historyInterval)
+
+        status = FolloweeStatus(name: name, lastRefresh: lastRefresh)
 
         NotificationCenter.default.publisher(for: GlucoseStore.glucoseSamplesDidChange, object: nil)
             .receive(on: RunLoop.main)
@@ -77,6 +83,9 @@ class Followee: ObservableObject, Identifiable {
                     await self.refreshGlucose()
                 }
             }
+        }
+        Task {
+            await self.getLatestDosingDecision()
         }
     }
 
@@ -98,8 +107,23 @@ class Followee: ObservableObject, Identifiable {
         ]
     }
 
+    func getLatestDosingDecision() async {
+        do {
+            if let latest = try await dosingDecisionStore.fetchLatestDosingDecision() {
+                if let cob = latest.carbsOnBoard {
+                    status.activeCarbs = cob
+                }
+                if let iob = latest.insulinOnBoard {
+                    status.activeInsulin = iob
+                }
+            }
 
-    // MARK: - Remote data
+        } catch {
+            log.error("Unable to fetch dosing decisions: %{public}@", error.localizedDescription)
+        }
+    }
+
+
     func refreshGlucose() async {
         if let latest = glucoseStore.latestGlucose, latest.startDate.timeIntervalSinceNow > -.minutes(15) {
             status.latestGlucose = glucoseStore.latestGlucose
@@ -120,10 +144,14 @@ class Followee: ObservableObject, Identifiable {
         }
     }
 
+    // MARK: - Remote data
     func fetchRemoteData(api: TAPI) async {
         self.isLoading = true
-        let start = Date().addingTimeInterval(-.days(1))
-        let filter = TDatum.Filter(startDate: start, types: ["cbg", "basal", "bolus", "insulin", "food"])
+        let now = Date()
+        // Fetch at most 6 hours of data
+        let backfillInterval = min(now.timeIntervalSince(status.lastRefresh), .hours(6)) + .minutes(10)
+        let start = now.addingTimeInterval(-backfillInterval)
+        let filter = TDatum.Filter(startDate: start, types: ["cbg", "basal", "bolus", "insulin", "food", "dosingDecision", "pumpStatus", "controllerStatus"])
         do {
             let (data, _) = try await api.listData(filter: filter, userId: userId)
 
@@ -133,6 +161,7 @@ class Followee: ObservableObject, Identifiable {
 
             var newSamples = [NewGlucoseSample]()
             var newDoses = [DoseEntry]()
+            var newDosingDecisions = [StoredDosingDecision]()
 
             for datum in data {
                 switch datum {
@@ -148,6 +177,12 @@ class Followee: ObservableObject, Identifiable {
                     if let dose = bolus.dose {
                         newDoses.append(dose)
                     }
+                case let dosingDecision as TDosingDecisionDatum:
+                    if let storedDosingDecision = dosingDecision.storedDosingDecision {
+                        newDosingDecisions.append(storedDosingDecision)
+                    }
+                case let pumpStatus as TPumpStatusDatum:
+                    handlePumpStatus(pumpStatus: pumpStatus)
                 default:
                     print("Unhandled: \(datum)")
                     break
@@ -159,9 +194,48 @@ class Followee: ObservableObject, Identifiable {
             if !newDoses.isEmpty {
                 doseStore.addDoses(newDoses, from: nil) { error in }
             }
+            if !newDosingDecisions.isEmpty {
+                dosingDecisionStore.addStoredDosingDecisions(dosingDecisions: newDosingDecisions) { error in }
+                Task {
+                    await getLatestDosingDecision()
+                }
+            }
         } catch {
             log.error("Unable to fetch data for %{public}@: %{public}@", userId, error.localizedDescription)
         }
         self.isLoading = false
+    }
+
+    private func handlePumpStatus(pumpStatus: TPumpStatusDatum) {
+        guard let time = pumpStatus.time, let basalDelivery = pumpStatus.basalDelivery else {
+            return
+        }
+        let lastBasalStateTime = status.basalState?.date ?? .distantPast
+
+        let rate: Double
+        let isSuspended: Bool
+        let scheduledRate: Double = 1.23 // TODO: lookup current rate in settings schedule
+        switch basalDelivery.state {
+        case .none:
+            return
+        case .cancelingTemporary, .initiatingTemporary, .resuming, .suspending, .scheduled:
+            rate = scheduledRate
+            isSuspended = false
+        case .some(.suspended):
+            rate = 0
+            isSuspended = true
+        case .some(.temporary):
+            guard let dose = basalDelivery.dose, let doseRate = dose.rate else { return }
+            rate = doseRate
+            isSuspended = false
+        }
+
+        if time > lastBasalStateTime {
+            status.basalState = BasalDeliveryState(
+                date: time,
+                rate: rate,
+                scheduledRate: scheduledRate,
+                isSuspended: isSuspended)
+        }
     }
 }

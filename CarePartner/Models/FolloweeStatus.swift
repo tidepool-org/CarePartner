@@ -10,30 +10,42 @@ import Foundation
 import HealthKit
 import LoopKit
 
+struct BasalDeliveryState {
+    var date: Date
+    var rate: Double
+    var scheduledRate: Double
+    var isSuspended: Bool
+    var isTempBasal: Bool {
+        return rate != scheduledRate && !isSuspended
+    }
+}
+
 struct FolloweeStatus {
     var name: String
+    var lastRefresh: Date
     var latestGlucose: GlucoseSampleValue?
     var glucoseDelta: HKQuantity?
     var trend: GlucoseTrend?
-    var lastRefresh: Date
-    var basalRate: HKQuantity?
+    var activeInsulin: InsulinValue?
+    var activeCarbs: CarbValue?
+    var basalState: BasalDeliveryState?
 }
 
 extension FolloweeStatus {
     static var mockSally: FolloweeStatus {
         return FolloweeStatus(
             name: "Sally",
-            latestGlucose: StoredGlucoseSample.mock(),
             lastRefresh: Date(),
-            basalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 0.45))
+            latestGlucose: StoredGlucoseSample.mock(),
+            basalState: BasalDeliveryState(date: Date(), rate: 0.45, scheduledRate: 0.5, isSuspended: false))
     }
 
     static var mockOmar: FolloweeStatus {
         return FolloweeStatus(
             name: "Omar",
-            latestGlucose: StoredGlucoseSample.mock(),
             lastRefresh: Date(),
-            basalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: 0.45))
+            latestGlucose: StoredGlucoseSample.mock(),
+            basalState: BasalDeliveryState(date: Date(), rate: 0.45, scheduledRate: 0.5, isSuspended: false))
     }
 
 }

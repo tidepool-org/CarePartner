@@ -13,7 +13,7 @@ import HealthKit
 
 struct FolloweeStatusView: View {
 
-    @EnvironmentObject private var displayGlucosePreference: DisplayGlucosePreference
+    @EnvironmentObject private var formatters: QuantityFormatters
 
     @ObservedObject private var followee: Followee
 
@@ -21,18 +21,6 @@ struct FolloweeStatusView: View {
 
     init(followee: Followee) {
         self.followee = followee
-    }
-
-    var glucoseText: String {
-        if let glucose = followee.status.latestGlucose {
-            return displayGlucosePreference.format(glucose.quantity, includeUnit: false)
-        } else {
-            return "---"
-        }
-    }
-
-    var glucoseUnits: String {
-        return displayGlucosePreference.formatter.localizedUnitStringWithPlurality()
     }
 
     var body: some View {
@@ -59,14 +47,35 @@ struct FolloweeStatusView: View {
             cgmStatus
             LoopCircleView(closeLoop: true, lastLoopCompleted: Date(), dataIsStale: false)
                 .animation(Animation.easeInOut(duration: 2), value: 5)
-            Text("1.5 U/hr")
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(.background)
-                .frame(height: 44)
-                .cornerRadius(22)
+            pumpStatus
         }
+    }
+
+    var basalRateText: String {
+        if let rate = followee.status.basalState?.rate {
+            let quantity = HKQuantity(unit: .internationalUnitsPerHour, doubleValue: rate)
+            return formatters.insulinRateFormatter.string(from: quantity, includeUnit: false)!
+
+        } else {
+            return "-"
+        }
+    }
+
+    var pumpStatus: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 3) {
+            Text(basalRateText)
+                .font(.system(size: 30))
+                .fontWeight(.black)
+                .foregroundColor(.insulin)
+            Text("U/hr")
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(.background)
+        .frame(height: 44)
+        .cornerRadius(22)
     }
 
     var statusHeader: some View {
@@ -100,6 +109,18 @@ struct FolloweeStatusView: View {
             }
         }
         .frame(maxWidth: .infinity)
+    }
+
+    var glucoseText: String {
+        if let glucose = followee.status.latestGlucose {
+            return formatters.glucoseFormatter.string(from: glucose.quantity, includeUnit: false)!
+        } else {
+            return "---"
+        }
+    }
+
+    var glucoseUnits: String {
+        return formatters.glucoseFormatter.localizedUnitStringWithPlurality()
     }
 
     var cgmStatus: some View {
@@ -160,7 +181,7 @@ struct FolloweeStatusView: View {
             } else {
                 signText = ""
             }
-            return signText + displayGlucosePreference.format(delta, includeUnit: false)
+            return signText + formatters.glucoseFormatter.string(from: delta, includeUnit: false)!
         } else {
             return NSLocalizedString("-", comment: "Placeholder when glucose delta is not available")
         }
@@ -195,6 +216,16 @@ struct FolloweeStatusView: View {
         }
     }
 
+    var activeInsulinText: String {
+        if let iob = followee.status.activeInsulin {
+            let formatter = QuantityFormatter(for: .internationalUnit())
+            let quantity = HKQuantity(unit: .internationalUnit(), doubleValue: iob.value)
+            return formatter.string(from: quantity)!
+        } else {
+            return "-"
+        }
+    }
+
     var insulinDetail: some View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
@@ -204,10 +235,19 @@ struct FolloweeStatusView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            Text("4.35 U")
+            Text(activeInsulinText)
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.insulin)
+        }
+    }
+
+    var activeCarbsText: String {
+        if let cob = followee.status.activeCarbs {
+            let formatter = QuantityFormatter(for: .gram())
+            return formatter.string(from: cob.quantity)!
+        } else {
+            return "-"
         }
     }
 
@@ -220,7 +260,7 @@ struct FolloweeStatusView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            Text("25 g")
+            Text(activeCarbsText)
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.carbs)
@@ -235,13 +275,16 @@ struct FolloweeSummaryView_Previews: PreviewProvider {
                 followee: FolloweeMock(
                     status: FolloweeStatus(
                         name: "Sally",
+                        lastRefresh: Date(),
                         latestGlucose: StoredGlucoseSample.mock(150, .downDown),
                         glucoseDelta: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: -10),
-                        lastRefresh: Date()
+                        activeInsulin: InsulinValue(startDate: Date(), value: 1.056),
+                        activeCarbs: CarbValue(startDate: Date(), quantity: HKQuantity(unit: .gram(), doubleValue: 25)),
+                        basalState: BasalDeliveryState(date: Date(), rate: 2.55, scheduledRate: 1.0, isSuspended: false)
                     )
                 )
             )
-            .environmentObject(DisplayGlucosePreference(displayGlucoseUnit: .millimolesPerLiter))
+            .environmentObject(QuantityFormatters(glucoseUnit: .milligramsPerDeciliter))
         }
     }
 }

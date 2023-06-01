@@ -69,7 +69,7 @@ struct ContentView_Previews: PreviewProvider {
                     ]),
                 client: TidepoolClient.loggedInMock)
         }
-        .environmentObject(DisplayGlucosePreference(displayGlucoseUnit: .milligramsPerDeciliter))
+        .environmentObject(QuantityFormatters(glucoseUnit: .milligramsPerDeciliter))
         NavigationView {
             FolloweeListView(
                 manager: FolloweeManagerMock(followees: []),
