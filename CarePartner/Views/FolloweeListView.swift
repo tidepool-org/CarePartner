@@ -11,6 +11,7 @@ import TidepoolKit
 import LoopKitUI
 
 struct FolloweeListView: View {
+    @Environment(\.scenePhase) var scenePhase
 
     @ObservedObject private var manager: FolloweeManager
     @ObservedObject private var client: TidepoolClient
@@ -54,6 +55,11 @@ struct FolloweeListView: View {
         .refreshable {
             await manager.refreshFollowees()
             print("Do your refresh work here")
+        }
+        .onChange(of: scenePhase) { newPhase in
+            Task {
+                await manager.refreshFollowees()
+            }
         }
     }
 }
