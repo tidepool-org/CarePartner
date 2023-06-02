@@ -57,8 +57,10 @@ struct FolloweeListView: View {
             print("Do your refresh work here")
         }
         .onChange(of: scenePhase) { newPhase in
-            Task {
-                await manager.refreshFollowees()
+            if newPhase == .active {
+                Task {
+                    await manager.refreshFollowees()
+                }
             }
         }
     }

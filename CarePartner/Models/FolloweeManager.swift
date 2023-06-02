@@ -22,12 +22,14 @@ class FolloweeManager: ObservableObject {
 
     var cancellable : AnyCancellable?
 
+    var refreshTimer: Timer?
+
     init(client: TidepoolClient) {
         tidepoolClient = client
         followees = [:]
 
         // When account changes, refresh list
-        cancellable = client.$session.sink { [weak self] _ in
+        cancellable = client.$session.dropFirst().sink { [weak self] _ in
             Task {
                 await self?.refreshFollowees()
             }
@@ -37,6 +39,8 @@ class FolloweeManager: ObservableObject {
             await loadFollowees()
         }
     }
+
+    
 
     public func refreshFollowees() async {
         do {
