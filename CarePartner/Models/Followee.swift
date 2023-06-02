@@ -30,6 +30,7 @@ class Followee: ObservableObject, Identifiable {
 
     let glucoseStore: GlucoseStore
     let doseStore: DoseStore
+    let carbStore: CarbStore
     let dosingDecisionStore: DosingDecisionStore
 
     private let log = OSLog(category: "Followee")
@@ -62,6 +63,12 @@ class Followee: ObservableObject, Identifiable {
             insulinSensitivitySchedule: nil,
             provenanceIdentifier: provenanceIdentifier)
 
+        carbStore = CarbStore(
+            cacheStore: cacheStore,
+            cacheLength: historyInterval,
+            defaultAbsorptionTimes: (fast: .minutes(30), medium: .hours(3), slow: .hours(5)),
+            provenanceIdentifier: provenanceIdentifier)
+
         dosingDecisionStore = DosingDecisionStore(
             store: cacheStore,
             expireAfter: historyInterval)
@@ -87,6 +94,7 @@ class Followee: ObservableObject, Identifiable {
         Task {
             await self.getLatestDosingDecision()
             await self.refreshInsulinData()
+            await self.refreshMealData()
         }
     }
 
@@ -154,6 +162,16 @@ class Followee: ObservableObject, Identifiable {
         }
     }
 
+    func refreshMealData() async {
+        do {
+            if let latestCarbEntry = try await carbStore.fetchLatestCarbEntry() {
+                status.lastCarbDate =  max(status.lastCarbDate ?? .distantPast, latestCarbEntry.startDate)
+            }
+        } catch {
+            log.error("Unable to fetch carb data: %{public}@", userId, error.localizedDescription)
+        }
+    }
+
     // MARK: - Remote data
     func fetchRemoteData(api: TAPI) async {
         self.isLoading = true
@@ -171,6 +189,7 @@ class Followee: ObservableObject, Identifiable {
 
             var newSamples = [NewGlucoseSample]()
             var newDoses = [DoseEntry]()
+            var newCarbEntries = [SyncCarbObject]()
             var newDosingDecisions = [StoredDosingDecision]()
 
             for datum in data {
@@ -186,6 +205,14 @@ class Followee: ObservableObject, Identifiable {
                 case let bolus as TAutomatedBolusDatum:
                     if let dose = bolus.dose {
                         newDoses.append(dose)
+                    }
+                case let bolus as TNormalBolusDatum:
+                    if let dose = bolus.dose {
+                        newDoses.append(dose)
+                    }
+                case let food as TFoodDatum:
+                    if let carbEntry = food.syncCarbObject {
+                        newCarbEntries.append(carbEntry)
                     }
                 case let dosingDecision as TDosingDecisionDatum:
                     if let storedDosingDecision = dosingDecision.storedDosingDecision {
@@ -205,6 +232,12 @@ class Followee: ObservableObject, Identifiable {
                 doseStore.addDoses(newDoses, from: nil) { error in }
                 Task {
                     await self.refreshInsulinData()
+                }
+            }
+            if !newCarbEntries.isEmpty {
+                carbStore.setSyncCarbObjects(newCarbEntries) { error in }
+                Task {
+                    await self.refreshMealData()
                 }
             }
             if !newDosingDecisions.isEmpty {

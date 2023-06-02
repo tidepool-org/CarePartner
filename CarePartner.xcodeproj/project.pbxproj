@@ -23,6 +23,9 @@
 		C13D98012A28012400905DE4 /* TAutomatedBolusDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98002A28012400905DE4 /* TAutomatedBolusDatum.swift */; };
 		C13D98032A28D2DE00905DE4 /* TDosingDecisionDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98022A28D2DE00905DE4 /* TDosingDecisionDatum.swift */; };
 		C13D98052A2912EC00905DE4 /* QuantityFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98042A2912EC00905DE4 /* QuantityFormatters.swift */; };
+		C13D98072A293A3A00905DE4 /* TNormalBolusDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98062A293A3A00905DE4 /* TNormalBolusDatum.swift */; };
+		C13D980E2A2A627900905DE4 /* TFoodDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D980D2A2A627900905DE4 /* TFoodDatum.swift */; };
+		C13D98102A2A6AA700905DE4 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D980F2A2A6AA700905DE4 /* Date.swift */; };
 		C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF412A262E7700D0E70E /* GlucoseTrend.swift */; };
 		C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF432A262F4800D0E70E /* FolloweeMock.swift */; };
 		C16D40B329AE6546009504BB /* FolloweeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */; };
@@ -86,6 +89,9 @@
 		C13D98002A28012400905DE4 /* TAutomatedBolusDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAutomatedBolusDatum.swift; sourceTree = "<group>"; };
 		C13D98022A28D2DE00905DE4 /* TDosingDecisionDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDosingDecisionDatum.swift; sourceTree = "<group>"; };
 		C13D98042A2912EC00905DE4 /* QuantityFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityFormatters.swift; sourceTree = "<group>"; };
+		C13D98062A293A3A00905DE4 /* TNormalBolusDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNormalBolusDatum.swift; sourceTree = "<group>"; };
+		C13D980D2A2A627900905DE4 /* TFoodDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFoodDatum.swift; sourceTree = "<group>"; };
+		C13D980F2A2A6AA700905DE4 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		C166AF412A262E7700D0E70E /* GlucoseTrend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrend.swift; sourceTree = "<group>"; };
 		C166AF432A262F4800D0E70E /* FolloweeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeMock.swift; sourceTree = "<group>"; };
 		C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeManagerMock.swift; sourceTree = "<group>"; };
@@ -134,11 +140,13 @@
 		C13D97FD2A27F77300905DE4 /* DataConversion */ = {
 			isa = PBXGroup;
 			children = (
-				C13D97FB2A27CCF700905DE4 /* TBloodGlucose.swift */,
-				C13D97F92A27CCB900905DE4 /* TCBGDatum.swift */,
 				C13D97FE2A27F79800905DE4 /* TAutomatedBasalDatum.swift */,
 				C13D98002A28012400905DE4 /* TAutomatedBolusDatum.swift */,
+				C13D97FB2A27CCF700905DE4 /* TBloodGlucose.swift */,
+				C13D97F92A27CCB900905DE4 /* TCBGDatum.swift */,
 				C13D98022A28D2DE00905DE4 /* TDosingDecisionDatum.swift */,
+				C13D98062A293A3A00905DE4 /* TNormalBolusDatum.swift */,
+				C13D980D2A2A627900905DE4 /* TFoodDatum.swift */,
 			);
 			path = DataConversion;
 			sourceTree = "<group>";
@@ -192,6 +200,7 @@
 				C19F117029AD5A620055AC28 /* OSLog.swift */,
 				C13D97F72A265E6A00905DE4 /* Sequence.swift */,
 				C11D2B7F29D2598A00A218BC /* TimeInterval.swift */,
+				C13D980F2A2A6AA700905DE4 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -372,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C11D2B7E29D2596800A218BC /* LoopCompletionFreshness.swift in Sources */,
+				C13D98102A2A6AA700905DE4 /* Date.swift in Sources */,
 				C13D97F82A265E6A00905DE4 /* Sequence.swift in Sources */,
 				C11D2B8029D2598A00A218BC /* TimeInterval.swift in Sources */,
 				C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */,
@@ -386,9 +396,11 @@
 				C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */,
 				C128BE532A017A83000167A1 /* AppDelegate.swift in Sources */,
 				C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */,
+				C13D98072A293A3A00905DE4 /* TNormalBolusDatum.swift in Sources */,
 				C11D2B9C29D2746800A218BC /* FolloweeStatusView.swift in Sources */,
 				C13D97F62A26558600905DE4 /* Color.swift in Sources */,
 				C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */,
+				C13D980E2A2A627900905DE4 /* TFoodDatum.swift in Sources */,
 				C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */,
 				C13D97FA2A27CCB900905DE4 /* TCBGDatum.swift in Sources */,
 				C13D98012A28012400905DE4 /* TAutomatedBolusDatum.swift in Sources */,

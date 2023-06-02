@@ -6,7 +6,6 @@
 //  Copyright © 2023 Tidepool Project. All rights reserved.
 //
 
-import Foundation
 import TidepoolKit
 import HealthKit
 import LoopKit
