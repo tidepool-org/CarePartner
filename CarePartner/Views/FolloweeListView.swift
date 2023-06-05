@@ -16,6 +16,8 @@ struct FolloweeListView: View {
     @ObservedObject private var manager: FolloweeManager
     @ObservedObject private var client: TidepoolClient
 
+    let timer = Timer.publish(every: .minutes(1), on: .main, in: .common).autoconnect()
+
     @State private var showingAccountSettings = false
 
     init(manager: FolloweeManager, client: TidepoolClient) {
@@ -58,6 +60,13 @@ struct FolloweeListView: View {
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
+                Task {
+                    await manager.refreshFollowees()
+                }
+            }
+        }
+        .onReceive(timer) { time in
+            if scenePhase == .active {
                 Task {
                     await manager.refreshFollowees()
                 }

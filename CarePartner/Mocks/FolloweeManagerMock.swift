@@ -16,4 +16,8 @@ class FolloweeManagerMock: FolloweeManager {
             self.followees[status.name] = FolloweeMock(status: status)
         }
     }
+
+    override func refreshFollowees() async {
+        await fetchFolloweeData()
+    }
 }

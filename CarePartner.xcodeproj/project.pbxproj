@@ -26,6 +26,8 @@
 		C13D98072A293A3A00905DE4 /* TNormalBolusDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98062A293A3A00905DE4 /* TNormalBolusDatum.swift */; };
 		C13D980E2A2A627900905DE4 /* TFoodDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D980D2A2A627900905DE4 /* TFoodDatum.swift */; };
 		C13D98102A2A6AA700905DE4 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D980F2A2A6AA700905DE4 /* Date.swift */; };
+		C156EB652A2E1F5D00AC9DED /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = C156EB642A2E1F5D00AC9DED /* SwiftCharts */; };
+		C156EB662A2E1F7E00AC9DED /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C156EB642A2E1F5D00AC9DED /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF412A262E7700D0E70E /* GlucoseTrend.swift */; };
 		C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF432A262F4800D0E70E /* FolloweeMock.swift */; };
 		C16D40B329AE6546009504BB /* FolloweeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */; };
@@ -65,6 +67,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */,
+				C156EB662A2E1F7E00AC9DED /* SwiftCharts in Embed Frameworks */,
 				C1C2AF252A225A38006D13B6 /* LoopKitUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -129,6 +132,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */,
+				C156EB652A2E1F5D00AC9DED /* SwiftCharts in Frameworks */,
 				C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */,
 				C1C2AF242A225A38006D13B6 /* LoopKitUI.framework in Frameworks */,
 			);
@@ -301,6 +305,7 @@
 			name = CarePartner;
 			packageProductDependencies = (
 				C1787D5929B0183400C9D551 /* TidepoolKit */,
+				C156EB642A2E1F5D00AC9DED /* SwiftCharts */,
 			);
 			productName = CarePartner;
 			productReference = C1DDFA9F29A5895E0019E4CB /* CarePartner.app */;
@@ -337,6 +342,7 @@
 			mainGroup = C1DDFA9629A5895E0019E4CB;
 			packageReferences = (
 				C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */,
+				C156EB632A2E1F5D00AC9DED /* XCRemoteSwiftPackageReference "SwiftCharts" */,
 			);
 			productRefGroup = C1DDFAA029A5895E0019E4CB /* Products */;
 			projectDirPath = "";
@@ -700,6 +706,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C156EB632A2E1F5D00AC9DED /* XCRemoteSwiftPackageReference "SwiftCharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanschuetz/SwiftCharts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.5;
+			};
+		};
 		C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tidepool-org/TidepoolKit.git";
@@ -711,6 +725,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C156EB642A2E1F5D00AC9DED /* SwiftCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C156EB632A2E1F5D00AC9DED /* XCRemoteSwiftPackageReference "SwiftCharts" */;
+			productName = SwiftCharts;
+		};
 		C1787D5929B0183400C9D551 /* TidepoolKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */;

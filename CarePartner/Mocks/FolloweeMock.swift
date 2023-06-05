@@ -7,14 +7,33 @@
 //
 
 import Foundation
+import TidepoolKit
 
 class FolloweeMock: Followee {
 
-    init(status: FolloweeStatus) {
+    init(status: FolloweeStatus, triggerLoading: Bool = false) {
         super.init(name: status.name, userId: status.name)
         self.status = status
+
+        if triggerLoading {
+            mockSlowLoad()
+        }
+    }
+
+    func mockSlowLoad() {
+        DispatchQueue.main.async() {
+            self.isLoading = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.isLoading = false
+        }
     }
 
     override func refreshGlucose() async {
     }
+
+    override func fetchRemoteData(api: TAPI) async {
+        mockSlowLoad()
+    }
+
 }

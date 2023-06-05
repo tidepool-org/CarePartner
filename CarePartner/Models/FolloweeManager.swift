@@ -22,8 +22,6 @@ class FolloweeManager: ObservableObject {
 
     var cancellable : AnyCancellable?
 
-    var refreshTimer: Timer?
-
     init(client: TidepoolClient) {
         tidepoolClient = client
         followees = [:]
@@ -39,8 +37,6 @@ class FolloweeManager: ObservableObject {
             await loadFollowees()
         }
     }
-
-    
 
     public func refreshFollowees() async {
         do {
@@ -71,7 +67,7 @@ class FolloweeManager: ObservableObject {
         }
     }
 
-    private func fetchFolloweeData() async {
+    func fetchFolloweeData() async {
         for followee in followees.values {
             Task {
                 print("Fetching \(followee.name)")

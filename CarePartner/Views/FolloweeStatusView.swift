@@ -88,11 +88,17 @@ struct FolloweeStatusView: View {
 
                 Spacer()
             }
-            HStack {
-                Image(systemName: "arrow.triangle.2.circlepath")
-                Text(followee.status.lastRefresh, style: .time)
+            ZStack {
+                ProgressView()
+                    .opacity(followee.isLoading ? 1 : 0)
+                HStack {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                    Text(followee.status.lastRefresh, style: .time)
+                }
+                .opacity(followee.isLoading ? 0 : 1)
+                .font(.caption)
             }
-            .font(.caption)
+            .animation(.easeIn, value: followee.isLoading)
             .foregroundColor(.secondary)
             HStack {
                 Spacer()
@@ -307,7 +313,8 @@ struct FolloweeSummaryView_Previews: PreviewProvider {
                         basalState: BasalDeliveryState(date: Date(), rate: 2.55, scheduledRate: 1.0, isSuspended: false),
                         lastBolusDate: Date().addingTimeInterval(-8*60),
                         lastCarbDate: Date().addingTimeInterval(-4*60*60)
-                    )
+                    ),
+                    triggerLoading: true
                 )
             )
             .environmentObject(QuantityFormatters(glucoseUnit: .milligramsPerDeciliter))
