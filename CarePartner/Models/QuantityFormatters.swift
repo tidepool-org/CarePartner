@@ -30,6 +30,9 @@ public class QuantityFormatters: ObservableObject {
 
         self.glucoseFormatter.numberFormatter.notANumberSymbol = "–"
         self.glucoseRateFormatter.numberFormatter.notANumberSymbol = "–"
+
+        self.insulinFormatter.numberFormatter.maximumFractionDigits = 2
+        self.insulinRateFormatter.numberFormatter.maximumFractionDigits = 2
     }
 
 }
