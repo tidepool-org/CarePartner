@@ -3,6 +3,7 @@
 //  CarePartner
 //
 //  Created by Pete Schwamb on 3/27/23.
+//  Copyright © 2023 Tidepool Project. All rights reserved.
 //
 
 import Foundation

@@ -12,21 +12,39 @@
 		C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7B29D2593300A218BC /* LoopCircleView.swift */; };
 		C11D2B7E29D2596800A218BC /* LoopCompletionFreshness.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7D29D2596800A218BC /* LoopCompletionFreshness.swift */; };
 		C11D2B8029D2598A00A218BC /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7F29D2598A00A218BC /* TimeInterval.swift */; };
-		C11D2B9C29D2746800A218BC /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B9B29D2746800A218BC /* AccountView.swift */; };
+		C11D2B9C29D2746800A218BC /* FolloweeStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B9B29D2746800A218BC /* FolloweeStatusView.swift */; };
 		C128BE512A017A63000167A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C128BE502A017A63000167A1 /* SceneDelegate.swift */; };
 		C128BE532A017A83000167A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C128BE522A017A83000167A1 /* AppDelegate.swift */; };
-		C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */; };
+		C13D97F62A26558600905DE4 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D97F52A26558600905DE4 /* Color.swift */; };
+		C13D97F82A265E6A00905DE4 /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D97F72A265E6A00905DE4 /* Sequence.swift */; };
+		C13D97FA2A27CCB900905DE4 /* TCBGDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D97F92A27CCB900905DE4 /* TCBGDatum.swift */; };
+		C13D97FC2A27CCF700905DE4 /* TBloodGlucose.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D97FB2A27CCF700905DE4 /* TBloodGlucose.swift */; };
+		C13D97FF2A27F79800905DE4 /* TAutomatedBasalDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D97FE2A27F79800905DE4 /* TAutomatedBasalDatum.swift */; };
+		C13D98012A28012400905DE4 /* TAutomatedBolusDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98002A28012400905DE4 /* TAutomatedBolusDatum.swift */; };
+		C13D98032A28D2DE00905DE4 /* TDosingDecisionDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98022A28D2DE00905DE4 /* TDosingDecisionDatum.swift */; };
+		C13D98052A2912EC00905DE4 /* QuantityFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98042A2912EC00905DE4 /* QuantityFormatters.swift */; };
+		C13D98072A293A3A00905DE4 /* TNormalBolusDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98062A293A3A00905DE4 /* TNormalBolusDatum.swift */; };
+		C13D980E2A2A627900905DE4 /* TFoodDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D980D2A2A627900905DE4 /* TFoodDatum.swift */; };
+		C13D98102A2A6AA700905DE4 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D980F2A2A6AA700905DE4 /* Date.swift */; };
+		C156EB652A2E1F5D00AC9DED /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = C156EB642A2E1F5D00AC9DED /* SwiftCharts */; };
+		C156EB662A2E1F7E00AC9DED /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C156EB642A2E1F5D00AC9DED /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF412A262E7700D0E70E /* GlucoseTrend.swift */; };
+		C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF432A262F4800D0E70E /* FolloweeMock.swift */; };
+		C16D40B329AE6546009504BB /* FolloweeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */; };
 		C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C1787D5929B0183400C9D551 /* TidepoolKit */; };
 		C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; };
 		C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1787D6529B6719900C9D551 /* CarePartnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1787D6429B6719900C9D551 /* CarePartnerTests.swift */; };
 		C17CDEF12A014C43003F4C84 /* TidepoolClientLoggedInMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17CDEF02A014C43003F4C84 /* TidepoolClientLoggedInMock.swift */; };
-		C19F116B29AD47830055AC28 /* FollowedAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116A29AD47830055AC28 /* FollowedAccounts.swift */; };
+		C19F116B29AD47830055AC28 /* FolloweeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116A29AD47830055AC28 /* FolloweeManager.swift */; };
 		C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */; };
 		C19F117129AD5A620055AC28 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117029AD5A620055AC28 /* OSLog.swift */; };
-		C19F117429AE583A0055AC28 /* AccountData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117329AE583A0055AC28 /* AccountData.swift */; };
+		C19F117429AE583A0055AC28 /* Followee.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117329AE583A0055AC28 /* Followee.swift */; };
+		C1C2AF222A214E7D006D13B6 /* FolloweeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C2AF212A214E7D006D13B6 /* FolloweeStatus.swift */; };
+		C1C2AF242A225A38006D13B6 /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */; };
+		C1C2AF252A225A38006D13B6 /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA229A5895E0019E4CB /* CarePartnerApp.swift */; };
-		C1DDFAA529A5895E0019E4CB /* FollowedAccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA429A5895E0019E4CB /* FollowedAccountsView.swift */; };
+		C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */; };
 		C1DDFAA729A5895F0019E4CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAA629A5895F0019E4CB /* Assets.xcassets */; };
 		C1DDFAAB29A5895F0019E4CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -49,6 +67,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */,
+				C156EB662A2E1F7E00AC9DED /* SwiftCharts in Embed Frameworks */,
+				C1C2AF252A225A38006D13B6 /* LoopKitUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,10 +81,23 @@
 		C11D2B7B29D2593300A218BC /* LoopCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCircleView.swift; sourceTree = "<group>"; };
 		C11D2B7D29D2596800A218BC /* LoopCompletionFreshness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCompletionFreshness.swift; sourceTree = "<group>"; };
 		C11D2B7F29D2598A00A218BC /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
-		C11D2B9B29D2746800A218BC /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		C11D2B9B29D2746800A218BC /* FolloweeStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeStatusView.swift; sourceTree = "<group>"; };
 		C128BE502A017A63000167A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C128BE522A017A83000167A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryViewModelMock.swift; sourceTree = "<group>"; };
+		C13D97F52A26558600905DE4 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		C13D97F72A265E6A00905DE4 /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		C13D97F92A27CCB900905DE4 /* TCBGDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCBGDatum.swift; sourceTree = "<group>"; };
+		C13D97FB2A27CCF700905DE4 /* TBloodGlucose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBloodGlucose.swift; sourceTree = "<group>"; };
+		C13D97FE2A27F79800905DE4 /* TAutomatedBasalDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAutomatedBasalDatum.swift; sourceTree = "<group>"; };
+		C13D98002A28012400905DE4 /* TAutomatedBolusDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAutomatedBolusDatum.swift; sourceTree = "<group>"; };
+		C13D98022A28D2DE00905DE4 /* TDosingDecisionDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TDosingDecisionDatum.swift; sourceTree = "<group>"; };
+		C13D98042A2912EC00905DE4 /* QuantityFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityFormatters.swift; sourceTree = "<group>"; };
+		C13D98062A293A3A00905DE4 /* TNormalBolusDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TNormalBolusDatum.swift; sourceTree = "<group>"; };
+		C13D980D2A2A627900905DE4 /* TFoodDatum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TFoodDatum.swift; sourceTree = "<group>"; };
+		C13D980F2A2A6AA700905DE4 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		C166AF412A262E7700D0E70E /* GlucoseTrend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTrend.swift; sourceTree = "<group>"; };
+		C166AF432A262F4800D0E70E /* FolloweeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeMock.swift; sourceTree = "<group>"; };
+		C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeManagerMock.swift; sourceTree = "<group>"; };
 		C1787D5B29B018C000C9D551 /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1787D6229B6719900C9D551 /* CarePartnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarePartnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1787D6429B6719900C9D551 /* CarePartnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarePartnerTests.swift; sourceTree = "<group>"; };
@@ -72,13 +105,15 @@
 		C19F116129AD38D40055AC28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C19F116329AD38E00055AC28 /* TidepoolKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TidepoolKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C19F116A29AD47830055AC28 /* FollowedAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedAccounts.swift; sourceTree = "<group>"; };
+		C19F116A29AD47830055AC28 /* FolloweeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeManager.swift; sourceTree = "<group>"; };
 		C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TidepoolClient.swift; sourceTree = "<group>"; };
 		C19F117029AD5A620055AC28 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
-		C19F117329AE583A0055AC28 /* AccountData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountData.swift; sourceTree = "<group>"; };
+		C19F117329AE583A0055AC28 /* Followee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Followee.swift; sourceTree = "<group>"; };
+		C1C2AF212A214E7D006D13B6 /* FolloweeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeStatus.swift; sourceTree = "<group>"; };
+		C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1DDFA9F29A5895E0019E4CB /* CarePartner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarePartner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1DDFAA229A5895E0019E4CB /* CarePartnerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarePartnerApp.swift; sourceTree = "<group>"; };
-		C1DDFAA429A5895E0019E4CB /* FollowedAccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedAccountsView.swift; sourceTree = "<group>"; };
+		C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolloweeListView.swift; sourceTree = "<group>"; };
 		C1DDFAA629A5895F0019E4CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1DDFAA829A5895F0019E4CB /* CarePartner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarePartner.entitlements; sourceTree = "<group>"; };
 		C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -97,17 +132,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */,
+				C156EB652A2E1F5D00AC9DED /* SwiftCharts in Frameworks */,
 				C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */,
+				C1C2AF242A225A38006D13B6 /* LoopKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C13D97FD2A27F77300905DE4 /* DataConversion */ = {
+			isa = PBXGroup;
+			children = (
+				C13D97FE2A27F79800905DE4 /* TAutomatedBasalDatum.swift */,
+				C13D98002A28012400905DE4 /* TAutomatedBolusDatum.swift */,
+				C13D97FB2A27CCF700905DE4 /* TBloodGlucose.swift */,
+				C13D97F92A27CCB900905DE4 /* TCBGDatum.swift */,
+				C13D98022A28D2DE00905DE4 /* TDosingDecisionDatum.swift */,
+				C13D98062A293A3A00905DE4 /* TNormalBolusDatum.swift */,
+				C13D980D2A2A627900905DE4 /* TFoodDatum.swift */,
+			);
+			path = DataConversion;
+			sourceTree = "<group>";
+		};
 		C16D40B129AE6536009504BB /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				C16D40B229AE6546009504BB /* SummaryViewModelMock.swift */,
+				C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */,
+				C166AF432A262F4800D0E70E /* FolloweeMock.swift */,
 				C17CDEF02A014C43003F4C84 /* TidepoolClientLoggedInMock.swift */,
 			);
 			path = Mocks;
@@ -124,6 +176,7 @@
 		C19F116229AD38E00055AC28 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */,
 				C1787D5B29B018C000C9D551 /* LoopKit.framework */,
 				C19F116329AD38E00055AC28 /* TidepoolKit.framework */,
 				C19F116429AD38E00055AC28 /* TidepoolKitUI.framework */,
@@ -134,9 +187,9 @@
 		C19F116C29AD4AD60055AC28 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C11D2B9B29D2746800A218BC /* AccountView.swift */,
-				C1DDFAA429A5895E0019E4CB /* FollowedAccountsView.swift */,
 				C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */,
+				C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */,
+				C11D2B9B29D2746800A218BC /* FolloweeStatusView.swift */,
 				C11D2B7B29D2593300A218BC /* LoopCircleView.swift */,
 			);
 			path = Views;
@@ -145,9 +198,13 @@
 		C19F116F29AD5A570055AC28 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C19F117029AD5A620055AC28 /* OSLog.swift */,
+				C13D97F52A26558600905DE4 /* Color.swift */,
+				C166AF412A262E7700D0E70E /* GlucoseTrend.swift */,
 				C11D2B7929D2531300A218BC /* HKUnit.swift */,
+				C19F117029AD5A620055AC28 /* OSLog.swift */,
+				C13D97F72A265E6A00905DE4 /* Sequence.swift */,
 				C11D2B7F29D2598A00A218BC /* TimeInterval.swift */,
+				C13D980F2A2A6AA700905DE4 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -155,10 +212,12 @@
 		C19F117229AE582E0055AC28 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */,
-				C19F117329AE583A0055AC28 /* AccountData.swift */,
+				C19F117329AE583A0055AC28 /* Followee.swift */,
+				C19F116A29AD47830055AC28 /* FolloweeManager.swift */,
+				C1C2AF212A214E7D006D13B6 /* FolloweeStatus.swift */,
 				C11D2B7D29D2596800A218BC /* LoopCompletionFreshness.swift */,
-				C19F116A29AD47830055AC28 /* FollowedAccounts.swift */,
+				C19F116D29AD4AEA0055AC28 /* TidepoolClient.swift */,
+				C13D98042A2912EC00905DE4 /* QuantityFormatters.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -185,6 +244,7 @@
 		C1DDFAA129A5895E0019E4CB /* CarePartner */ = {
 			isa = PBXGroup;
 			children = (
+				C13D97FD2A27F77300905DE4 /* DataConversion */,
 				C16D40B129AE6536009504BB /* Mocks */,
 				C19F117229AE582E0055AC28 /* Models */,
 				C19F116F29AD5A570055AC28 /* Extensions */,
@@ -245,6 +305,7 @@
 			name = CarePartner;
 			packageProductDependencies = (
 				C1787D5929B0183400C9D551 /* TidepoolKit */,
+				C156EB642A2E1F5D00AC9DED /* SwiftCharts */,
 			);
 			productName = CarePartner;
 			productReference = C1DDFA9F29A5895E0019E4CB /* CarePartner.app */;
@@ -258,7 +319,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Tidepool Project";
 				TargetAttributes = {
 					C1787D6129B6719900C9D551 = {
@@ -281,6 +342,7 @@
 			mainGroup = C1DDFA9629A5895E0019E4CB;
 			packageReferences = (
 				C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */,
+				C156EB632A2E1F5D00AC9DED /* XCRemoteSwiftPackageReference "SwiftCharts" */,
 			);
 			productRefGroup = C1DDFAA029A5895E0019E4CB /* Products */;
 			projectDirPath = "";
@@ -325,21 +387,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				C11D2B7E29D2596800A218BC /* LoopCompletionFreshness.swift in Sources */,
+				C13D98102A2A6AA700905DE4 /* Date.swift in Sources */,
+				C13D97F82A265E6A00905DE4 /* Sequence.swift in Sources */,
 				C11D2B8029D2598A00A218BC /* TimeInterval.swift in Sources */,
-				C1DDFAA529A5895E0019E4CB /* FollowedAccountsView.swift in Sources */,
-				C16D40B329AE6546009504BB /* SummaryViewModelMock.swift in Sources */,
+				C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */,
+				C16D40B329AE6546009504BB /* FolloweeManagerMock.swift in Sources */,
 				C17CDEF12A014C43003F4C84 /* TidepoolClientLoggedInMock.swift in Sources */,
+				C13D98052A2912EC00905DE4 /* QuantityFormatters.swift in Sources */,
 				C128BE512A017A63000167A1 /* SceneDelegate.swift in Sources */,
+				C13D97FF2A27F79800905DE4 /* TAutomatedBasalDatum.swift in Sources */,
+				C13D98032A28D2DE00905DE4 /* TDosingDecisionDatum.swift in Sources */,
 				C11D2B7A29D2531300A218BC /* HKUnit.swift in Sources */,
+				C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */,
 				C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */,
 				C128BE532A017A83000167A1 /* AppDelegate.swift in Sources */,
 				C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */,
-				C11D2B9C29D2746800A218BC /* AccountView.swift in Sources */,
+				C13D98072A293A3A00905DE4 /* TNormalBolusDatum.swift in Sources */,
+				C11D2B9C29D2746800A218BC /* FolloweeStatusView.swift in Sources */,
+				C13D97F62A26558600905DE4 /* Color.swift in Sources */,
+				C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */,
+				C13D980E2A2A627900905DE4 /* TFoodDatum.swift in Sources */,
 				C19F116E29AD4AEA0055AC28 /* TidepoolClient.swift in Sources */,
-				C19F116B29AD47830055AC28 /* FollowedAccounts.swift in Sources */,
+				C13D97FA2A27CCB900905DE4 /* TCBGDatum.swift in Sources */,
+				C13D98012A28012400905DE4 /* TAutomatedBolusDatum.swift in Sources */,
+				C19F116B29AD47830055AC28 /* FolloweeManager.swift in Sources */,
 				C11D2B7629CF9FFE00A218BC /* AccountSettingsView.swift in Sources */,
+				C13D97FC2A27CCF700905DE4 /* TBloodGlucose.swift in Sources */,
+				C1C2AF222A214E7D006D13B6 /* FolloweeStatus.swift in Sources */,
 				C19F117129AD5A620055AC28 /* OSLog.swift in Sources */,
-				C19F117429AE583A0055AC28 /* AccountData.swift in Sources */,
+				C19F117429AE583A0055AC28 /* Followee.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +504,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -486,6 +563,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -513,6 +591,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CarePartner/Preview Content\"";
 				DEVELOPMENT_TEAM = 75U4X84TEG;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -557,6 +636,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CarePartner/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 75U4X84TEG;
@@ -581,8 +661,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.tidepool.carepartner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-                                PROVISIONING_PROFILE_SPECIFIER = "";
-                                "PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.tidepool.carepartner 1684937681";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.tidepool.carepartner 1684937681";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -626,6 +706,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C156EB632A2E1F5D00AC9DED /* XCRemoteSwiftPackageReference "SwiftCharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanschuetz/SwiftCharts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.5;
+			};
+		};
 		C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tidepool-org/TidepoolKit.git";
@@ -637,6 +725,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C156EB642A2E1F5D00AC9DED /* SwiftCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C156EB632A2E1F5D00AC9DED /* XCRemoteSwiftPackageReference "SwiftCharts" */;
+			productName = SwiftCharts;
+		};
 		C1787D5929B0183400C9D551 /* TidepoolKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */;

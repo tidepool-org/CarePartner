@@ -12,6 +12,7 @@ struct LoopCircleView: View {
     let closeLoop: Bool
     let lastLoopCompleted: Date?
     let dataIsStale: Bool
+    @State private var isAnimating: Bool = false
 
     var body: some View {
         let closeLoop = closeLoop
@@ -23,19 +24,21 @@ struct LoopCircleView: View {
 
         Circle()
             .trim(from: closeLoop ? 0 : 0.2, to: 1)
-            .stroke(dataIsStale ? Color(UIColor.systemGray3) : loopColor, lineWidth: 8)
+            .stroke(dataIsStale ? Color(UIColor.systemGray3) : loopColor, lineWidth: isAnimating ? 12 : 8)
             .rotationEffect(Angle(degrees: -126))
             .frame(width: 36, height: 36)
+            .scaleEffect(self.isAnimating ? 0.7: 1)
+            .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: isAnimating)
     }
 
     func getLoopColor(freshness: LoopCompletionFreshness) -> Color {
         switch freshness {
         case .fresh:
-            return Color("fresh")
+            return .fresh
         case .aging:
-            return Color("warning")
+            return .warning
         case .stale:
-            return Color.red
+            return .stale
         }
     }
 }

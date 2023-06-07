@@ -3,9 +3,11 @@
 //  CarePartner
 //
 //  Created by Pete Schwamb on 2/21/23.
+//  Copyright © 2023 Tidepool Project. All rights reserved.
 //
 
 import SwiftUI
+import LoopKitUI
 import AuthenticationServices
 
 @main
@@ -14,16 +16,18 @@ struct CarePartnerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     let client = TidepoolClient()
-    let followedAccounts: FollowedAccounts
+    let followedAccounts: FolloweeManager
+    let formatters = QuantityFormatters(glucoseUnit: .milligramsPerDeciliter)
 
     init() {
-        followedAccounts = FollowedAccounts(client: client)
+        followedAccounts = FolloweeManager(client: client)
     }
 
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                FollowedAccountsView(followedAccounts: followedAccounts, client: client)
+                FolloweeListView(manager: followedAccounts, client: client)
+                    .environmentObject(formatters)
             }
         }
     }
