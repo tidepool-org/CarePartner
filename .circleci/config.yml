@@ -18,6 +18,7 @@ jobs:
           command: bundle exec fastlane scan --scheme "CarePartner" --device "iPhone 14" --clean 
 
   release:
+    resource_class: macos.x86.medium.gen2
     macos:
       xcode: 14.3.1
     environment:
