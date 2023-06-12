@@ -9,7 +9,7 @@ import Foundation
 
 class FollowedAccountsMock: FollowedAccounts {
     init(accounts: [AccountData]) {
-        super.init(client: TidepoolClient())
+        super.init(client: TidepoolClient.loggedInMock)
         self.accounts = accounts
     }
 }

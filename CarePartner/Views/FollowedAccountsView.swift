@@ -22,20 +22,22 @@ struct FollowedAccountsView: View {
 
     var body: some View {
         // TODO: list of followed accounts with their summary views
-        ScrollView {
-            if followedAccounts.accounts.isEmpty {
-                Text("No accounts have shared data with you yet.")
-                    .padding(.horizontal)
-            } else {
-                ForEach(followedAccounts.accounts, id: \.userid) { account in
-                    AccountView(accountData: account)
+        VStack {
+            ScrollView {
+                if followedAccounts.accounts.isEmpty {
+                    welcomeMessage
+                } else {
+                    followedAccountsList
                 }
             }
+            Spacer()
+            
         }
         .sheet(isPresented: $showingAccountSettings) {
             AccountSettingsView(client: client)
         }
         .navigationTitle("Following")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Button(role: .none, action: {
                 showingAccountSettings = true
@@ -49,6 +51,36 @@ struct FollowedAccountsView: View {
             }
         }
     }
+    
+    private var welcomeMessage: some View {
+        VStack(alignment: .leading) {
+            Image("following-icon")
+                .resizable()
+                .frame(width: 77, height: 77)
+                .padding(.top, 20)
+            Group {
+                Text("Welcome to")
+                Text("Tidepool Care Partner")
+                    .foregroundColor(.accentColor)
+                    .padding(.bottom, 1)
+            }
+            .font(.title)
+            .bold()
+            Text("Stay in the loop with updates about the high and the lows.")
+                .padding(.bottom, 20)
+            Text("To follow new accounts, a Tidepool Loop user must invite you to their care team from the Tidepool Loop app.")
+                .font(.subheadline)
+                .italic()
+        }
+        .padding(.leading, 20)
+        .padding(.trailing, 80)
+    }
+    
+    private var followedAccountsList: some View {
+        ForEach(followedAccounts.accounts, id: \.userid) { account in
+            AccountView(accountData: account)
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -58,12 +90,12 @@ struct ContentView_Previews: PreviewProvider {
                 accounts: [
                     AccountData.mock
                 ]
-            ), client: TidepoolClient())
+            ), client: TidepoolClient.loggedInMock)
         }
         NavigationView {
             FollowedAccountsView(followedAccounts: FollowedAccountsMock(
                 accounts: []
-            ), client: TidepoolClient())
+            ), client: TidepoolClient.loggedInMock)
         }
     }
 }
