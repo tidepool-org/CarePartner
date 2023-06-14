@@ -31,8 +31,9 @@ struct FollowedAccountsView: View {
                 }
             }
             Spacer()
-            
+            pendingInviteTray
         }
+        .background(background)
         .sheet(isPresented: $showingAccountSettings) {
             AccountSettingsView(client: client)
         }
@@ -50,6 +51,10 @@ struct FollowedAccountsView: View {
                 self.showingAccountSettings = true
             }
         }
+    }
+    
+    private var background: some View {
+        LinearGradient(gradient: Gradient(colors: [Color("accent-background"), Color("accent-background").opacity(0.2)]), startPoint: .top, endPoint: .bottom)
     }
     
     private var welcomeMessage: some View {
@@ -79,6 +84,12 @@ struct FollowedAccountsView: View {
     private var followedAccountsList: some View {
         ForEach(followedAccounts.accounts, id: \.userid) { account in
             AccountView(accountData: account)
+        }
+    }
+    
+    private var pendingInviteTray: some View {
+        BottomTrayView() {
+            PendingInviteView(pendingInvites: ["Sally Seastar", "Omar Octopus", "Abigail Albacore"])
         }
     }
 }
