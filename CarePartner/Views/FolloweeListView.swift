@@ -12,31 +12,41 @@ import LoopKitUI
 
 struct FolloweeListView: View {
     @Environment(\.scenePhase) var scenePhase
-
+    
     @ObservedObject private var manager: FolloweeManager
     @ObservedObject private var client: TidepoolClient
-
+    
     let timer = Timer.publish(every: .minutes(1), on: .main, in: .common).autoconnect()
-
+    
     @State private var showingAccountSettings = false
-
+    @State private var isTrayClosed: Bool
+    
     init(manager: FolloweeManager, client: TidepoolClient) {
         self.manager = manager
         self.client = client
+        self._isTrayClosed = State(initialValue: !manager.followees.values.isEmpty)
     }
-
+    
     var body: some View {
         // TODO: list of followed accounts with their summary views
-        ScrollView {
-            if manager.followees.isEmpty {
-                Text("No accounts have shared data with you yet.")
-                    .padding(.horizontal)
-            } else {
-                ForEach(Array(manager.followees.values)) { followee in
-                    FolloweeStatusView(followee: followee)
+        ZStack {
+            ScrollView {
+                if manager.followees.isEmpty {
+                    welcomeMessage
+                } else {
+                    followedAccountsList
                 }
             }
+            if !isTrayClosed {
+                Color.black.opacity(0.6)
+                    .gesture(TapGesture().onEnded({ isTrayClosed = true }))
+            }
+            VStack {
+                Spacer()
+                pendingInviteTray
+            }
         }
+        .background(background)
         .sheet(isPresented: $showingAccountSettings) {
             AccountSettingsView(client: client)
         }
@@ -71,6 +81,46 @@ struct FolloweeListView: View {
                     await manager.refreshFollowees()
                 }
             }
+        }
+    }
+    
+    private var background: some View {
+        LinearGradient(gradient: Gradient(colors: [Color("accent-background"), Color("accent-background").opacity(0.2)]), startPoint: .top, endPoint: .bottom)
+    }
+    
+    private var welcomeMessage: some View {
+        VStack(alignment: .leading) {
+            Image("following-icon")
+                .resizable()
+                .frame(width: 77, height: 77)
+                .padding(.top, 20)
+            Group {
+                Text("Welcome to")
+                Text("Tidepool Care Partner")
+                    .foregroundColor(.accentColor)
+                    .padding(.bottom, 1)
+            }
+            .font(.title)
+            .bold()
+            Text("Stay in the loop with updates about the high and the lows.")
+                .padding(.bottom, 20)
+            Text("To follow new accounts, a Tidepool Loop user must invite you to their care team from the Tidepool Loop app.")
+                .font(.subheadline)
+                .italic()
+        }
+        .padding(.leading, 20)
+        .padding(.trailing, 80)
+    }
+    
+    private var followedAccountsList: some View {
+        ForEach(Array(manager.followees.values)) { followee in
+            FolloweeStatusView(followee: followee)
+        }
+    }
+    
+    private var pendingInviteTray: some View {
+        BottomTrayView(isClosed: $isTrayClosed) {
+            PendingInviteView(pendingInvites: ["Sally Seastar", "Omar Octopus", "Abigail Albacore", "a"])
         }
     }
 }
