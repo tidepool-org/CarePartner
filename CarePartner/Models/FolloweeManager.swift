@@ -17,6 +17,8 @@ class FolloweeManager: ObservableObject {
     private let tidepoolClient: TidepoolClient
 
     @Published var followees: [String: Followee]
+    
+    @Published var pendingInviteIds: [String]
 
     private let log = OSLog(category: "FolloweeManager")
 
@@ -25,11 +27,13 @@ class FolloweeManager: ObservableObject {
     init(client: TidepoolClient) {
         tidepoolClient = client
         followees = [:]
+        pendingInviteIds = []
 
         // When account changes, refresh list
         cancellable = client.$session.dropFirst().sink { [weak self] _ in
             Task {
                 await self?.refreshFollowees()
+                await self?.refreshPendingInvites()
             }
         }
 
@@ -64,6 +68,19 @@ class FolloweeManager: ObservableObject {
             }
         } catch {
             print("Could not get users: \(error)")
+        }
+    }
+    
+    func refreshPendingInvites() async {
+        do {
+            if tidepoolClient.hasSession {
+                let pendingInvites = try await tidepoolClient.api.getPendingInvitesReceived()
+                pendingInviteIds = pendingInvites.map { $0.creatorId }.sorted()
+                
+                // instead of just replacing the list, instead update the list with the new / removed items (like in followee
+            }
+        } catch {
+            print("Could not get pending invites: \(error)")
         }
     }
 

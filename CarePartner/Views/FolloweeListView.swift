@@ -72,6 +72,7 @@ struct FolloweeListView: View {
             if newPhase == .active {
                 Task {
                     await manager.refreshFollowees()
+                    await manager.refreshPendingInvites()
                 }
             }
         }
@@ -120,7 +121,7 @@ struct FolloweeListView: View {
     
     private var pendingInviteTray: some View {
         BottomTrayView(isClosed: $isTrayClosed) {
-            PendingInviteView(pendingInvites: ["Sally Seastar", "Omar Octopus", "Abigail Albacore", "a"])
+            PendingInviteView(pendingInvites: manager.pendingInviteIds)
         }
     }
 }
