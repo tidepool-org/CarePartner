@@ -18,7 +18,7 @@ class FolloweeManager: ObservableObject {
 
     @Published var followees: [String: Followee]
     
-    @Published var pendingInviteIds: [String]
+    @Published var pendingInviteUserDetails: [UserDetails]
 
     private let log = OSLog(category: "FolloweeManager")
 
@@ -27,7 +27,7 @@ class FolloweeManager: ObservableObject {
     init(client: TidepoolClient) {
         tidepoolClient = client
         followees = [:]
-        pendingInviteIds = []
+        pendingInviteUserDetails = []
 
         // When account changes, refresh list
         cancellable = client.$session.dropFirst().sink { [weak self] _ in
@@ -75,9 +75,9 @@ class FolloweeManager: ObservableObject {
         do {
             if tidepoolClient.hasSession {
                 let pendingInvites = try await tidepoolClient.api.getPendingInvitesReceived()
-                pendingInviteIds = pendingInvites.map { $0.creatorId }.sorted()
+                pendingInviteUserDetails = pendingInvites.map { UserDetails(id: $0.creatorId, fullName: $0.creator.profile.fullName ?? "Unknown") }.sorted(by: { $0.fullName < $1.fullName })
                 
-                // instead of just replacing the list, instead update the list with the new / removed items (like in followee
+                // TODO instead of just replacing the list, instead update the list with the new / removed items (like in followee
             }
         } catch {
             print("Could not get pending invites: \(error)")
@@ -87,9 +87,9 @@ class FolloweeManager: ObservableObject {
     func fetchFolloweeData() async {
         for followee in followees.values {
             Task {
-                print("Fetching \(followee.name)")
+                print("Fetching \(followee.userDetails.fullName)")
                 await followee.fetchRemoteData(api: tidepoolClient.api)
-                print("Fetching complete for \(followee.name)")
+                print("Fetching complete for \(followee.userDetails.fullName)")
             }
         }
     }
@@ -103,7 +103,7 @@ class FolloweeManager: ObservableObject {
     }
 
     private func addFollowee(_ followee: Followee) {
-        followees[followee.userId] = followee
+        followees[followee.userDetails.id] = followee
         followee.delegate = self
     }
 
@@ -170,13 +170,13 @@ class FolloweeManager: ObservableObject {
             }
         }
 
-        let storageURL = followeesPath.appendingPathComponent(followee.userId + ".plist")
+        let storageURL = followeesPath.appendingPathComponent(followee.userDetails.id + ".plist")
 
         let newValue = followee.rawValue
         do {
             let data = try PropertyListSerialization.data(fromPropertyList: newValue, format: .binary, options: 0)
             try data.write(to: storageURL, options: .atomic)
-            os_log(.info, "Wrote %{public}@ to %{public}@", followee.userId, storageURL.absoluteString)
+            os_log(.info, "Wrote %{public}@ to %{public}@", followee.userDetails.id, storageURL.absoluteString)
         } catch {
             os_log(.error, "Error saving %{public}@: %{public}@", storageURL.absoluteString, error.localizedDescription)
         }

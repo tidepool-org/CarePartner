@@ -121,7 +121,7 @@ struct FolloweeListView: View {
     
     private var pendingInviteTray: some View {
         BottomTrayView(isClosed: $isTrayClosed) {
-            PendingInviteView(pendingInvites: manager.pendingInviteIds)
+            PendingInviteView(pendingInviteUserDetails: manager.pendingInviteUserDetails)
         }
     }
 }
@@ -134,7 +134,8 @@ struct ContentView_Previews: PreviewProvider {
                     followees: [
                         FolloweeStatus.mockSally,
                         FolloweeStatus.mockOmar
-                    ]),
+                    ],
+                    pendingInviteUserDetails: [UserDetails.mockOmar, UserDetails.mockAbigail]),
                 client: TidepoolClient.loggedInMock)
         }
         .environmentObject(QuantityFormatters(glucoseUnit: .milligramsPerDeciliter))

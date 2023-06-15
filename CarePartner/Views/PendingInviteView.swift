@@ -12,7 +12,7 @@ import TidepoolKit
 struct PendingInviteView: TrayContent {
     @Environment(\.colorScheme) var colorScheme
     
-    var pendingInvites: [String]
+    var pendingInviteUserDetails: [UserDetails]
     
     let visibleContentHeight: CGFloat = 20.0
     let discoverableContentHeight: CGFloat = 170.0
@@ -21,7 +21,7 @@ struct PendingInviteView: TrayContent {
         VStack {
             title
             ScrollView {
-                if pendingInvites.isEmpty {
+                if pendingInviteUserDetails.isEmpty {
                     noPendingInvitesMessage
                 } else {
                     pendingInviteList
@@ -51,7 +51,7 @@ struct PendingInviteView: TrayContent {
     private var pendingInvitationCount: some View {
         HStack {
             Image(systemName: "person.fill")
-            Text("\(pendingInvites.count)")
+            Text("\(pendingInviteUserDetails.count)")
         }
         .foregroundColor(.accentColor)
     }
@@ -70,30 +70,31 @@ struct PendingInviteView: TrayContent {
     }
     
     private var pendingInviteList: some View {
-        ForEach(pendingInvites, id: \.self) { pendingInvite in
-            pendingInviteRow(for: pendingInvite)
+        ForEach(pendingInviteUserDetails, id: \.id) { userDetails in
+            pendingInviteRow(for: userDetails)
         }
     }
     
-    private func pendingInviteRow(for pendingInvite: String) -> some View {
+    private func pendingInviteRow(for userDetails: UserDetails) -> some View {
         VStack(alignment: .leading, spacing: 20) {
             Divider()
             HStack {
-                Text("**\(pendingInvite)** invites you to start following them")
+                Text("**\(userDetails.fullName)** invites you to start following them")
                     .foregroundColor(.primary)
                 Spacer()
                 Group {
-                    cancelButton(for: pendingInvite)
+                    cancelButton(for: userDetails)
                         .padding(.trailing, 4)
-                    acceptButton(for: pendingInvite)
+                    acceptButton(for: userDetails)
                 }
                 .font(.system(size: 36))
             }
         }
     }
     
-    private func cancelButton(for pendingInvite: String) -> some View {
-        Button(action: { print("deny \(pendingInvite)!") }) {
+    private func cancelButton(for userDetails: UserDetails) -> some View {
+        // TODO placeholder
+        Button(action: { print("deny \(userDetails.fullName)!") }) {
             Image(systemName: "x.circle.fill")
                 .foregroundStyle(.red, .red.opacity(cancelOpacity))
         }
@@ -104,8 +105,9 @@ struct PendingInviteView: TrayContent {
         colorScheme == .light ? 0.2 : 0.5
     }
     
-    private func acceptButton(for pendingInvite: String) -> some View {
-        Button(action: { print("accept \(pendingInvite)!") }) {
+    private func acceptButton(for userDetails: UserDetails) -> some View {
+        // TODO placeholder
+        Button(action: { print("accept \(userDetails.fullName)!") }) {
             Image(systemName: "checkmark.circle.fill")
                 .foregroundStyle(Color.accentColor, Color.accentColor.opacity(acceptOpacity))
         }
@@ -118,8 +120,13 @@ struct PendingInviteView: TrayContent {
 }
 
 struct PendingInviteView_Previews: PreviewProvider {
+    static var pendingInviteUserDetails: [UserDetails] = [
+        UserDetails(id: UUID().uuidString, fullName: "Sally Seastar"),
+        UserDetails(id: UUID().uuidString, fullName: "Omar Octopus"),
+        UserDetails(id: UUID().uuidString, fullName: "Abigail Albacore"),
+    ]
     static var previews: some View {
-        PendingInviteView(pendingInvites: ["Sally Seastar", "Omar Octopus", "Abigail Albacore"])
-        PendingInviteView(pendingInvites: [])
+        PendingInviteView(pendingInviteUserDetails: pendingInviteUserDetails)
+        PendingInviteView(pendingInviteUserDetails: [])
     }
 }
