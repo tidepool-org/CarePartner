@@ -83,7 +83,7 @@ struct FolloweeStatusView: View {
             HStack {
                 Image(systemName: "person.crop.circle")
                     .fontWeight(.light)
-                Text(followee.status.name)
+                Text(followee.status.firstName)
                     .font(.headline)
 
                 Spacer()
@@ -304,7 +304,7 @@ struct FolloweeSummaryView_Previews: PreviewProvider {
             FolloweeStatusView(
                 followee: FolloweeMock(
                     status: FolloweeStatus(
-                        name: "Sally",
+                        firstName: "Sally",
                         lastRefresh: Date(),
                         latestGlucose: StoredGlucoseSample.mock(150, .downDown),
                         glucoseDelta: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: -10),

@@ -21,7 +21,7 @@ struct BasalDeliveryState {
 }
 
 struct FolloweeStatus {
-    var name: String
+    var firstName: String
     var lastRefresh: Date
     var latestGlucose: GlucoseSampleValue?
     var glucoseDelta: HKQuantity?
@@ -36,7 +36,7 @@ struct FolloweeStatus {
 extension FolloweeStatus {
     static var mockSally: FolloweeStatus {
         return FolloweeStatus(
-            name: "Sally",
+            firstName: "Sally",
             lastRefresh: Date(),
             latestGlucose: StoredGlucoseSample.mock(),
             basalState: BasalDeliveryState(date: Date(), rate: 0.45, scheduledRate: 0.5, isSuspended: false))
@@ -44,7 +44,7 @@ extension FolloweeStatus {
 
     static var mockOmar: FolloweeStatus {
         return FolloweeStatus(
-            name: "Omar",
+            firstName: "Omar",
             lastRefresh: Date(),
             latestGlucose: StoredGlucoseSample.mock(),
             basalState: BasalDeliveryState(date: Date(), rate: 0.45, scheduledRate: 0.5, isSuspended: false))

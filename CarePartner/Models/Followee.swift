@@ -21,6 +21,10 @@ protocol FolloweeDelegate: AnyObject {
 struct UserDetails {
     var id: String
     var fullName: String
+    
+    var firstName: String {
+        fullName.components(separatedBy: " ").first ?? fullName
+    }
 }
 
 extension UserDetails {
@@ -52,8 +56,8 @@ class Followee: ObservableObject, Identifiable {
 
     weak var delegate: FolloweeDelegate?
 
-    init(name: String, userId: String, lastRefresh: Date = .distantPast) {
-        self.userDetails = UserDetails(id: userId, fullName: name)
+    init(fullName: String, userId: String, lastRefresh: Date = .distantPast) {
+        self.userDetails = UserDetails(id: userId, fullName: fullName)
 
         let url = NSPersistentContainer.defaultDirectoryURL.appendingPathComponent(userId)
         let cacheStore = PersistenceController(directoryURL: url)
@@ -86,7 +90,7 @@ class Followee: ObservableObject, Identifiable {
             store: cacheStore,
             expireAfter: historyInterval)
 
-        status = FolloweeStatus(name: name, lastRefresh: lastRefresh)
+        status = FolloweeStatus(firstName: userDetails.firstName, lastRefresh: lastRefresh)
 
         NotificationCenter.default.publisher(for: GlucoseStore.glucoseSamplesDidChange, object: nil)
             .receive(on: RunLoop.main)
@@ -112,18 +116,18 @@ class Followee: ObservableObject, Identifiable {
     }
 
     convenience init?(rawValue: [String : Any]) {
-        guard let name = rawValue["name"] as? String,
+        guard let fullName = rawValue["fullName"] as? String,
               let userId = rawValue["userId"] as? String
         else { return nil }
 
         let lastRefresh = rawValue["lastRefresh"] as? Date ?? .distantPast
 
-        self.init(name: name, userId: userId, lastRefresh: lastRefresh)
+        self.init(fullName: fullName, userId: userId, lastRefresh: lastRefresh)
     }
 
     var rawValue: [String : Any] {
         return [
-            "name": userDetails.fullName,
+            "fullName": userDetails.fullName,
             "userId": userDetails.id,
             "lastRefresh": status.lastRefresh
         ]

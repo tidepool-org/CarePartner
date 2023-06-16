@@ -98,8 +98,7 @@ class FolloweeManager: ObservableObject {
         guard let profile = user.profile, let fullName = profile.fullName, user.trustorPermissions?.view != nil else {
             return nil
         }
-        let firstName = fullName.components(separatedBy: " ").first ?? fullName
-        return Followee(name: firstName, userId: user.userid)
+        return Followee(fullName: fullName, userId: user.userid)
     }
 
     private func addFollowee(_ followee: Followee) {

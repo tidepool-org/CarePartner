@@ -13,7 +13,7 @@ class FolloweeManagerMock: FolloweeManager {
         super.init(client: TidepoolClient.loggedInMock)
 
         for status in followees {
-            self.followees[status.name] = FolloweeMock(status: status)
+            self.followees[status.firstName] = FolloweeMock(status: status)
         }
         
         self.pendingInviteUserDetails = pendingInviteUserDetails
