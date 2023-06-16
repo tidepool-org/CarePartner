@@ -20,6 +20,7 @@ struct FolloweeListView: View {
     
     @State private var showingAccountSettings = false
     @State private var isTrayClosed: Bool
+    @State private var isPendingInviteDisabled = false
     
     init(manager: FolloweeManager, client: TidepoolClient) {
         self.manager = manager
@@ -44,6 +45,7 @@ struct FolloweeListView: View {
             VStack {
                 Spacer()
                 pendingInviteTray
+                    .disabled(isPendingInviteDisabled)
             }
         }
         .background(background)
@@ -65,24 +67,28 @@ struct FolloweeListView: View {
             }
         }
         .refreshable {
-            await manager.refreshFollowees()
-            print("Do your refresh work here")
+            await refresh()
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
                 Task {
-                    await manager.refreshFollowees()
-                    await manager.refreshPendingInvites()
+                    await refresh()
                 }
             }
         }
         .onReceive(timer) { time in
             if scenePhase == .active {
                 Task {
-                    await manager.refreshFollowees()
+                    await refresh()
                 }
             }
         }
+    }
+    
+    private func refresh() async {
+        print("Do your refresh work here")
+        await manager.refreshFollowees()
+        await manager.refreshPendingInvites()
     }
     
     private var background: some View {
@@ -120,9 +126,34 @@ struct FolloweeListView: View {
     }
     
     private var pendingInviteTray: some View {
-        BottomTrayView(isClosed: $isTrayClosed) {
-            PendingInviteView(pendingInviteUserDetails: manager.pendingInviteUserDetails)
+        ZStack {
+            BottomTrayView(isClosed: $isTrayClosed) {
+                PendingInviteView(pendingInvites: manager.pendingInvites,
+                                  acceptInviteHandler: { pendingInvite in await acceptInvite(pendingInvite) },
+                                  rejectInviteHandler: { pendingInvite in await rejectInvite(pendingInvite) })
+            }
+            if isPendingInviteDisabled {
+                ActivityIndicator(isAnimating: .constant(true), style: .large)
+            }
         }
+    }
+    
+    private func acceptInvite(_ pendingInvite: PendingInvite) async {
+        isPendingInviteDisabled = true
+        let success = await manager.acceptInvite(pendingInvite: pendingInvite)
+        if success {
+            await manager.refreshPendingInvites()
+        }
+        isPendingInviteDisabled = false
+    }
+    
+    private func rejectInvite(_ pendingInvite: PendingInvite) async {
+        isPendingInviteDisabled = true
+        let success = await manager.rejectInvite(pendingInvite: pendingInvite)
+        if success {
+            await manager.refreshPendingInvites()
+        }
+        isPendingInviteDisabled = false
     }
 }
 
@@ -135,7 +166,7 @@ struct ContentView_Previews: PreviewProvider {
                         FolloweeStatus.mockSally,
                         FolloweeStatus.mockOmar
                     ],
-                    pendingInviteUserDetails: [UserDetails.mockOmar, UserDetails.mockAbigail]),
+                    pendingInvites: [PendingInvite(userDetails: UserDetails.mockOmar, key: "omar-key"), PendingInvite(userDetails: UserDetails.mockAbigail, key: "abigail-key")]),
                 client: TidepoolClient.loggedInMock)
         }
         .environmentObject(QuantityFormatters(glucoseUnit: .milligramsPerDeciliter))

@@ -18,7 +18,7 @@ class FolloweeManager: ObservableObject {
 
     @Published var followees: [String: Followee]
     
-    @Published var pendingInviteUserDetails: [UserDetails]
+    @Published var pendingInvites: [PendingInvite]
 
     private let log = OSLog(category: "FolloweeManager")
 
@@ -27,7 +27,7 @@ class FolloweeManager: ObservableObject {
     init(client: TidepoolClient) {
         tidepoolClient = client
         followees = [:]
-        pendingInviteUserDetails = []
+        pendingInvites = []
 
         // When account changes, refresh list
         cancellable = client.$session.dropFirst().sink { [weak self] _ in
@@ -74,8 +74,8 @@ class FolloweeManager: ObservableObject {
     func refreshPendingInvites() async {
         do {
             if tidepoolClient.hasSession {
-                let pendingInvites = try await tidepoolClient.api.getPendingInvitesReceived()
-                pendingInviteUserDetails = pendingInvites.map { UserDetails(id: $0.creatorId, fullName: $0.creator.profile.fullName ?? "Unknown") }.sorted(by: { $0.fullName < $1.fullName })
+                let pendingInvitesReceived = try await tidepoolClient.api.getPendingInvitesReceived()
+                pendingInvites = pendingInvitesReceived.map { PendingInvite(userDetails: UserDetails(id: $0.creatorId, fullName: $0.creator.profile.fullName ?? "Unknown"), key: $0.key) }.sorted(by: { $0.userDetails.fullName < $1.userDetails.fullName })
                 
                 // TODO instead of just replacing the list, instead update the list with the new / removed items (like in followee
             }
@@ -104,6 +104,26 @@ class FolloweeManager: ObservableObject {
     private func addFollowee(_ followee: Followee) {
         followees[followee.userDetails.id] = followee
         followee.delegate = self
+    }
+    
+    func acceptInvite(pendingInvite: PendingInvite) async -> Bool {
+        do {
+            try await tidepoolClient.api.acceptInvite(invitedByUserId: pendingInvite.userDetails.id, key: pendingInvite.key)
+            return true
+        } catch {
+            print("Could not accept invite from \(pendingInvite.userDetails.fullName): \(error)")
+            return false
+        }
+    }
+    
+    func rejectInvite(pendingInvite: PendingInvite) async -> Bool {
+        do {
+            try await tidepoolClient.api.rejectInvite(invitedByUserId: pendingInvite.userDetails.id, key: pendingInvite.key)
+            return true
+        } catch {
+            print("Could not reject invite from \(pendingInvite.userDetails.fullName): \(error)")
+            return false
+        }
     }
 
     // MARK: Persistence

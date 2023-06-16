@@ -9,14 +9,14 @@
 import Foundation
 
 class FolloweeManagerMock: FolloweeManager {
-    init(followees: [FolloweeStatus], pendingInviteUserDetails: [UserDetails] = []) {
+    init(followees: [FolloweeStatus], pendingInvites: [PendingInvite] = []) {
         super.init(client: TidepoolClient.loggedInMock)
 
         for status in followees {
             self.followees[status.firstName] = FolloweeMock(status: status)
         }
         
-        self.pendingInviteUserDetails = pendingInviteUserDetails
+        self.pendingInvites = pendingInvites
     }
 
     override func refreshFollowees() async {
