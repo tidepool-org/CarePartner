@@ -18,7 +18,7 @@ protocol FolloweeDelegate: AnyObject {
     func stateDidChange(for followee: Followee)
 }
 
-struct UserDetails {
+struct UserDetails: Equatable {
     var id: String
     var fullName: String
     

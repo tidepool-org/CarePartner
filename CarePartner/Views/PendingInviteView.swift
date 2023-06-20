@@ -9,7 +9,7 @@
 import SwiftUI
 import TidepoolKit
 
-struct PendingInvite {
+struct PendingInvite: Equatable {
     let userDetails: UserDetails
     let key: String
 }
@@ -17,7 +17,7 @@ struct PendingInvite {
 struct PendingInviteView: TrayContent {
     @Environment(\.colorScheme) var colorScheme
     
-    var pendingInvites: [PendingInvite]
+    var sortedPendingInvites: [PendingInvite]
     
     let visibleContentHeight: CGFloat = 20.0
     let discoverableContentHeight: CGFloat = 170.0
@@ -25,11 +25,11 @@ struct PendingInviteView: TrayContent {
     let acceptInviteHandler: (PendingInvite) async -> Void
     let rejectInviteHandler: (PendingInvite) async -> Void
 
-    init(pendingInvites: [PendingInvite],
+    init(sortedPendingInvites: [PendingInvite],
          acceptInviteHandler: @escaping (PendingInvite) async -> Void,
          rejectInviteHandler: @escaping (PendingInvite) async -> Void)
     {
-        self.pendingInvites = pendingInvites
+        self.sortedPendingInvites = sortedPendingInvites
         self.acceptInviteHandler = acceptInviteHandler
         self.rejectInviteHandler = rejectInviteHandler
     }
@@ -38,7 +38,7 @@ struct PendingInviteView: TrayContent {
         VStack {
             title
             ScrollView {
-                if pendingInvites.isEmpty {
+                if sortedPendingInvites.isEmpty {
                     noPendingInvitesMessage
                 } else {
                     pendingInviteList
@@ -68,7 +68,7 @@ struct PendingInviteView: TrayContent {
     private var pendingInvitationCount: some View {
         HStack {
             Image(systemName: "person.fill")
-            Text("\(pendingInvites.count)")
+            Text("\(sortedPendingInvites.count)")
         }
         .foregroundColor(.accentColor)
     }
@@ -87,7 +87,7 @@ struct PendingInviteView: TrayContent {
     }
     
     private var pendingInviteList: some View {
-        ForEach(pendingInvites, id: \.userDetails.id) { pendingInvite in
+        ForEach(sortedPendingInvites, id: \.userDetails.id) { pendingInvite in
             pendingInviteRow(for: pendingInvite)
         }
     }

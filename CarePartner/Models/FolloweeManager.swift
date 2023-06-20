@@ -18,16 +18,20 @@ class FolloweeManager: ObservableObject {
 
     @Published var followees: [String: Followee]
     
-    @Published var pendingInvites: [PendingInvite]
+    @Published var pendingInvites: [String: PendingInvite]
 
     private let log = OSLog(category: "FolloweeManager")
 
     var cancellable : AnyCancellable?
-
+    
+    var sortedPendingInvites: [PendingInvite] {
+        pendingInvites.values.map { $0 }.sorted(by: { $0.userDetails.fullName < $1.userDetails.fullName })
+    }
+    
     init(client: TidepoolClient) {
         tidepoolClient = client
         followees = [:]
-        pendingInvites = []
+        pendingInvites = [:]
 
         // When account changes, refresh list
         cancellable = client.$session.dropFirst().sink { [weak self] _ in
@@ -75,9 +79,19 @@ class FolloweeManager: ObservableObject {
         do {
             if tidepoolClient.hasSession {
                 let pendingInvitesReceived = try await tidepoolClient.api.getPendingInvitesReceived()
-                pendingInvites = pendingInvitesReceived.map { PendingInvite(userDetails: UserDetails(id: $0.creatorId, fullName: $0.creator.profile.fullName ?? "Unknown"), key: $0.key) }.sorted(by: { $0.userDetails.fullName < $1.userDetails.fullName })
+                let receivedPendingInvites = pendingInvitesReceived.map { PendingInvite(userDetails: UserDetails(id: $0.creatorId, fullName: $0.creator.profile.fullName ?? "Unknown"), key: $0.key) }
                 
-                // TODO instead of just replacing the list, instead update the list with the new / removed items (like in followee
+                for pendingInvite in pendingInvites.values {
+                    if !receivedPendingInvites.contains(pendingInvite) {
+                        pendingInvites[pendingInvite.userDetails.id] = nil
+                    }
+                }
+                
+                for pendingInvite in receivedPendingInvites {
+                    if !pendingInvites.keys.contains(pendingInvite.userDetails.id) {
+                        pendingInvites[pendingInvite.userDetails.id] = pendingInvite
+                    }
+                }
             }
         } catch {
             print("Could not get pending invites: \(error)")

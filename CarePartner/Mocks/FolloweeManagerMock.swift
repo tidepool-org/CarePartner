@@ -16,7 +16,9 @@ class FolloweeManagerMock: FolloweeManager {
             self.followees[status.firstName] = FolloweeMock(status: status)
         }
         
-        self.pendingInvites = pendingInvites
+        for pendingInvite in pendingInvites {
+            self.pendingInvites[pendingInvite.userDetails.id] = pendingInvite
+        }
     }
 
     override func refreshFollowees() async {
