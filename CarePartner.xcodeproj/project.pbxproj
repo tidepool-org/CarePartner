@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B4A0AB072A3A4B530045C44F /* PendingInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0AB062A3A4B530045C44F /* PendingInviteView.swift */; };
-		B4A0AB092A3A4B840045C44F /* BottomTrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0AB082A3A4B840045C44F /* BottomTrayView.swift */; };
 		C11D2B7629CF9FFE00A218BC /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */; };
 		C11D2B7A29D2531300A218BC /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7929D2531300A218BC /* HKUnit.swift */; };
 		C11D2B7C29D2593300A218BC /* LoopCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D2B7B29D2593300A218BC /* LoopCircleView.swift */; };
@@ -79,7 +78,6 @@
 
 /* Begin PBXFileReference section */
 		B4A0AB062A3A4B530045C44F /* PendingInviteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PendingInviteView.swift; sourceTree = "<group>"; };
-		B4A0AB082A3A4B840045C44F /* BottomTrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTrayView.swift; sourceTree = "<group>"; };
 		C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
 		C11D2B7929D2531300A218BC /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		C11D2B7B29D2593300A218BC /* LoopCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCircleView.swift; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				C11D2B7529CF9FFE00A218BC /* AccountSettingsView.swift */,
-				B4A0AB082A3A4B840045C44F /* BottomTrayView.swift */,
 				C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */,
 				C11D2B9B29D2746800A218BC /* FolloweeStatusView.swift */,
 				C11D2B7B29D2593300A218BC /* LoopCircleView.swift */,
@@ -423,7 +420,6 @@
 				C1C2AF222A214E7D006D13B6 /* FolloweeStatus.swift in Sources */,
 				C19F117129AD5A620055AC28 /* OSLog.swift in Sources */,
 				C19F117429AE583A0055AC28 /* Followee.swift in Sources */,
-				B4A0AB092A3A4B840045C44F /* BottomTrayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
