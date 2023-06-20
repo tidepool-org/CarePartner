@@ -36,14 +36,18 @@ class FolloweeManager: ObservableObject {
         // When account changes, refresh list
         cancellable = client.$session.dropFirst().sink { [weak self] _ in
             Task {
-                await self?.refreshFollowees()
-                await self?.refreshPendingInvites()
+                await self?.refreshAll()
             }
         }
 
         Task {
             await loadFollowees()
         }
+    }
+    
+    public func refreshAll() async {
+        await refreshFollowees()
+        await refreshPendingInvites()
     }
 
     public func refreshFollowees() async {

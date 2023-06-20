@@ -10,22 +10,6 @@ import SwiftUI
 import TidepoolKit
 import LoopKitUI
 
-enum TrayState {
-    case opened
-    case closed
-    
-    static var presentationDetents: Set<PresentationDetent> {
-        [Self.opened.presentationDetent, Self.closed.presentationDetent]
-    }
-    
-    var presentationDetent: PresentationDetent {
-        switch self {
-        case .opened: return .fraction(0.3)
-        case .closed: return .fraction(0.05)
-        }
-    }
-}
-
 struct FolloweeListView: View {
     @Environment(\.scenePhase) var scenePhase
     
@@ -39,16 +23,30 @@ struct FolloweeListView: View {
     @State private var showingPendingInvites = false
     @State private var isPendingInviteDisabled = false
     
+    private enum TrayState {
+        case opened
+        case closed
+        
+        static var presentationDetents: Set<PresentationDetent> {
+            [Self.opened.presentationDetent, Self.closed.presentationDetent]
+        }
+        
+        var presentationDetent: PresentationDetent {
+            switch self {
+            case .opened: return .fraction(0.3)
+            case .closed: return .fraction(0.05)
+            }
+        }
+    }
+
+    private var trayState: TrayState { selectedDetent == TrayState.opened.presentationDetent ? .opened : .closed }
+    
     init(manager: FolloweeManager, client: TidepoolClient) {
         self.manager = manager
         self.client = client
         self.showingPendingInvites = !manager.pendingInvites.isEmpty
     }
-    
-    private var trayTopPadding: CGFloat { trayState == .closed ? 20 : 0 }
-    
-    private var trayState: TrayState { selectedDetent == TrayState.opened.presentationDetent ? .opened : .closed }
-    
+        
     var body: some View {
         // TODO: list of followed accounts with their summary views
         ZStack {
@@ -60,8 +58,9 @@ struct FolloweeListView: View {
                 }
             }
             if trayState == .opened {
+                // dim out background views, but add tap to close tray
                 Color.black.opacity(0.6)
-                    .gesture(TapGesture().onEnded({ selectedDetent = TrayState.closed.presentationDetent }))
+                    .gesture(tapToCloseTray)
             }
         }
         .background(background)
@@ -86,28 +85,36 @@ struct FolloweeListView: View {
             }
         }
         .refreshable {
-            await refresh()
+            await refreshLists()
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
                 Task {
-                    await refresh()
+                    await refreshLists()
                 }
             }
         }
         .onReceive(timer) { time in
             if scenePhase == .active {
                 Task {
-                    await refresh()
+                    await refreshLists()
                 }
             }
         }
     }
+    
+    private var tapToCloseTray: some Gesture {
+        TapGesture().onEnded({ selectedDetent = TrayState.closed.presentationDetent })
+    }
         
-    private func refresh() async {
+    private func refreshLists() async {
         print("Do your refresh work here")
-        await manager.refreshFollowees()
-        await manager.refreshPendingInvites()
+        await manager.refreshAll()
+        
+        displayPendingInvitesIfNeeded()
+    }
+    
+    private func displayPendingInvitesIfNeeded() {
         if !showingPendingInvites && manager.followees.values.isEmpty ||
             !showingPendingInvites && !manager.pendingInvites.values.isEmpty
         {
@@ -169,11 +176,13 @@ struct FolloweeListView: View {
         .gesture(trayTapGesture)
     }
     
+    private var trayTopPadding: CGFloat { trayState == .closed ? 20 : 0 }
+    
     private func acceptInvite(_ pendingInvite: PendingInvite) async {
         isPendingInviteDisabled = true
         let success = await manager.acceptInvite(pendingInvite: pendingInvite)
         if success {
-            await refresh()
+            await refreshLists()
         }
         isPendingInviteDisabled = false
     }
