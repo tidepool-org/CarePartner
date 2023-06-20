@@ -14,7 +14,7 @@ struct PendingInvite: Equatable {
     let key: String
 }
 
-struct PendingInviteView: TrayContent {
+struct PendingInviteView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var sortedPendingInvites: [PendingInvite]
@@ -143,16 +143,16 @@ struct PendingInviteView: TrayContent {
 }
 
 struct PendingInviteView_Previews: PreviewProvider {
-    static var pendingInvites: [PendingInvite] = [
+    static var sortedPendingInvites: [PendingInvite] = [
         PendingInvite(userDetails: UserDetails(id: UUID().uuidString, fullName: "Sally Seastar"), key: "sally-key"),
         PendingInvite(userDetails: UserDetails(id: UUID().uuidString, fullName: "Omar Octopus"), key: "omar-key"),
         PendingInvite(userDetails: UserDetails(id: UUID().uuidString, fullName: "Abigail Albacore"), key: "abigail-key")
-    ]
+    ].sorted(by: { $0.userDetails.fullName < $1.userDetails.fullName })
     static var previews: some View {
-        PendingInviteView(pendingInvites: pendingInvites,
+        PendingInviteView(sortedPendingInvites: sortedPendingInvites,
                           acceptInviteHandler: { _ in },
                           rejectInviteHandler: { _ in })
-        PendingInviteView(pendingInvites: [],
+        PendingInviteView(sortedPendingInvites: [],
                           acceptInviteHandler: { _ in },
                           rejectInviteHandler: { _ in })
     }

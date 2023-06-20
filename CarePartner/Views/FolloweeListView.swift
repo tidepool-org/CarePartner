@@ -152,7 +152,7 @@ struct FolloweeListView: View {
     
     private var pendingInviteTray: some View {
         ZStack {
-            PendingInviteView(pendingInvites: manager.sortedPendingInvites,
+            PendingInviteView(sortedPendingInvites: manager.sortedPendingInvites,
                               acceptInviteHandler: { pendingInvite in await acceptInvite(pendingInvite) },
                               rejectInviteHandler: { pendingInvite in await rejectInvite(pendingInvite) })
             .padding(.horizontal)
