@@ -75,7 +75,7 @@ class FolloweeManager: ObservableObject {
                 await fetchFolloweeData()
             }
         } catch {
-            print("Could not get users: \(error)")
+            log.error("Could not get users: : %{public}@", error.localizedDescription)
         }
     }
     
@@ -98,7 +98,7 @@ class FolloweeManager: ObservableObject {
                 }
             }
         } catch {
-            print("Could not get pending invites: \(error)")
+            log.error("Could not get pending invites: %{public}@", error.localizedDescription)
         }
     }
 
@@ -129,7 +129,7 @@ class FolloweeManager: ObservableObject {
             try await tidepoolClient.api.acceptInvite(invitedByUserId: pendingInvite.userDetails.id, key: pendingInvite.key)
             return true
         } catch {
-            print("Could not accept invite from \(pendingInvite.userDetails.fullName): \(error)")
+            log.error("Could not accept invite from %{public}@: %{public}@", pendingInvite.userDetails.fullName, error.localizedDescription)
             return false
         }
     }
@@ -139,7 +139,7 @@ class FolloweeManager: ObservableObject {
             try await tidepoolClient.api.rejectInvite(invitedByUserId: pendingInvite.userDetails.id, key: pendingInvite.key)
             return true
         } catch {
-            print("Could not reject invite from \(pendingInvite.userDetails.fullName): \(error)")
+            log.error("Could not reject invite from %{public}@: %{public}@", pendingInvite.userDetails.fullName, error.localizedDescription)
             return false
         }
     }
