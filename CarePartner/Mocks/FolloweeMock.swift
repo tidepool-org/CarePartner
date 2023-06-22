@@ -12,7 +12,7 @@ import TidepoolKit
 class FolloweeMock: Followee {
 
     init(status: FolloweeStatus, triggerLoading: Bool = false) {
-        super.init(name: status.name, userId: status.name)
+        super.init(fullName: status.firstName, userId: status.firstName)
         self.status = status
 
         if triggerLoading {

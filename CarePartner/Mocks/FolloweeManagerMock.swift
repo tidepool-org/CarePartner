@@ -9,11 +9,15 @@
 import Foundation
 
 class FolloweeManagerMock: FolloweeManager {
-    init(followees: [FolloweeStatus]) {
+    init(followees: [FolloweeStatus], pendingInvites: [PendingInvite] = []) {
         super.init(client: TidepoolClient.loggedInMock)
 
         for status in followees {
-            self.followees[status.name] = FolloweeMock(status: status)
+            self.followees[status.firstName] = FolloweeMock(status: status)
+        }
+        
+        for pendingInvite in pendingInvites {
+            self.pendingInvites[pendingInvite.userDetails.id] = pendingInvite
         }
     }
 

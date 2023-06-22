@@ -17,25 +17,37 @@ class FolloweeManager: ObservableObject {
     private let tidepoolClient: TidepoolClient
 
     @Published var followees: [String: Followee]
+    
+    @Published var pendingInvites: [String: PendingInvite]
 
     private let log = OSLog(category: "FolloweeManager")
 
     var cancellable : AnyCancellable?
-
+    
+    var sortedPendingInvites: [PendingInvite] {
+        pendingInvites.values.map { $0 }.sorted(by: { $0.userDetails.fullName < $1.userDetails.fullName })
+    }
+    
     init(client: TidepoolClient) {
         tidepoolClient = client
         followees = [:]
+        pendingInvites = [:]
 
         // When account changes, refresh list
         cancellable = client.$session.dropFirst().sink { [weak self] _ in
             Task {
-                await self?.refreshFollowees()
+                await self?.refreshAll()
             }
         }
 
         Task {
             await loadFollowees()
         }
+    }
+    
+    public func refreshAll() async {
+        await refreshFollowees()
+        await refreshPendingInvites()
     }
 
     public func refreshFollowees() async {
@@ -63,16 +75,39 @@ class FolloweeManager: ObservableObject {
                 await fetchFolloweeData()
             }
         } catch {
-            print("Could not get users: \(error)")
+            log.error("Could not get users: : %{public}@", error.localizedDescription)
+        }
+    }
+    
+    func refreshPendingInvites() async {
+        do {
+            if tidepoolClient.hasSession {
+                let pendingInvitesReceived = try await tidepoolClient.api.getPendingInvitesReceived()
+                let receivedPendingInvites = pendingInvitesReceived.map { PendingInvite(userDetails: UserDetails(id: $0.creatorId, fullName: $0.creator.profile.fullName ?? "Unknown"), key: $0.key) }
+                
+                for pendingInvite in pendingInvites.values {
+                    if !receivedPendingInvites.contains(pendingInvite) {
+                        pendingInvites[pendingInvite.userDetails.id] = nil
+                    }
+                }
+                
+                for pendingInvite in receivedPendingInvites {
+                    if !pendingInvites.keys.contains(pendingInvite.userDetails.id) {
+                        pendingInvites[pendingInvite.userDetails.id] = pendingInvite
+                    }
+                }
+            }
+        } catch {
+            log.error("Could not get pending invites: %{public}@", error.localizedDescription)
         }
     }
 
     func fetchFolloweeData() async {
         for followee in followees.values {
             Task {
-                print("Fetching \(followee.name)")
+                print("Fetching \(followee.userDetails.fullName)")
                 await followee.fetchRemoteData(api: tidepoolClient.api)
-                print("Fetching complete for \(followee.name)")
+                print("Fetching complete for \(followee.userDetails.fullName)")
             }
         }
     }
@@ -81,13 +116,32 @@ class FolloweeManager: ObservableObject {
         guard let profile = user.profile, let fullName = profile.fullName, user.trustorPermissions?.view != nil else {
             return nil
         }
-        let firstName = fullName.components(separatedBy: " ").first ?? fullName
-        return Followee(name: firstName, userId: user.userid)
+        return Followee(fullName: fullName, userId: user.userid)
     }
 
     private func addFollowee(_ followee: Followee) {
-        followees[followee.userId] = followee
+        followees[followee.userDetails.id] = followee
         followee.delegate = self
+    }
+    
+    func acceptInvite(pendingInvite: PendingInvite) async -> Bool {
+        do {
+            try await tidepoolClient.api.acceptInvite(invitedByUserId: pendingInvite.userDetails.id, key: pendingInvite.key)
+            return true
+        } catch {
+            log.error("Could not accept invite from %{public}@: %{public}@", pendingInvite.userDetails.fullName, error.localizedDescription)
+            return false
+        }
+    }
+    
+    func rejectInvite(pendingInvite: PendingInvite) async -> Bool {
+        do {
+            try await tidepoolClient.api.rejectInvite(invitedByUserId: pendingInvite.userDetails.id, key: pendingInvite.key)
+            return true
+        } catch {
+            log.error("Could not reject invite from %{public}@: %{public}@", pendingInvite.userDetails.fullName, error.localizedDescription)
+            return false
+        }
     }
 
     // MARK: Persistence
@@ -153,13 +207,13 @@ class FolloweeManager: ObservableObject {
             }
         }
 
-        let storageURL = followeesPath.appendingPathComponent(followee.userId + ".plist")
+        let storageURL = followeesPath.appendingPathComponent(followee.userDetails.id + ".plist")
 
         let newValue = followee.rawValue
         do {
             let data = try PropertyListSerialization.data(fromPropertyList: newValue, format: .binary, options: 0)
             try data.write(to: storageURL, options: .atomic)
-            os_log(.info, "Wrote %{public}@ to %{public}@", followee.userId, storageURL.absoluteString)
+            os_log(.info, "Wrote %{public}@ to %{public}@", followee.userDetails.id, storageURL.absoluteString)
         } catch {
             os_log(.error, "Error saving %{public}@: %{public}@", storageURL.absoluteString, error.localizedDescription)
         }

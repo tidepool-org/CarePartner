@@ -18,6 +18,25 @@ protocol FolloweeDelegate: AnyObject {
     func stateDidChange(for followee: Followee)
 }
 
+struct UserDetails: Equatable {
+    var id: String
+    var fullName: String
+    
+    var firstName: String {
+        fullName.components(separatedBy: " ").first ?? fullName
+    }
+}
+
+extension UserDetails {
+    static var mockOmar: UserDetails {
+        return UserDetails(id: UUID().uuidString, fullName: "Omar Octopus")
+    }
+    
+    static var mockAbigail: UserDetails {
+        return UserDetails(id: UUID().uuidString, fullName: "Abigail Albacore")
+    }
+}
+
 @MainActor
 class Followee: ObservableObject, Identifiable {
     typealias RawValue = [String: Any]
@@ -25,8 +44,7 @@ class Followee: ObservableObject, Identifiable {
     @Published var status: FolloweeStatus
     @Published var isLoading: Bool = false
 
-    let name: String
-    let userId: String
+    let userDetails: UserDetails
 
     let glucoseStore: GlucoseStore
     let doseStore: DoseStore
@@ -38,9 +56,8 @@ class Followee: ObservableObject, Identifiable {
 
     weak var delegate: FolloweeDelegate?
 
-    init(name: String, userId: String, lastRefresh: Date = .distantPast) {
-        self.name = name
-        self.userId = userId
+    init(fullName: String, userId: String, lastRefresh: Date = .distantPast) {
+        self.userDetails = UserDetails(id: userId, fullName: fullName)
 
         let url = NSPersistentContainer.defaultDirectoryURL.appendingPathComponent(userId)
         let cacheStore = PersistenceController(directoryURL: url)
@@ -73,7 +90,7 @@ class Followee: ObservableObject, Identifiable {
             store: cacheStore,
             expireAfter: historyInterval)
 
-        status = FolloweeStatus(name: name, lastRefresh: lastRefresh)
+        status = FolloweeStatus(firstName: userDetails.firstName, lastRefresh: lastRefresh)
 
         NotificationCenter.default.publisher(for: GlucoseStore.glucoseSamplesDidChange, object: nil)
             .receive(on: RunLoop.main)
@@ -99,19 +116,19 @@ class Followee: ObservableObject, Identifiable {
     }
 
     convenience init?(rawValue: [String : Any]) {
-        guard let name = rawValue["name"] as? String,
+        guard let fullName = rawValue["fullName"] as? String,
               let userId = rawValue["userId"] as? String
         else { return nil }
 
         let lastRefresh = rawValue["lastRefresh"] as? Date ?? .distantPast
 
-        self.init(name: name, userId: userId, lastRefresh: lastRefresh)
+        self.init(fullName: fullName, userId: userId, lastRefresh: lastRefresh)
     }
 
     var rawValue: [String : Any] {
         return [
-            "name": name,
-            "userId": userId,
+            "fullName": userDetails.fullName,
+            "userId": userDetails.id,
             "lastRefresh": status.lastRefresh
         ]
     }
@@ -158,7 +175,7 @@ class Followee: ObservableObject, Identifiable {
                 status.lastBolusDate = max(status.lastBolusDate ?? .distantPast, latestBolus.startDate)
             }
         } catch {
-            log.error("Unable to fetch insulin data: %{public}@", userId, error.localizedDescription)
+            log.error("Unable to fetch insulin data: %{public}@", userDetails.id, error.localizedDescription)
         }
     }
 
@@ -168,7 +185,7 @@ class Followee: ObservableObject, Identifiable {
                 status.lastCarbDate =  max(status.lastCarbDate ?? .distantPast, latestCarbEntry.startDate)
             }
         } catch {
-            log.error("Unable to fetch carb data: %{public}@", userId, error.localizedDescription)
+            log.error("Unable to fetch carb data: %{public}@", userDetails.id, error.localizedDescription)
         }
     }
 
@@ -181,7 +198,7 @@ class Followee: ObservableObject, Identifiable {
         let start = now.addingTimeInterval(-backfillInterval)
         let filter = TDatum.Filter(startDate: start, types: ["cbg", "basal", "bolus", "insulin", "food", "dosingDecision", "pumpStatus", "controllerStatus"])
         do {
-            let (data, _) = try await api.listData(filter: filter, userId: userId)
+            let (data, _) = try await api.listData(filter: filter, userId: userDetails.id)
 
             status.lastRefresh = Date()
 
@@ -247,7 +264,7 @@ class Followee: ObservableObject, Identifiable {
                 }
             }
         } catch {
-            log.error("Unable to fetch data for %{public}@: %{public}@", userId, error.localizedDescription)
+            log.error("Unable to fetch data for %{public}@: %{public}@", userDetails.id, error.localizedDescription)
         }
         self.isLoading = false
     }
