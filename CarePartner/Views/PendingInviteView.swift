@@ -36,7 +36,7 @@ struct PendingInviteView: View {
     
     var body: some View {
         VStack {
-            title
+            PendingInviteTitleView(pendingInvitationCount: sortedPendingInvites.count)
             ScrollView {
                 if sortedPendingInvites.isEmpty {
                     noPendingInvitesMessage
@@ -51,26 +51,6 @@ struct PendingInviteView: View {
     
     private var maxHeight: CGFloat {
         discoverableContentHeight + visibleContentHeight
-    }
-    
-    private var title: some View {
-        HStack {
-            Text("Invitations")
-                .font(.title3)
-                .fontWeight(.semibold)
-            Spacer()
-            pendingInvitationCount
-        }
-        .padding(.top, 6)
-        .padding(.bottom, 12)
-    }
-    
-    private var pendingInvitationCount: some View {
-        HStack {
-            Image(systemName: "person.fill")
-            Text("\(sortedPendingInvites.count)")
-        }
-        .foregroundColor(.accentColor)
     }
     
     private var noPendingInvitesMessage: some View {
@@ -139,6 +119,30 @@ struct PendingInviteView: View {
     
     private var acceptOpacity: Double {
         colorScheme == .light ? 0.25 : 0.5
+    }
+}
+
+struct PendingInviteTitleView: View {
+    let pendingInvitationCount: Int
+    
+    var body: some View {
+        HStack {
+            Text("Invitations")
+                .font(.title3)
+                .fontWeight(.semibold)
+            Spacer()
+            pendingInvitationCountView
+        }
+        .padding(.top, 6)
+        .padding(.bottom, 12)
+    }
+    
+    private var pendingInvitationCountView: some View {
+        HStack {
+            Image(systemName: "person.fill")
+            Text("\(pendingInvitationCount)")
+        }
+        .foregroundColor(.accentColor)
     }
 }
 

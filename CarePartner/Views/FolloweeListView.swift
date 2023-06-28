@@ -24,27 +24,52 @@ struct FolloweeListView: View {
     @State private var isPendingInviteDisabled = false
     
     private enum TrayState {
-        case opened
+        case openedFull
+        case openedPartial
         case closed
-        
-        static var presentationDetents: Set<PresentationDetent> {
-            [Self.opened.presentationDetent, Self.closed.presentationDetent]
-        }
-        
+                
         var presentationDetent: PresentationDetent {
             switch self {
-            case .opened: return .fraction(0.3)
-            case .closed: return .fraction(0.05)
+            case .openedFull: return .fraction(0.3)
+            case .openedPartial: return .fraction(0.185)
+            case .closed: return .fraction(0.06)
             }
+        }
+        
+        var isOpen: Bool {
+            self == .openedFull || self == .openedPartial
+        }
+        
+        static func trayState(for selectedDetent: PresentationDetent) -> TrayState {
+            selectedDetent == TrayState.openedFull.presentationDetent ? .openedFull : selectedDetent == TrayState.openedPartial.presentationDetent ? .openedPartial : .closed
+        }
+        
+        static func trayTopPadding(for selectedDetent: PresentationDetent) -> CGFloat {
+            let trayState = trayState(for: selectedDetent)
+            return trayState == .closed ? 30 : trayState == .openedPartial ? 18 : 0
+        }
+        
+        static func trayPresentationDetents(canTrayOpenFully: Bool) -> Set<PresentationDetent> {
+            canTrayOpenFully ? [self.openedFull.presentationDetent, self.closed.presentationDetent] : [self.openedPartial.presentationDetent, self.closed.presentationDetent]
+        }
+        
+        static func determineTrayOpenness(canTrayOpenFully: Bool) -> PresentationDetent {
+            canTrayOpenFully ? self.openedFull.presentationDetent : self.openedPartial.presentationDetent
         }
     }
 
-    private var trayState: TrayState { selectedDetent == TrayState.opened.presentationDetent ? .opened : .closed }
-    
+    private var canTrayOpenFully: Bool {
+        // when there is only 1 pending invite, only open the tray partially
+        manager.sortedPendingInvites.count != 1
+    }
+        
+    private var trayState: TrayState { TrayState.trayState(for: selectedDetent) }
+    private var trayPresentationDetents: Set<PresentationDetent> { TrayState.trayPresentationDetents(canTrayOpenFully: canTrayOpenFully) }
+    private var trayTopPadding: CGFloat { TrayState.trayTopPadding(for: selectedDetent) }
+        
     init(manager: FolloweeManager, client: TidepoolClient) {
         self.manager = manager
         self.client = client
-        self.showingPendingInvites = !manager.pendingInvites.isEmpty
     }
         
     var body: some View {
@@ -57,7 +82,7 @@ struct FolloweeListView: View {
                     followedAccountsList
                 }
             }
-            if trayState == .opened {
+            if trayState.isOpen {
                 // dim out background views, but add tap to close tray
                 Color.black.opacity(0.6)
                     .gesture(tapToCloseTray)
@@ -115,14 +140,17 @@ struct FolloweeListView: View {
     }
     
     private func displayPendingInvitesIfNeeded() {
-        if !showingPendingInvites && manager.followees.values.isEmpty ||
-            !showingPendingInvites && !manager.pendingInvites.values.isEmpty
-        {
+        if !showingPendingInvites && manager.followees.values.isEmpty {
+            // open the pending invite tray
             showingPendingInvites = true
-            selectedDetent = TrayState.opened.presentationDetent
+            selectedDetent = TrayState.determineTrayOpenness(canTrayOpenFully: canTrayOpenFully)
+        } else if !showingPendingInvites && !manager.pendingInvites.values.isEmpty {
+            // just display the tray but not open
+            showingPendingInvites = true
+            selectedDetent = TrayState.closed.presentationDetent
         }
     }
-    
+        
     private var background: some View {
         LinearGradient(gradient: Gradient(colors: [Color("accent-background"), Color("accent-background").opacity(0.2)]), startPoint: .top, endPoint: .bottom)
     }
@@ -159,24 +187,28 @@ struct FolloweeListView: View {
     
     private var pendingInviteTray: some View {
         ZStack {
-            PendingInviteView(sortedPendingInvites: manager.sortedPendingInvites,
-                              acceptInviteHandler: { pendingInvite in await acceptInvite(pendingInvite) },
-                              rejectInviteHandler: { pendingInvite in await rejectInvite(pendingInvite) })
+            Group {
+                if trayState == .closed {
+                    // display just the title
+                    PendingInviteTitleView(pendingInvitationCount: manager.sortedPendingInvites.count)
+                } else {
+                    PendingInviteView(sortedPendingInvites: manager.sortedPendingInvites,
+                                      acceptInviteHandler: { pendingInvite in await acceptInvite(pendingInvite) },
+                                      rejectInviteHandler: { pendingInvite in await rejectInvite(pendingInvite) })
+                    if isPendingInviteDisabled {
+                        ActivityIndicator(isAnimating: .constant(true), style: .large)
+                    }
+                }
+            }
             .padding(.horizontal)
             .padding(.top, trayTopPadding)
             .interactiveDismissDisabled()
-            .presentationDetents(TrayState.presentationDetents, selection: $selectedDetent)
-            .presentationBackgroundInteraction(.enabled(upThrough: TrayState.opened.presentationDetent))
-
-            if isPendingInviteDisabled {
-                ActivityIndicator(isAnimating: .constant(true), style: .large)
-            }
+            .presentationDetents(trayPresentationDetents, selection: $selectedDetent)
+            .presentationBackgroundInteraction(.enabled(upThrough: trayState.presentationDetent))
         }
         .contentShape(Rectangle())
         .gesture(trayTapGesture)
     }
-    
-    private var trayTopPadding: CGFloat { trayState == .closed ? 20 : 0 }
     
     private func acceptInvite(_ pendingInvite: PendingInvite) async {
         isPendingInviteDisabled = true
@@ -198,8 +230,8 @@ struct FolloweeListView: View {
     
     private var trayTapGesture: some Gesture {
         TapGesture().onEnded({
-            if trayState == .opened { selectedDetent = TrayState.closed.presentationDetent }
-            else { selectedDetent = TrayState.opened.presentationDetent }
+            if trayState != .closed { selectedDetent = TrayState.closed.presentationDetent }
+            else { selectedDetent = TrayState.determineTrayOpenness(canTrayOpenFully: canTrayOpenFully) }
         })
     }
 }
