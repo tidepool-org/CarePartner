@@ -58,6 +58,7 @@ class TidepoolClient: ObservableObject {
 
     func logout() async {
         await api.logout()
+        session = nil
     }
 }
 

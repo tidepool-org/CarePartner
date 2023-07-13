@@ -87,6 +87,7 @@ public struct AccountSettingsView: View {
             .toolbar {
                 closeButton
             }
+            .interactiveDismissDisabled(profile == nil)
         }
         .alert(NSLocalizedString("Are you sure you want to logout?", comment: "Confirmation message for logging out"), isPresented: $showingLogoutConfirmation)
         {
@@ -201,6 +202,7 @@ public struct AccountSettingsView: View {
             Text(NSLocalizedString("Done", comment: "Done navigation button title on AccountSettingsView"))
                 .fontWeight(.regular)
         }
+        .disabled(profile == nil)
     }
 }
 
