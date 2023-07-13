@@ -17,10 +17,11 @@ struct FolloweeStatusView: View {
 
     @ObservedObject private var followee: Followee
 
-    @State private var expanded: Bool = true
+    @State private var expanded: Bool
 
-    init(followee: Followee) {
+    init(followee: Followee, initiallyExpanded: Bool) {
         self.followee = followee
+        self.expanded = initiallyExpanded
     }
 
     var body: some View {
@@ -315,7 +316,8 @@ struct FolloweeSummaryView_Previews: PreviewProvider {
                         lastCarbDate: Date().addingTimeInterval(-4*60*60)
                     ),
                     triggerLoading: true
-                )
+                ),
+                initiallyExpanded: true
             )
             .environmentObject(QuantityFormatters(glucoseUnit: .milligramsPerDeciliter))
         }

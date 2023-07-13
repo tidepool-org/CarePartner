@@ -73,6 +73,8 @@ class FolloweeManager: ObservableObject {
                 
                 // Refresh all accounts
                 await fetchFolloweeData()
+            } else {
+                followees = [:]
             }
         } catch {
             log.error("Could not get users: : %{public}@", error.localizedDescription)
@@ -96,6 +98,8 @@ class FolloweeManager: ObservableObject {
                         pendingInvites[pendingInvite.userDetails.id] = pendingInvite
                     }
                 }
+            } else {
+                pendingInvites = [:]
             }
         } catch {
             log.error("Could not get pending invites: %{public}@", error.localizedDescription)

@@ -181,7 +181,10 @@ struct FolloweeListView: View {
     
     private var followedAccountsList: some View {
         ForEach(Array(manager.followees.values)) { followee in
-            FolloweeStatusView(followee: followee)
+            FolloweeStatusView(
+                followee: followee,
+                initiallyExpanded: manager.followees.count == 1
+            )
         }
     }
     
