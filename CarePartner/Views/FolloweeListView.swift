@@ -76,20 +76,18 @@ struct FolloweeListView: View {
         // TODO: list of followed accounts with their summary views
         ZStack {
             ScrollView {
-                if manager.followees.isEmpty {
-                    welcomeMessage
-                } else {
-                    followedAccountsList
+                Group {
+                    if manager.followees.isEmpty {
+                        welcomeMessage
+                    } else {
+                        followedAccountsList
+                    }
                 }
-            }
-            if trayState.isOpen {
-                // dim out background views, but add tap to close tray
-                Color.black.opacity(0.6)
-                    .gesture(tapToCloseTray)
             }
         }
         .background(background)
-        .sheet(isPresented: $showingAccountSettings) {
+        .animation(.default, value: manager.sortedPendingInvites)
+        .sheet(isPresented: $showingAccountSettings, onDismiss: { displayPendingInvitesIfNeeded() }) {
             AccountSettingsView(client: client)
         }
         .sheet(isPresented: $showingPendingInvites) {
@@ -98,15 +96,10 @@ struct FolloweeListView: View {
         .navigationTitle("Following")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            Button(role: .none, action: {
-                showingAccountSettings = true
-            }) {
+            Button {
+                showAccountSettings()
+            } label: {
                 Label("Account", systemImage: "person.crop.circle")
-            }
-        }
-        .task {
-            if !client.hasSession {
-                self.showingAccountSettings = true
             }
         }
         .refreshable {
@@ -117,6 +110,11 @@ struct FolloweeListView: View {
                 Task {
                     await refreshLists()
                 }
+            }
+        }
+        .onChange(of: client.hasSession) { _ in
+            Task {
+                await refreshLists()
             }
         }
         .onReceive(timer) { time in
@@ -131,6 +129,25 @@ struct FolloweeListView: View {
     private var tapToCloseTray: some Gesture {
         TapGesture().onEnded({ selectedDetent = TrayState.closed.presentationDetent })
     }
+    
+    private func showAccountSettings() {
+        showingPendingInvites = false
+        
+        func waitForPendingInvitesToBeDisabled() async {
+            if showingPendingInvites {
+                try? await Task.sleep(nanoseconds: 10)
+                await waitForPendingInvitesToBeDisabled()
+            } else {
+                try? await Task.sleep(nanoseconds: 10)
+                return
+            }
+        }
+        
+        Task {
+            await waitForPendingInvitesToBeDisabled()
+            showingAccountSettings = true
+        }
+    }
         
     private func refreshLists() async {
         print("Do your refresh work here")
@@ -140,19 +157,29 @@ struct FolloweeListView: View {
     }
     
     private func displayPendingInvitesIfNeeded() {
-        if !showingPendingInvites && manager.followees.values.isEmpty {
+        let currentDetent = selectedDetent
+        if !client.hasSession {
+            print("No Session")
+            showingPendingInvites = false
+            selectedDetent = currentDetent
+        } else if !showingPendingInvites && manager.followees.values.isEmpty {
             // open the pending invite tray
             showingPendingInvites = true
-            selectedDetent = TrayState.determineTrayOpenness(canTrayOpenFully: canTrayOpenFully)
-        } else if !showingPendingInvites && !manager.pendingInvites.values.isEmpty {
+            selectedDetent = currentDetent
+        } else if (!showingPendingInvites && !manager.pendingInvites.values.isEmpty) || client.hasSession {
             // just display the tray but not open
             showingPendingInvites = true
-            selectedDetent = TrayState.closed.presentationDetent
+            selectedDetent = currentDetent
         }
     }
         
+    @ViewBuilder
     private var background: some View {
-        LinearGradient(gradient: Gradient(colors: [Color("accent-background"), Color("accent-background").opacity(0.2)]), startPoint: .top, endPoint: .bottom)
+        if manager.followees.isEmpty {
+            LinearGradient(gradient: Gradient(colors: [Color("accent-background"), Color("accent-background").opacity(0.2)]), startPoint: .top, endPoint: .bottom)
+        } else {
+            Color.white
+        }
     }
     
     private var welcomeMessage: some View {
@@ -188,29 +215,49 @@ struct FolloweeListView: View {
         }
     }
     
+    @Namespace private var namespace
+    @State private var pendingInviteTrayHeight: Double = .zero
+    
+    struct SizePreferenceKey: PreferenceKey {
+        static var defaultValue: CGSize = .zero
+        static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+            value = nextValue()
+        }
+    }
+    
+    @ViewBuilder
     private var pendingInviteTray: some View {
-        ZStack {
-            Group {
-                if trayState == .closed {
-                    // display just the title
+        GeometryReader { proxy in
+            ScrollView {
+                VStack(spacing: 0) {
                     PendingInviteTitleView(pendingInvitationCount: manager.sortedPendingInvites.count)
-                } else {
-                    PendingInviteView(sortedPendingInvites: manager.sortedPendingInvites,
-                                      acceptInviteHandler: { pendingInvite in await acceptInvite(pendingInvite) },
-                                      rejectInviteHandler: { pendingInvite in await rejectInvite(pendingInvite) })
-                    if isPendingInviteDisabled {
-                        ActivityIndicator(isAnimating: .constant(true), style: .large)
+                        .padding(.bottom, 4)
+                        .contentShape(Rectangle())
+                        .gesture(trayTapGesture)
+                    
+                    if pendingInviteTrayHeight > 50 {
+                        VStack {
+                            PendingInviteView(manager: manager,
+                                              acceptInviteHandler: { pendingInvite in await acceptInvite(pendingInvite) },
+                                              rejectInviteHandler: { pendingInvite in await rejectInvite(pendingInvite) })
+                            if isPendingInviteDisabled {
+                                ActivityIndicator(isAnimating: .constant(true), style: .large)
+                            }
+                        }
+                        .animation(.default, value: pendingInviteTrayHeight)
                     }
                 }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
-            .padding(.top, trayTopPadding)
+            .scrollDisabled(true)
             .interactiveDismissDisabled()
             .presentationDetents(trayPresentationDetents, selection: $selectedDetent)
-            .presentationBackgroundInteraction(.enabled(upThrough: trayState.presentationDetent))
+            .presentationBackgroundInteraction(.enabled(upThrough: TrayState.closed.presentationDetent))
+            .preference(key: SizePreferenceKey.self, value: proxy.size)
         }
-        .contentShape(Rectangle())
-        .gesture(trayTapGesture)
+        .onPreferenceChange(SizePreferenceKey.self) { size in
+            pendingInviteTrayHeight = size.height
+        }
     }
     
     private func acceptInvite(_ pendingInvite: PendingInvite) async {

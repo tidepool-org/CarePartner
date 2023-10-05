@@ -25,22 +25,18 @@ struct FolloweeStatusView: View {
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 12) {
             statusHeader
-                .padding(.vertical, 10)
+            
             pillRow
-                .padding(.bottom, 12)
+            
             if expanded {
                 details
-                    .padding(.bottom)
-
             }
         }
-        .padding(.horizontal, 8)
-        .background(Color(UIColor.secondarySystemBackground))
-        .cornerRadius(10)
-        .padding(.horizontal)
-
+        .padding()
+        .background(Color(UIColor.secondarySystemBackground).cornerRadius(18))
+        .padding()
     }
 
     var pillRow: some View {
