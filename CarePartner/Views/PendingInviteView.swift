@@ -17,7 +17,7 @@ struct PendingInvite: Equatable {
 struct PendingInviteView: View {
     @Environment(\.colorScheme) var colorScheme
     
-    var sortedPendingInvites: [PendingInvite]
+    @ObservedObject private var manager: FolloweeManager
     
     let visibleContentHeight: CGFloat = 20.0
     let discoverableContentHeight: CGFloat = 170.0
@@ -25,56 +25,59 @@ struct PendingInviteView: View {
     let acceptInviteHandler: (PendingInvite) async -> Void
     let rejectInviteHandler: (PendingInvite) async -> Void
 
-    init(sortedPendingInvites: [PendingInvite],
-         acceptInviteHandler: @escaping (PendingInvite) async -> Void,
+    init(manager: FolloweeManager,
+        acceptInviteHandler: @escaping (PendingInvite) async -> Void,
          rejectInviteHandler: @escaping (PendingInvite) async -> Void)
     {
-        self.sortedPendingInvites = sortedPendingInvites
+        self.manager = manager
         self.acceptInviteHandler = acceptInviteHandler
         self.rejectInviteHandler = rejectInviteHandler
     }
     
     var body: some View {
-        VStack {
-            PendingInviteTitleView(pendingInvitationCount: sortedPendingInvites.count)
-            ScrollView {
-                if sortedPendingInvites.isEmpty {
+        VStack(alignment: .leading) {
+            Divider()
+            
+            Group {
+                if manager.sortedPendingInvites.isEmpty {
                     noPendingInvitesMessage
                 } else {
-                    pendingInviteList
+                    VStack {
+                        pendingInviteList
+                    }
                 }
             }
         }
-        .frame(maxHeight: maxHeight)
-        .edgesIgnoringSafeArea(.bottom)
     }
     
     private var maxHeight: CGFloat {
         discoverableContentHeight + visibleContentHeight
     }
     
+    @ViewBuilder
     private var noPendingInvitesMessage: some View {
-        VStack {
-            Divider()
-            Text("You have no pending invites")
-                .padding(.vertical, 20)
-            Button(action: { }) {
-                Text("Check for new invites")
-            }
-                .buttonStyle(ActionButtonStyle())
-                .padding(.bottom, 10)
+        Text("You have no pending invites")
+            .padding(.vertical, 20)
+        
+        Button(action: { }) {
+            Text("Check for new invites")
         }
+        .buttonStyle(ActionButtonStyle())
+        .padding(.bottom, 10)
     }
     
     private var pendingInviteList: some View {
-        ForEach(sortedPendingInvites, id: \.userDetails.id) { pendingInvite in
+        ForEach(manager.sortedPendingInvites, id: \.userDetails.id) { pendingInvite in
             pendingInviteRow(for: pendingInvite)
+
+            if pendingInvite != manager.sortedPendingInvites.last {
+                Divider()
+            }
         }
     }
     
     private func pendingInviteRow(for pendingInvite: PendingInvite) -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            Divider()
             HStack {
                 Text("**\(pendingInvite.userDetails.fullName)** invites you to start following them")
                     .foregroundColor(.primary)
@@ -87,6 +90,7 @@ struct PendingInviteView: View {
                 .font(.system(size: 36))
             }
         }
+        .padding(.vertical)
     }
     
     private func rejectButton(for pendingInvite: PendingInvite) -> some View {
@@ -95,7 +99,7 @@ struct PendingInviteView: View {
                 await rejectInviteHandler(pendingInvite)
             }
         }) {
-            Image(systemName: "x.circle.fill")
+            Image(systemName: "xmark.circle.fill")
                 .foregroundStyle(.red, .red.opacity(cancelOpacity))
         }
         .buttonStyle(.plain)
@@ -133,8 +137,7 @@ struct PendingInviteTitleView: View {
             Spacer()
             pendingInvitationCountView
         }
-        .padding(.top, 6)
-        .padding(.bottom, 12)
+        .padding(.vertical)
     }
     
     private var pendingInvitationCountView: some View {
@@ -153,10 +156,10 @@ struct PendingInviteView_Previews: PreviewProvider {
         PendingInvite(userDetails: UserDetails(id: UUID().uuidString, fullName: "Abigail Albacore"), key: "abigail-key")
     ].sorted(by: { $0.userDetails.fullName < $1.userDetails.fullName })
     static var previews: some View {
-        PendingInviteView(sortedPendingInvites: sortedPendingInvites,
+        PendingInviteView(manager: FolloweeManagerMock(followees: [], pendingInvites: sortedPendingInvites),
                           acceptInviteHandler: { _ in },
                           rejectInviteHandler: { _ in })
-        PendingInviteView(sortedPendingInvites: [],
+        PendingInviteView(manager: FolloweeManagerMock(followees: [], pendingInvites: []),
                           acceptInviteHandler: { _ in },
                           rejectInviteHandler: { _ in })
     }
