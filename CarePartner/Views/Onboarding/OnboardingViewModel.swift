@@ -18,10 +18,10 @@ class OnboardingViewModel: ObservableObject {
     private let log = OSLog(category: "OnboardingViewModel")
     
     /// Creates an OnboardingViewModel instance
-    /// - Parameter showingOnboarding: Set this value to override the `hasNotCompletedOnboarding` value in `@AppStorage`
-    init(showingOnboarding: Bool? = nil) {
-        if let showingOnboarding {
-            self.hasNotCompletedOnboarding = showingOnboarding
+    /// - Parameter showOnboarding: Set this value to override the `hasNotCompletedOnboarding` value in `@AppStorage`
+    init(showOnboarding: Bool? = nil) {
+        if let showOnboarding {
+            self.hasNotCompletedOnboarding = showOnboarding
         }
     }
     
