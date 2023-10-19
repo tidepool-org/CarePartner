@@ -25,7 +25,8 @@ class OnboardingViewModel: ObservableObject {
         }
     }
     
-    func requestAuthorization() async {
+    /// Request user permission for notification authorization
+    func requestNotificationAuthorization() async {
         do {
             try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .criticalAlert, .carPlay, .sound])
         } catch {
