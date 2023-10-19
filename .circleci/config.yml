@@ -2,9 +2,9 @@
 version: 2.1
 jobs:
   build-and-test:
-    resource_class: macos.x86.medium.gen2
+    resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 14.3.1
+      xcode: 15.0.1
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: test
@@ -15,12 +15,12 @@ jobs:
       - run: bundle install
       - run:
           name: Fastlane
-          command: bundle exec fastlane scan --scheme "CarePartner" --device "iPhone 14" --clean 
+          command: bundle exec fastlane scan --scheme "CarePartner" --device "iPhone 15" --clean
 
   release:
-    resource_class: macos.x86.medium.gen2
+    resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 14.3.1
+      xcode: 15.0.1
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: release
