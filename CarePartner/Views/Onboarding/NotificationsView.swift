@@ -27,10 +27,7 @@ struct NotificationsView: View {
             Image("onboarding-notifications")
                 .onboardingFullWidth()
         } onboardingLink: {
-            OnboardingLink(
-                .continue,
-                destination: .managingFocusModes
-            ) {
+            OnboardingLink(.continue, destination: .managingFocusModes) {
                 await onboardingViewModel.requestAuthorization()
             }
         }
