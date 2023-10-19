@@ -55,7 +55,7 @@ struct OnboardingContent<Content: View>: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 48) {
                     title
