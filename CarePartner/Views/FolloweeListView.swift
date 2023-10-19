@@ -13,6 +13,8 @@ import LoopKitUI
 struct FolloweeListView: View {
     @Environment(\.scenePhase) var scenePhase
     
+    @EnvironmentObject private var onboardingViewModel: OnboardingViewModel
+    
     @ObservedObject private var manager: FolloweeManager
     @ObservedObject private var client: TidepoolClient
     
@@ -150,6 +152,10 @@ struct FolloweeListView: View {
     }
         
     private func refreshLists() async {
+        guard !onboardingViewModel.hasNotCompletedOnboarding else {
+            return
+        }
+        
         print("Do your refresh work here")
         await manager.refreshAll()
         
@@ -298,6 +304,7 @@ struct ContentView_Previews: PreviewProvider {
                     pendingInvites: [PendingInvite(userDetails: UserDetails.mockOmar, key: "omar-key"), PendingInvite(userDetails: UserDetails.mockAbigail, key: "abigail-key")]),
                 client: TidepoolClient.loggedInMock)
         }
+        .environmentObject(OnboardingViewModel())
         .environmentObject(QuantityFormatters(glucoseUnit: .milligramsPerDeciliter))
         NavigationView {
             FolloweeListView(
