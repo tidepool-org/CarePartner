@@ -13,7 +13,7 @@ import UserNotifications
 class OnboardingViewModel: ObservableObject {
     
     /// Persistent onboarding completion state
-    @AppStorage("hasNotCompletedOnboarding") var hasNotCompletedOnboarding = false
+    @AppStorage("hasNotCompletedOnboarding") var hasNotCompletedOnboarding = true
     
     private let log = OSLog(category: "OnboardingViewModel")
     

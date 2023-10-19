@@ -1,0 +1,168 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "-" : {
+      "comment" : "Placeholder when glucose delta is not available"
+    },
+    "**%@** invites you to start following them" : {
+
+    },
+    "%lld" : {
+
+    },
+    "+" : {
+      "comment" : "Sign marker for positive glucose delta"
+    },
+    "Account" : {
+
+    },
+    "Active Carbs" : {
+
+    },
+    "Active Insulin" : {
+
+    },
+    "Are you sure you want to logout?" : {
+      "comment" : "Confirmation message for logging out"
+    },
+    "Change in Glucose" : {
+
+    },
+    "Check for new invites" : {
+
+    },
+    "Continue" : {
+
+    },
+    "Continue to destination after async work" : {
+
+    },
+    "Data Activity" : {
+
+    },
+    "Different style options" : {
+
+    },
+    "Do not use Tidepool Care Partner for treatment decisions, such as insulin dosing." : {
+
+    },
+    "Done" : {
+      "comment" : "Done navigation button title on AccountSettingsView"
+    },
+    "Enable iOS Notifications" : {
+
+    },
+    "Environment" : {
+      "comment" : "Label title for displaying selected Tidepool server environment.\n   Tidepool login environment action sheet title"
+    },
+    "Finish" : {
+
+    },
+    "Finish with non async work" : {
+
+    },
+    "Focus Modes" : {
+
+    },
+    "Following" : {
+
+    },
+    "I understand" : {
+
+    },
+    "I understand and perform async work" : {
+
+    },
+    "If you wish to continue receiving important notifications from Tidepool Care Partner while in a Focus Mode, you must add this app as an ‘Allowed App’ for each Focus Mode." : {
+
+    },
+    "Invitations" : {
+
+    },
+    "iOS 15 has added features such as ‘Focus Modes’ that enable you to have more control over when all your apps can send you notifications." : {
+
+    },
+    "Last Bolus: " : {
+
+    },
+    "Last Entry: " : {
+
+    },
+    "Last Reading: " : {
+
+    },
+    "Login" : {
+      "comment" : "Tidepool login button title"
+    },
+    "Logout" : {
+      "comment" : "Button title to logout\n   Logout button title"
+    },
+    "My Account" : {
+      "comment" : "title for AccountSettingsView"
+    },
+    "Notifications" : {
+
+    },
+    "Onboarding Content" : {
+
+    },
+    "Primary Button Style" : {
+
+    },
+    "Stay in the loop with updates about the high and the lows." : {
+
+    },
+    "The Tidepool Loop user should follow instructions within the Tidepool Loop app." : {
+
+    },
+    "Tidepool Care Partner" : {
+
+    },
+    "Tidepool Care Partner is for people who want to stay up to date with the activity of someone they care for with diabetes." : {
+
+    },
+    "Tidepool Care Partner lets you follow the activity of someone you care for with diabetes. Take a moment to learn about the key features of the app." : {
+
+    },
+    "Tidepool Care Partner will send you Time Sensitive alerts. These alerts are a type of Apple notification and are designed to alert you to higher risk situations, such as urgent low glucose, insulin pump occlusions, or other serious system errors." : {
+
+    },
+    "Time Sensitive Notifications" : {
+
+    },
+    "To allow Tidepool Care Partner to alert you with important information about highs and lows, you will need to enable notifications in your iOS settings. The app will prompt you to allow notifications next, once you click continue." : {
+
+    },
+    "To follow new accounts, a Tidepool Loop user must invite you to their care team from the Tidepool Loop app." : {
+
+    },
+    "U/hr" : {
+
+    },
+    "Using Focus Modes with Tidepool Care Partner" : {
+
+    },
+    "Using the App" : {
+
+    },
+    "Welcome to" : {
+
+    },
+    "Welcome to Tidepool Care Partner" : {
+
+    },
+    "When a Tidepool Loop user shares their data with you, you will see their:" : {
+
+    },
+    "You are not logged in." : {
+      "comment" : "LoginViewModel description text when not logged in"
+    },
+    "You have no pending invites" : {
+
+    },
+    "You will also receive notifications informing you of important changes to insulin and glucose levels. These notifications will be pre-configured by the Tidepool Loop user, but you may make adjustments at anytime in your Settings. You will receive the following:" : {
+
+    }
+  },
+  "version" : "1.0"
+}
