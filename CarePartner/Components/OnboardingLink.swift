@@ -158,33 +158,40 @@ struct OnboardingLink_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             VStack(alignment: .leading) {
-                Text("Different style options")
-                OnboardingLink(.continue)
-                OnboardingLink(.iUnderstand)
-                OnboardingLink(.finish)
-                OnboardingLink(.loading)
-                
-                Divider().padding(.vertical)
-                
-                Text("Continue to destination after async work")
-                OnboardingLink(.continue, destination: .claimsConfirmation) {
-                    try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 1)
+                Group {
+                    Text("Different style options")
+                    OnboardingLink(.continue)
+                    OnboardingLink(.iUnderstand)
+                    OnboardingLink(.finish)
+                    OnboardingLink(.loading)
+                    
+                    Divider().padding(.vertical)
                 }
                 
-                Divider().padding(.vertical)
-                
-                
-                Text("I understand and perform async work")
-                OnboardingLink(.iUnderstand) {
-                    try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 1)
-                    print("Async")
+                Group {
+                    Text("Continue to destination after async work")
+                    OnboardingLink(.continue, destination: .claimsConfirmation) {
+                        try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 1)
+                    }
+                    
+                    Divider().padding(.vertical)
                 }
                 
-                Divider().padding(.vertical)
+                Group {
+                    Text("I understand and perform async work")
+                    OnboardingLink(.iUnderstand) {
+                        try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 1)
+                        print("Async")
+                    }
+                    
+                    Divider().padding(.vertical)
+                }
                 
-                Text("Finish with non async work")
-                OnboardingLink(.finish) {
-                    print("No Async")
+                Group {
+                    Text("Finish with non async work")
+                    OnboardingLink(.finish) {
+                        print("No Async")
+                    }
                 }
             }
             .padding()
