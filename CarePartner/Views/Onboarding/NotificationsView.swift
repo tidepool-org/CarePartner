@@ -28,7 +28,7 @@ struct NotificationsView: View {
                 .onboardingFullWidth()
         } onboardingLink: {
             OnboardingLink(.continue, destination: .managingFocusModes) {
-                await onboardingViewModel.requestAuthorization()
+                await onboardingViewModel.requestNotificationAuthorization()
             }
         }
     }
