@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct ProductOverviewView: View {
-
     var body: some View {
         OnboardingContent(Text("Welcome to Tidepool Care Partner")) {
             Text("Tidepool Care Partner lets you follow the activity of someone you care for with diabetes. Take a moment to learn about the key features of the app.")
