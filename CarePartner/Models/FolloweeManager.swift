@@ -86,7 +86,7 @@ class FolloweeManager: ObservableObject {
             if tidepoolClient.hasSession {
                 pendingInvites = [:]
                 let pendingInvitesReceived = try await tidepoolClient.api.getPendingInvitesReceived()
-                let receivedPendingInvites = pendingInvitesReceived.map { PendingInvite(userDetails: UserDetails(id: $0.creator.userid, fullName: $0.creator.profile?.fullName ?? "Unknown"), key: $0.key) }
+                let receivedPendingInvites = pendingInvitesReceived.map { PendingInvite(userDetails: UserDetails(id: $0.creator.userid, fullName: $0.fullName), key: $0.key) }
                 
                 for pendingInvite in pendingInvites.values {
                     if !receivedPendingInvites.contains(pendingInvite) {
@@ -228,5 +228,16 @@ class FolloweeManager: ObservableObject {
 extension FolloweeManager: FolloweeDelegate {
     func stateDidChange(for followee: Followee) {
         storeFollowee(followee)
+    }
+}
+
+extension TPendingInvite {
+    fileprivate var fullName: String {
+        creator.profile?.patient?.fullName
+            ?? creator.profile?.fullName
+            ?? String(
+                format: NSLocalizedString("Tidepool User %@", comment: ""),
+                String(creator.userid.suffix(4)).capitalized
+            )
     }
 }

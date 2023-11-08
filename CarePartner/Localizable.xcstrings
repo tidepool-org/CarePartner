@@ -127,6 +127,9 @@
     "Tidepool Care Partner will send you Time Sensitive alerts. These alerts are a type of Apple notification and are designed to alert you to higher risk situations, such as urgent low glucose, insulin pump occlusions, or other serious system errors." : {
 
     },
+    "Tidepool User %@" : {
+
+    },
     "Time Sensitive Notifications" : {
 
     },
