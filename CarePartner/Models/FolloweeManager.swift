@@ -233,6 +233,11 @@ extension FolloweeManager: FolloweeDelegate {
 
 extension TPendingInvite {
     fileprivate var fullName: String {
-        creator.profile?.fullName ?? String(format: NSLocalizedString("Tidepool User %@", comment: ""), String(creator.userid.suffix(4)).capitalized)
+        creator.profile?.patient?.fullName
+            ?? creator.profile?.fullName
+            ?? String(
+                format: NSLocalizedString("Tidepool User %@", comment: ""),
+                String(creator.userid.suffix(4)).capitalized
+            )
     }
 }
