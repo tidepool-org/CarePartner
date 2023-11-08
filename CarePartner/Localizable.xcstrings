@@ -79,9 +79,6 @@
     "Invitations" : {
 
     },
-    "iOS 15 has added features such as ‘Focus Modes’ that enable you to have more control over when all your apps can send you notifications." : {
-
-    },
     "Last Bolus: " : {
 
     },
@@ -164,6 +161,9 @@
 
     },
     "You will also receive notifications informing you of important changes to insulin and glucose levels. These notifications will be pre-configured by the Tidepool Loop user, but you may make adjustments at anytime in your Settings. You will receive the following:" : {
+
+    },
+    "Your device has a feature called ‘Focus Modes’ that enables you to have more control over when all your apps can send you notifications." : {
 
     }
   },

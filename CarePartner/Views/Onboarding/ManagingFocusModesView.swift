@@ -17,7 +17,7 @@ struct ManagingFocusModesView: View {
             Text("Using Focus Modes with Tidepool Care Partner")
                 .font(.title3.bold())
             
-            Text("iOS 15 has added features such as ‘Focus Modes’ that enable you to have more control over when all your apps can send you notifications.")
+            Text("Your device has a feature called ‘Focus Modes’ that enables you to have more control over when all your apps can send you notifications.")
             
             Text("If you wish to continue receiving important notifications from Tidepool Care Partner while in a Focus Mode, you must add this app as an ‘Allowed App’ for each Focus Mode.")
             
