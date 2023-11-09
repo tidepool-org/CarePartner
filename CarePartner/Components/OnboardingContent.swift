@@ -92,6 +92,7 @@ extension Image {
     func onboardingFullWidth() -> some View {
         self
             .resizable()
+            .aspectRatio(contentMode: .fit)
             .padding(.horizontal, -32)
     }
 }

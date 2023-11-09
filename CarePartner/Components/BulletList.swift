@@ -91,7 +91,6 @@ struct Bullet: View, Identifiable {
             }
             
             text
-                .font(.subheadline)
         }
     }
 }
