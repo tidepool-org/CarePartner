@@ -11,7 +11,8 @@ import TidepoolKit
 import LoopKitUI
 
 struct FolloweeListView: View {
-    @Environment(\.scenePhase) var scenePhase
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.scenePhase) private var scenePhase
     
     @EnvironmentObject private var onboardingViewModel: OnboardingViewModel
     
@@ -184,7 +185,11 @@ struct FolloweeListView: View {
         if manager.followees.isEmpty {
             LinearGradient(gradient: Gradient(colors: [Color("accent-background"), Color("accent-background").opacity(0.2)]), startPoint: .top, endPoint: .bottom)
         } else {
-            Color.white
+            if colorScheme == .light {
+                Color.white
+            } else {
+                Color.black
+            }
         }
     }
     
