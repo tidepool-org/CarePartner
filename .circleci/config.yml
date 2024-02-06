@@ -15,7 +15,7 @@ jobs:
       - run: bundle install
       - run:
           name: Fastlane
-          command: bundle exec fastlane scan --scheme "CarePartner" --device "iPhone 14" --clean 
+          command: bundle exec fastlane scan --scheme "CarePartner" --device "iPhone 15" --clean 
 
   release:
     resource_class: macos.m1.medium.gen1
