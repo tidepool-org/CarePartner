@@ -306,7 +306,7 @@ struct FolloweeSummaryView_Previews: PreviewProvider {
                         latestGlucose: StoredGlucoseSample.mock(150, .downDown),
                         glucoseDelta: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: -10),
                         activeInsulin: InsulinValue(startDate: Date(), value: 1.056),
-                        activeCarbs: CarbValue(startDate: Date(), quantity: HKQuantity(unit: .gram(), doubleValue: 25)),
+                        activeCarbs: CarbValue(startDate: Date(), value: 25),
                         basalState: BasalDeliveryState(date: Date(), rate: 2.55, scheduledRate: 1.0, isSuspended: false),
                         lastBolusDate: Date().addingTimeInterval(-8*60),
                         lastCarbDate: Date().addingTimeInterval(-4*60*60)

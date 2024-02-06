@@ -24,8 +24,7 @@ extension TDosingDecisionDatum {
 
         let carbsOnBoard: CarbValue?
         if let carbohydratesOnBoard, let startDate = carbohydratesOnBoard.time, let amount = carbohydratesOnBoard.amount {
-            let quantity = HKQuantity(unit: .gram(), doubleValue: amount)
-            carbsOnBoard = CarbValue(startDate: startDate, quantity: quantity)
+            carbsOnBoard = CarbValue(startDate: startDate, value: amount)
         } else {
             carbsOnBoard = nil
         }
