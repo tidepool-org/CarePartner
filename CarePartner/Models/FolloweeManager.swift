@@ -86,7 +86,13 @@ class FolloweeManager: ObservableObject {
             if tidepoolClient.hasSession {
                 pendingInvites = [:]
                 let pendingInvitesReceived = try await tidepoolClient.api.getPendingInvitesReceived()
-                let receivedPendingInvites = pendingInvitesReceived.map { PendingInvite(userDetails: UserDetails(id: $0.creator.userid, fullName: $0.fullName), key: $0.key) }
+                let receivedPendingInvites: [PendingInvite] = pendingInvitesReceived.compactMap {
+                    if let expiresAt = $0.expiresAt, expiresAt <= Date() {
+                        return nil
+                    }
+                    
+                    return PendingInvite(userDetails: UserDetails(id: $0.creator.userid, fullName: $0.fullName), key: $0.key)
+                }
                 
                 for pendingInvite in pendingInvites.values {
                     if !receivedPendingInvites.contains(pendingInvite) {
