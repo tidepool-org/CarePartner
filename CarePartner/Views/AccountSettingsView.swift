@@ -186,6 +186,7 @@ public struct AccountSettingsView: View {
         Task {
             do {
                 try await client.login(environment: selectedEnvironment, sceneDelegate: sceneDelegate)
+                UIApplication.shared.registerForRemoteNotifications()
                 isLoggingIn = false
             } catch {
                 self.error = error

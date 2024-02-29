@@ -9,23 +9,16 @@
 import SwiftUI
 
 struct AppView: View {
+    @EnvironmentObject private var client: TidepoolClient
+    @EnvironmentObject private var followeeManager: FolloweeManager
 
-    @StateObject private var onboardingViewModel: OnboardingViewModel
+    @StateObject private var onboardingViewModel = OnboardingViewModel()
     
-    private let client: TidepoolClient
-    private let followedAccounts: FolloweeManager
     private let formatters = QuantityFormatters(glucoseUnit: .milligramsPerDeciliter)
-
-    @MainActor
-    init() {
-        _onboardingViewModel = StateObject(wrappedValue: OnboardingViewModel())
-        client = TidepoolClient()
-        followedAccounts = FolloweeManager(client: client)
-    }
 
     var body: some View {
         NavigationStack {
-            FolloweeListView(manager: followedAccounts, client: client)
+            FolloweeListView(manager: followeeManager, client: client)
                 .fullScreenCover(isPresented: $onboardingViewModel.hasNotCompletedOnboarding) {
                     NavigationStack {
                         ProductOverviewView()
@@ -38,7 +31,10 @@ struct AppView: View {
 }
 
 struct AppView_Previews: PreviewProvider {
+    static let client = TidepoolClient()
     static var previews: some View {
         AppView()
+            .environmentObject(client)
+            .environmentObject(FolloweeManager(client: client))
     }
 }
