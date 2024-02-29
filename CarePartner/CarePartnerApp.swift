@@ -18,6 +18,8 @@ struct CarePartnerApp: App {
     var body: some Scene {
         WindowGroup {
             AppView()
+                .environmentObject(appDelegate.client)
+                .environmentObject(appDelegate.followeeManager)
         }
     }
 }
