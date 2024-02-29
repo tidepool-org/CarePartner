@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tidepool-org/TidepoolKit.git",
       "state" : {
-        "branch" : "cameron/LOOP-4776-api-updates",
-        "revision" : "0c4e5c8ecefa0ce527ff4b1f599c443611d628b6"
+        "branch" : "dev",
+        "revision" : "b8185353c0f46a055f6d5681bb3f18ec86a5b974"
       }
     }
   ],
