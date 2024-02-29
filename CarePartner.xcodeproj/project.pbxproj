@@ -782,7 +782,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tidepool-org/TidepoolKit.git";
 			requirement = {
-				branch = dev;
+				branch = "cameron/CPA-136-device-push-tokens";
 				kind = branch;
 			};
 		};

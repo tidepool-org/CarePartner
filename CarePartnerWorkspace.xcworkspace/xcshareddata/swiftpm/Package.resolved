@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tidepool-org/TidepoolKit.git",
       "state" : {
-        "branch" : "dev",
-        "revision" : "d39f991004413b86424ebd7558bae38a122b6fc0"
+        "branch" : "cameron/CPA-136-device-push-tokens",
+        "revision" : "a3ed4644c25d386a94ec6b21488d5bc73c3260a1"
       }
     }
   ],
