@@ -19,7 +19,7 @@ jobs:
   release:
     resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 15.2.0
+      xcode: 15.4.0
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: release
