@@ -14,7 +14,7 @@ jobs:
       - run: git submodule update --recursive --init
       - run:
           name: Fastlane
-          command: bundle exec fastlane scan --scheme "CarePartner" --device "iPhone 15" --clean 
+          command: fastlane scan --scheme "CarePartner" --device "iPhone 15" --clean 
 
   release:
     resource_class: macos.m1.medium.gen1
@@ -29,7 +29,7 @@ jobs:
       - run: git submodule update --recursive --init
       - run:
           name: Fastlane
-          command: bundle exec fastlane release build_number:<< pipeline.number >>
+          command: fastlane release build_number:<< pipeline.number >>
           no_output_timeout: 20m
 
 workflows:
