@@ -38,14 +38,10 @@
 		C13D98072A293A3A00905DE4 /* TNormalBolusDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D98062A293A3A00905DE4 /* TNormalBolusDatum.swift */; };
 		C13D980E2A2A627900905DE4 /* TFoodDatum.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D980D2A2A627900905DE4 /* TFoodDatum.swift */; };
 		C13D98102A2A6AA700905DE4 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D980F2A2A6AA700905DE4 /* Date.swift */; };
-		C156EB652A2E1F5D00AC9DED /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = C156EB642A2E1F5D00AC9DED /* SwiftCharts */; };
-		C156EB662A2E1F7E00AC9DED /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C156EB642A2E1F5D00AC9DED /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		C166AF422A262E7700D0E70E /* GlucoseTrend.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF412A262E7700D0E70E /* GlucoseTrend.swift */; };
 		C166AF442A262F4800D0E70E /* FolloweeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C166AF432A262F4800D0E70E /* FolloweeMock.swift */; };
 		C16D40B329AE6546009504BB /* FolloweeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16D40B229AE6546009504BB /* FolloweeManagerMock.swift */; };
 		C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */ = {isa = PBXBuildFile; productRef = C1787D5929B0183400C9D551 /* TidepoolKit */; };
-		C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; };
-		C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C1787D5B29B018C000C9D551 /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1787D6529B6719900C9D551 /* CarePartnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1787D6429B6719900C9D551 /* CarePartnerTests.swift */; };
 		C17CDEF12A014C43003F4C84 /* TidepoolClientLoggedInMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17CDEF02A014C43003F4C84 /* TidepoolClientLoggedInMock.swift */; };
 		C19F116B29AD47830055AC28 /* FolloweeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F116A29AD47830055AC28 /* FolloweeManager.swift */; };
@@ -53,13 +49,14 @@
 		C19F117129AD5A620055AC28 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117029AD5A620055AC28 /* OSLog.swift */; };
 		C19F117429AE583A0055AC28 /* Followee.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19F117329AE583A0055AC28 /* Followee.swift */; };
 		C1C2AF222A214E7D006D13B6 /* FolloweeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C2AF212A214E7D006D13B6 /* FolloweeStatus.swift */; };
-		C1C2AF242A225A38006D13B6 /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */; };
-		C1C2AF252A225A38006D13B6 /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C1C2AF232A225A38006D13B6 /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C1DDFAA329A5895E0019E4CB /* CarePartnerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA229A5895E0019E4CB /* CarePartnerApp.swift */; };
 		C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */; };
 		C1DDFAA729A5895F0019E4CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAA629A5895F0019E4CB /* Assets.xcassets */; };
 		C1DDFAAB29A5895F0019E4CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */; };
 		C1F5BDCB2C754E3E00ECBAAF /* LoopKit in Frameworks */ = {isa = PBXBuildFile; productRef = C1F5BDCA2C754E3E00ECBAAF /* LoopKit */; };
+		C1F5BDCD2C75508000ECBAAF /* LoopKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = C1F5BDCC2C75508000ECBAAF /* LoopKitUI */; };
+		C1F5BDCF2C7550ED00ECBAAF /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = C1F5BDCE2C7550ED00ECBAAF /* SwiftCharts */; };
+		C1F5BDD02C7550ED00ECBAAF /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C1F5BDCE2C7550ED00ECBAAF /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,9 +76,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C1787D5D29B018C000C9D551 /* LoopKit.framework in Embed Frameworks */,
-				C156EB662A2E1F7E00AC9DED /* SwiftCharts in Embed Frameworks */,
-				C1C2AF252A225A38006D13B6 /* LoopKitUI.framework in Embed Frameworks */,
+				C1F5BDD02C7550ED00ECBAAF /* SwiftCharts in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,10 +152,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */,
+				C1F5BDCF2C7550ED00ECBAAF /* SwiftCharts in Frameworks */,
+				C1F5BDCD2C75508000ECBAAF /* LoopKitUI in Frameworks */,
 				C1F5BDCB2C754E3E00ECBAAF /* LoopKit in Frameworks */,
-				C156EB652A2E1F5D00AC9DED /* SwiftCharts in Frameworks */,
-				C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */,
-				C1C2AF242A225A38006D13B6 /* LoopKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,8 +353,9 @@
 			name = CarePartner;
 			packageProductDependencies = (
 				C1787D5929B0183400C9D551 /* TidepoolKit */,
-				C156EB642A2E1F5D00AC9DED /* SwiftCharts */,
 				C1F5BDCA2C754E3E00ECBAAF /* LoopKit */,
+				C1F5BDCC2C75508000ECBAAF /* LoopKitUI */,
+				C1F5BDCE2C7550ED00ECBAAF /* SwiftCharts */,
 			);
 			productName = CarePartner;
 			productReference = C1DDFA9F29A5895E0019E4CB /* CarePartner.app */;
@@ -803,11 +798,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C156EB642A2E1F5D00AC9DED /* SwiftCharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C156EB632A2E1F5D00AC9DED /* XCRemoteSwiftPackageReference "SwiftCharts" */;
-			productName = SwiftCharts;
-		};
 		C1787D5929B0183400C9D551 /* TidepoolKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */;
@@ -817,6 +807,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C1F5BDC92C754E3E00ECBAAF /* XCRemoteSwiftPackageReference "LoopKit" */;
 			productName = LoopKit;
+		};
+		C1F5BDCC2C75508000ECBAAF /* LoopKitUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1F5BDC92C754E3E00ECBAAF /* XCRemoteSwiftPackageReference "LoopKit" */;
+			productName = LoopKitUI;
+		};
+		C1F5BDCE2C7550ED00ECBAAF /* SwiftCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C156EB632A2E1F5D00AC9DED /* XCRemoteSwiftPackageReference "SwiftCharts" */;
+			productName = SwiftCharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
