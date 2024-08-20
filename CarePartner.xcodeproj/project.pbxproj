@@ -59,6 +59,7 @@
 		C1DDFAA529A5895E0019E4CB /* FolloweeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1DDFAA429A5895E0019E4CB /* FolloweeListView.swift */; };
 		C1DDFAA729A5895F0019E4CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAA629A5895F0019E4CB /* Assets.xcassets */; };
 		C1DDFAAB29A5895F0019E4CB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1DDFAAA29A5895F0019E4CB /* Preview Assets.xcassets */; };
+		C1F5BDCB2C754E3E00ECBAAF /* LoopKit in Frameworks */ = {isa = PBXBuildFile; productRef = C1F5BDCA2C754E3E00ECBAAF /* LoopKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1787D5A29B0183400C9D551 /* TidepoolKit in Frameworks */,
+				C1F5BDCB2C754E3E00ECBAAF /* LoopKit in Frameworks */,
 				C156EB652A2E1F5D00AC9DED /* SwiftCharts in Frameworks */,
 				C1787D5C29B018C000C9D551 /* LoopKit.framework in Frameworks */,
 				C1C2AF242A225A38006D13B6 /* LoopKitUI.framework in Frameworks */,
@@ -358,6 +360,7 @@
 			packageProductDependencies = (
 				C1787D5929B0183400C9D551 /* TidepoolKit */,
 				C156EB642A2E1F5D00AC9DED /* SwiftCharts */,
+				C1F5BDCA2C754E3E00ECBAAF /* LoopKit */,
 			);
 			productName = CarePartner;
 			productReference = C1DDFA9F29A5895E0019E4CB /* CarePartner.app */;
@@ -371,7 +374,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1540;
 				ORGANIZATIONNAME = "Tidepool Project";
 				TargetAttributes = {
 					C1787D6129B6719900C9D551 = {
@@ -395,6 +398,7 @@
 			packageReferences = (
 				C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */,
 				C156EB632A2E1F5D00AC9DED /* XCRemoteSwiftPackageReference "SwiftCharts" */,
+				C1F5BDC92C754E3E00ECBAAF /* XCRemoteSwiftPackageReference "LoopKit" */,
 			);
 			productRefGroup = C1DDFAA029A5895E0019E4CB /* Products */;
 			projectDirPath = "";
@@ -572,6 +576,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -631,6 +636,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -786,6 +792,14 @@
 				kind = branch;
 			};
 		};
+		C1F5BDC92C754E3E00ECBAAF /* XCRemoteSwiftPackageReference "LoopKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tidepool-org/LoopKit";
+			requirement = {
+				branch = dev;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -798,6 +812,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C1787D5829B0183400C9D551 /* XCRemoteSwiftPackageReference "TidepoolKit" */;
 			productName = TidepoolKit;
+		};
+		C1F5BDCA2C754E3E00ECBAAF /* LoopKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1F5BDC92C754E3E00ECBAAF /* XCRemoteSwiftPackageReference "LoopKit" */;
+			productName = LoopKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

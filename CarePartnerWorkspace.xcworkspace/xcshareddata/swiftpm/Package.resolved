@@ -1,5 +1,24 @@
 {
+  "originHash" : "5751a985a737f5bae5fb3f27b31f0b9e4407859b1fafd52148d8e9487b42b67a",
   "pins" : [
+    {
+      "identity" : "loopalgorithm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/LoopKit/LoopAlgorithm",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6f0697aed001bba75af1e5566a2afdab34ea0fd4"
+      }
+    },
+    {
+      "identity" : "loopkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tidepool-org/LoopKit",
+      "state" : {
+        "branch" : "dev",
+        "revision" : "7095cc804978519220816f13a231a8c69125c0a4"
+      }
+    },
     {
       "identity" : "swiftcharts",
       "kind" : "remoteSourceControl",
@@ -19,5 +38,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

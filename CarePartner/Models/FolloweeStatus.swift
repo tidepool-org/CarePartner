@@ -8,6 +8,7 @@
 
 import Foundation
 import HealthKit
+import LoopAlgorithm
 import LoopKit
 
 struct BasalDeliveryState {
@@ -23,7 +24,7 @@ struct BasalDeliveryState {
 struct FolloweeStatus {
     var firstName: String
     var lastRefresh: Date
-    var latestGlucose: GlucoseSampleValue?
+    var latestGlucose: StoredGlucoseSample?
     var glucoseDelta: HKQuantity?
     var trend: GlucoseTrend?
     var activeInsulin: InsulinValue?
