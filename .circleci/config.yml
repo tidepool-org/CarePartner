@@ -31,6 +31,7 @@ jobs:
       - run: git submodule update --recursive --init
       - macos/switch-ruby:
           version: "3.2"
+      - run: gem install fastlane --no-document
       - run:
           name: Fastlane
           command: fastlane release build_number:<< pipeline.number >>
