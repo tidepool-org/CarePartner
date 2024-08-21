@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LoopAlgorithm
 import HealthKit
 import LoopKit
 import CoreData
@@ -74,8 +75,6 @@ class Followee: ObservableObject, Identifiable {
         doseStore = DoseStore(
             cacheStore: cacheStore,
             cacheLength: historyInterval,
-            insulinModelProvider: PresetInsulinModelProvider(defaultRapidActingModel: nil),
-            longestEffectDuration: ExponentialInsulinModelPreset.rapidActingAdult.effectDuration,
             basalProfile: nil,
             insulinSensitivitySchedule: nil,
             provenanceIdentifier: provenanceIdentifier)
@@ -83,7 +82,6 @@ class Followee: ObservableObject, Identifiable {
         carbStore = CarbStore(
             cacheStore: cacheStore,
             cacheLength: historyInterval,
-            defaultAbsorptionTimes: (fast: .minutes(30), medium: .hours(3), slow: .hours(5)),
             provenanceIdentifier: provenanceIdentifier)
 
         dosingDecisionStore = DosingDecisionStore(
@@ -150,8 +148,8 @@ class Followee: ObservableObject, Identifiable {
     }
 
     func refreshGlucose() async {
-        if let latest = glucoseStore.latestGlucose, latest.startDate.timeIntervalSinceNow > -.minutes(15) {
-            status.latestGlucose = glucoseStore.latestGlucose
+        if let latest = glucoseStore.latestGlucose as? StoredGlucoseSample, latest.startDate.timeIntervalSinceNow > -.minutes(15) {
+            status.latestGlucose = latest
             do {
                 let samples = try await glucoseStore.getGlucoseSamples(start: latest.startDate.addingTimeInterval(-.minutes(6)))
                 if let previousSample = samples.filter({ $0.syncIdentifier != latest.syncIdentifier }).sorted(by: \.startDate).last {

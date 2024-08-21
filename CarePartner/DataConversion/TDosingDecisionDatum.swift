@@ -8,6 +8,7 @@
 
 import Foundation
 import TidepoolKit
+import LoopAlgorithm
 import LoopKit
 import HealthKit
 
