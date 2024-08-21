@@ -27,6 +27,8 @@ jobs:
       - checkout
       - run: git submodule sync --recursive
       - run: git submodule update --recursive --init
+      - macos/switch-ruby:
+          version: "3.2"
       - run:
           name: Fastlane
           command: fastlane release build_number:<< pipeline.number >>
