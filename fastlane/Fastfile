@@ -1,25 +1,31 @@
 # fastlane/Fastfile
-default_platform :ios
 
-# In CircleCI, we encode the app store connect api key as base64
-# because CircleCI does not handle multi-line environment variabiles
-# https://support.circleci.com/hc/en-us/articles/360046094254-Using-Multiple-Line-newline-Environment-Variables-in-CircleCI
-# cat AuthKey_77H29HSX8R.p8| base64
+default_platform :ios
 
 APP_STORE_CONNECT_ISSUER = ENV["APP_STORE_CONNECT_ISSUER"]
 APP_STORE_CONNECT_KEY_ID = ENV["APP_STORE_CONNECT_KEY_ID"]
-APP_STORE_CONNECT_KEY = Base64.decode64(ENV["APP_STORE_CONNECT_KEY_ENCODED"])
+
+# In CircleCI, we encode the App Store Connect API Key as base64
+# because CircleCI does not handle multi-line environment variables
+# https://support.circleci.com/hc/en-us/articles/360046094254-Using-Multiple-Line-newline-Environment-Variables-in-CircleCI
+
+APP_STORE_CONNECT_KEY_CONTENT = Base64.decode64(ENV["APP_STORE_CONNECT_KEY_ENCODED"])
+APP_STORE_CONNECT_KEY_FILE_PATH = '~/project/AuthKey.p8'
+
+# Writes the AuthKey to a local file since the `xcargs` command of
+# `build_ios_app` only accepts a file instead of the contents directly.
+
+sh("echo '#{APP_STORE_CONNECT_KEY_CONTENT}' > #{APP_STORE_CONNECT_KEY_FILE_PATH}")
 
 api_key = app_store_connect_api_key(
   key_id: "#{APP_STORE_CONNECT_KEY_ID}",
   issuer_id: "#{APP_STORE_CONNECT_ISSUER}",
-  key_content: "#{APP_STORE_CONNECT_KEY}"
+  key_content: "#{APP_STORE_CONNECT_KEY_CONTENT}"
 )
 
 platform :ios do
   before_all do
     setup_circle_ci
-    sh("echo '#{APP_STORE_CONNECT_KEY}' > ../AuthKey_77H29HSX8R.p8")
   end
 
   desc "Runs all the tests"
@@ -36,14 +42,19 @@ platform :ios do
         )
       end
     end
+    
+    SCHEME = 'CarePartner'
+    OUTPUT_FOLDER = 'output'
+    OUTPUT_NAME = 'CarePartner.ipa'
 
+    # `xcargs -allowProvisioningUpdates` will use Xcode automatic signing which requires the flags `-authenticationKeyID`, `-authenticationKeyIssuerID`, and `-authenticationKeyPath` to be provided.
     build_ios_app(
       export_method: "app-store",
-      xcargs: "-allowProvisioningUpdates -authenticationKeyID #{APP_STORE_CONNECT_KEY_ID} -authenticationKeyIssuerID #{APP_STORE_CONNECT_ISSUER} -authenticationKeyPath '/Users/distiller/project/AuthKey_77H29HSX8R.p8'",
-      scheme: "CarePartner",
-      output_name: "CarePartner.ipa",
+      xcargs: "-allowProvisioningUpdates -authenticationKeyID #{APP_STORE_CONNECT_KEY_ID} -authenticationKeyIssuerID #{APP_STORE_CONNECT_ISSUER} -authenticationKeyPath #{APP_STORE_CONNECT_KEY_FILE_PATH}",
+      scheme: "#{SCHEME}",
+      output_name: "#{OUTPUT_NAME}",
       clean: true,
-      output_directory: "output",
+      output_directory: "#{OUTPUT_FOLDER}",
       configuration: "Release",
       destination: 'generic/platform=iOS'
     )
@@ -51,10 +62,8 @@ platform :ios do
     upload_to_testflight(
       api_key: api_key,
       skip_submission: false,
-      ipa: "output/CarePartner.ipa",
+      ipa: "#{OUTPUT_FOLDER}/#{OUTPUT_NAME}",
       skip_waiting_for_build_processing: true,
     )
-
-    #pilot(api_key: api_key)
   end
 end
