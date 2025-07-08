@@ -9,10 +9,11 @@ jobs:
       xcode: 16.4.0
     steps:
       - checkout
-      - run: git submodule sync --recursive
-      - run: git submodule update --recursive --init
       - run:
-          name: Fastlane - Test
+          name: Submodule sync & update
+          command: git submodule sync --recursive && git submodule update --recursive --init
+      - run:
+          name: Fastlane test
           command: fastlane scan --scheme "CarePartner" --clean
 
   release:
@@ -21,10 +22,11 @@ jobs:
       xcode: 16.4.0
     steps:
       - checkout
-      - run: git submodule sync --recursive
-      - run: git submodule update --recursive --init
       - run:
-          name: Fastlane - Release
+          name: Submodule sync & update
+          command: git submodule sync --recursive && git submodule update --recursive --init
+      - run:
+          name: Fastlane release
           command: fastlane release build_number:<< pipeline.number >>
 
 workflows:
