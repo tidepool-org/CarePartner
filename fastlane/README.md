@@ -23,30 +23,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Runs all the tests
 
-### ios adhoc
-
-```sh
-[bundle exec] fastlane ios adhoc
-```
-
-Ad-hoc build
-
-### ios update_profile
-
-```sh
-[bundle exec] fastlane ios update_profile
-```
-
-
-
-### ios sync_certs
-
-```sh
-[bundle exec] fastlane ios sync_certs
-```
-
-
-
 ### ios release
 
 ```sh
