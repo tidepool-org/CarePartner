@@ -4,23 +4,17 @@ default_platform :ios
 
 APP_STORE_CONNECT_ISSUER = ENV["APP_STORE_CONNECT_ISSUER"]
 APP_STORE_CONNECT_KEY_ID = ENV["APP_STORE_CONNECT_KEY_ID"]
-
-# In CircleCI, we encode the App Store Connect API Key as base64
-# because CircleCI does not handle multi-line environment variables
-# https://support.circleci.com/hc/en-us/articles/360046094254-Using-Multiple-Line-newline-Environment-Variables-in-CircleCI
-
-APP_STORE_CONNECT_KEY_CONTENT = Base64.decode64(ENV["APP_STORE_CONNECT_KEY_ENCODED"])
+APP_STORE_CONNECT_KEY_ENCODED = ENV["APP_STORE_CONNECT_KEY_ENCODED"]
 APP_STORE_CONNECT_KEY_FILE_PATH = '~/project/AuthKey.p8'
 
 # Writes the AuthKey to a local file since the `xcargs` command of
 # `build_ios_app` only accepts a file instead of the contents directly.
-
-sh("echo '#{APP_STORE_CONNECT_KEY_CONTENT}' > #{APP_STORE_CONNECT_KEY_FILE_PATH}")
+sh("echo Base64.decode64(#{APP_STORE_CONNECT_KEY_ENCODED}) > #{APP_STORE_CONNECT_KEY_FILE_PATH}")
 
 api_key = app_store_connect_api_key(
   key_id: "#{APP_STORE_CONNECT_KEY_ID}",
   issuer_id: "#{APP_STORE_CONNECT_ISSUER}",
-  key_content: "#{APP_STORE_CONNECT_KEY_CONTENT}"
+  key_filepath: "#{APP_STORE_CONNECT_KEY_PATH}"
 )
 
 platform :ios do
