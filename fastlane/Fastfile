@@ -38,15 +38,7 @@ platform :ios do
       end
     end
 
-    build_ios_app(
-      export_method: "app-store",
-      scheme: "CarePartner",
-      output_name: "CarePartner.ipa",
-      clean: true,
-      output_directory: "output",
-      configuration: "Release",
-      destination: 'generic/platform=iOS'
-    )
+    gym("CarePartner")
 
     upload_to_testflight(
       api_key: api_key,
