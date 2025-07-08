@@ -39,7 +39,7 @@ platform :ios do
 
     build_ios_app(
       export_method: "app-store",
-      export_options: "../exportOptions.plist"
+      export_options: "../exportOptions.plist",
       xcargs: "-allowProvisioningUpdates",
       scheme: "CarePartner",
       output_name: "CarePartner.ipa",
