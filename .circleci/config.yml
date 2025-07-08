@@ -6,7 +6,7 @@ jobs:
   build-and-test:
     resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 15.4.0
+      xcode: 16.4.0
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: test
@@ -16,12 +16,12 @@ jobs:
       - run: git submodule update --recursive --init
       - run:
           name: Fastlane
-          command: fastlane scan --scheme "CarePartner" --device "iPhone 15" --clean 
+          command: fastlane scan --scheme "CarePartner" --device "iPhone 16" --clean
 
   release:
     resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 15.4.0
+      xcode: 16.4.0
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: release
@@ -44,6 +44,9 @@ workflows:
       - release:
           filters:
             branches:
-              only: main
+              only:
+                - main
+                - test
+              
           requires:
             - build-and-test

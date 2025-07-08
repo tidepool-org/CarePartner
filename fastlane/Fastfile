@@ -20,48 +20,15 @@ api_key = app_store_connect_api_key(
 platform :ios do
   before_all do
     setup_circle_ci
+    update_code_signing_settings(use_automatic_signing: true)
   end
 
   desc "Runs all the tests"
   lane :test do
     scan
   end
-
-  desc "Ad-hoc build"
-  lane :adhoc do
-    match(type: "adhoc")
-    gym(export_method: "ad-hoc")
-  end
-
-  lane :update_profile do 
-    match(
-      type: "appstore",
-      git_url: "https://github.com/tidepool-org/match_certificates",
-      app_identifier: "org.tidepool.carepartner",
-      git_branch: "carepartner",
-    )
-  end
-
-  lane :sync_certs do
-    sync_code_signing(
-      type: "appstore",
-      app_identifier: "org.tidepool.carepartner",
-      git_url: "https://github.com/tidepool-org/match_certificates",
-      git_branch: "carepartner",
-      api_key: api_key
-    )
-  end
-
+  
   lane :release do |options|
-
-    match(
-      type: "appstore",
-      git_url: "https://github.com/tidepool-org/match_certificates",
-      app_identifier: "org.tidepool.carepartner",
-      git_branch: "carepartner",
-      readonly: true
-    )
-
     if options.include?(:build_number)
       puts "build_number = [" + options[:build_number] + "]"
       if is_ci
@@ -70,7 +37,6 @@ platform :ios do
         )
       end
     end
-
 
     build_ios_app(
       export_method: "app-store",
