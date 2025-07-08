@@ -19,7 +19,7 @@ api_key = app_store_connect_api_key(
 platform :ios do
   before_all do
     setup_circle_ci
-    sh("echo '#{APP_STORE_CONNECT_KEY}' > AuthKey_77H29HSX8R.p8")
+    sh("echo '#{APP_STORE_CONNECT_KEY}' > ../AuthKey_77H29HSX8R.p8")
   end
 
   desc "Runs all the tests"
