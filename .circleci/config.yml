@@ -7,24 +7,18 @@ jobs:
     resource_class: m4pro.medium
     macos:
       xcode: 16.4.0
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: test
     steps:
       - checkout
       - run: git submodule sync --recursive
       - run: git submodule update --recursive --init
       - run:
           name: Fastlane
-          command: fastlane scan --scheme "CarePartner" --device "iPhone 16" --clean
+          command: fastlane test --clean
 
   release:
     resource_class: m4pro.medium
     macos:
       xcode: 16.4.0
-    environment:
-      FL_OUTPUT_DIR: output
-      FASTLANE_LANE: release
     steps:
       - checkout
       - run: git submodule sync --recursive
