@@ -49,7 +49,7 @@ platform :ios do
 
     # `xcargs -allowProvisioningUpdates` will use Xcode automatic signing which requires the flags `-authenticationKeyID`, `-authenticationKeyIssuerID`, and `-authenticationKeyPath` to be provided.
     build_ios_app(
-      export_method: "app-store-connect",
+      export_method: "app-store",
       xcargs: "-allowProvisioningUpdates -authenticationKeyID #{APP_STORE_CONNECT_KEY_ID} -authenticationKeyIssuerID #{APP_STORE_CONNECT_ISSUER} -authenticationKeyPath #{APP_STORE_CONNECT_KEY_FILE_PATH}",
       scheme: "#{SCHEME}",
       output_name: "#{OUTPUT_NAME}",
