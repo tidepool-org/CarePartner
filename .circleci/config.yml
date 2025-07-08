@@ -4,7 +4,7 @@ orbs:
 version: 2.1
 jobs:
   build-and-test:
-    resource_class: macos.m1.medium.gen1
+    resource_class: m4pro.medium
     macos:
       xcode: 16.4.0
     environment:
@@ -19,7 +19,7 @@ jobs:
           command: fastlane scan --scheme "CarePartner" --device "iPhone 16" --clean
 
   release:
-    resource_class: macos.m1.medium.gen1
+    resource_class: m4pro.medium
     macos:
       xcode: 16.4.0
     environment:
