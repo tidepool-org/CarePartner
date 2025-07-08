@@ -39,7 +39,7 @@ platform :ios do
 
     build_ios_app(
       export_method: "app-store",
-      xcargs: "-allowProvisioningUpdates -authenticationKeyID #{APP_STORE_CONNECT_KEY_ID} -authenticationKeyIssuerID #{APP_STORE_CONNECT_ISSUER} -authenticationKeyContent AuthKey_77H29HSX8R.p8",
+      xcargs: "-allowProvisioningUpdates -authenticationKeyID #{APP_STORE_CONNECT_KEY_ID} -authenticationKeyIssuerID #{APP_STORE_CONNECT_ISSUER} -authenticationKeyPath AuthKey_77H29HSX8R.p8",
       scheme: "CarePartner",
       output_name: "CarePartner.ipa",
       clean: true,
