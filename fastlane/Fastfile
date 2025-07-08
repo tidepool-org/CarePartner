@@ -6,15 +6,15 @@ default_platform :ios
 # https://support.circleci.com/hc/en-us/articles/360046094254-Using-Multiple-Line-newline-Environment-Variables-in-CircleCI
 # cat AuthKey_77H29HSX8R.p8| base64
 
-APP_STORE_CONNECT_ISSUER = ENV["APP_STORE_CONNECT_ISSUER"]
-APP_STORE_CONNECT_KEY_ID = ENV["APP_STORE_CONNECT_KEY_ID"]
-APP_STORE_CONNECT_KEY = Base64.decode64(ENV["APP_STORE_CONNECT_KEY_ENCODED"])
+#APP_STORE_CONNECT_ISSUER = ENV["APP_STORE_CONNECT_ISSUER"]
+#APP_STORE_CONNECT_KEY_ID = ENV["APP_STORE_CONNECT_KEY_ID"]
+#APP_STORE_CONNECT_KEY = Base64.decode64(ENV["APP_STORE_CONNECT_KEY_ENCODED"])
 
-api_key = app_store_connect_api_key(
-  key_id: "#{APP_STORE_CONNECT_KEY_ID}",
-  issuer_id: "#{APP_STORE_CONNECT_ISSUER}",
-  key_content: "#{APP_STORE_CONNECT_KEY}"
-)
+#api_key = app_store_connect_api_key(
+#  key_id: "#{APP_STORE_CONNECT_KEY_ID}",
+#  issuer_id: "#{APP_STORE_CONNECT_ISSUER}",
+#  key_content: "#{APP_STORE_CONNECT_KEY}"
+#)
 
 
 platform :ios do
@@ -40,7 +40,10 @@ platform :ios do
 
     build_ios_app(
       export_method: "app-store",
-      xcargs: "-allowProvisioningUpdates",
+      export_xcargs: "-allowProvisioningUpdates",
+      export_options: {
+        "signingStyle": "automatic"
+      },
       scheme: "CarePartner",
       output_name: "CarePartner.ipa",
       clean: true,
@@ -49,12 +52,12 @@ platform :ios do
       destination: 'generic/platform=iOS'
     )
 
-    upload_to_testflight(
-      api_key: api_key,
-      skip_submission: false,
-      ipa: "output/CarePartner.ipa",
-      skip_waiting_for_build_processing: true,
-    )
+    #upload_to_testflight(
+      #api_key: api_key,
+      #skip_submission: false,
+      #ipa: "output/CarePartner.ipa",
+      #skip_waiting_for_build_processing: true,
+    #)
 
     #pilot(api_key: api_key)
   end
