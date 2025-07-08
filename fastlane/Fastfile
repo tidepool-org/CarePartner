@@ -27,12 +27,6 @@ platform :ios do
   before_all do
     setup_circle_ci
   end
-
-  desc "Runs all the tests"
-  lane :test do
-    xcclean
-    scan
-  end
   
   lane :release do |options|
     if options.include?(:build_number)

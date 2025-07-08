@@ -13,7 +13,7 @@ jobs:
       - run: git submodule update --recursive --init
       - run:
           name: Fastlane
-          command: fastlane test
+          command: fastlane scan --scheme "CarePartner" --clean
 
   release:
     resource_class: m4pro.medium
