@@ -38,7 +38,7 @@ platform :ios do
       end
     end
 
-    gym("CarePartner")
+    gym(scheme: "CarePartner")
 
     upload_to_testflight(
       api_key: api_key,
